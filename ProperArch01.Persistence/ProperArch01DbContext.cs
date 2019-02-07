@@ -23,58 +23,16 @@ namespace ProperArch01.Persistence
 
         public virtual DbSet<ClassAttendance> ClassAttendances { get; set; }
         public virtual DbSet<ScheduledClass> ScheduledClasses { get; set; }
-        public virtual DbSet<ClassType> ScheduledClassTypes { get; set; }
+        public virtual DbSet<ClassType> ClassTypes { get; set; }
         public virtual DbSet<ClassTimetable> ClassTimetable { get; set; }
         public virtual DbSet<IdentityUserRole> UserRoles { get; set; }
         public virtual DbSet<Holidays> Holiday { get; set; }
+        public virtual DbSet<GymUser> User { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new IdentityUserLoginConfiguration());
             modelBuilder.Configurations.Add(new IdentityUserRoleConfiguration());
-
-            // Define PKs
-            //modelBuilder.Entity<ClassAttendance>()
-            //    .HasKey(k => k.Id);
-
-            //modelBuilder.Entity<ClassTimetable>()
-            //    .HasKey(k => k.Id);
-
-            //modelBuilder.Entity<ClassType>()
-            //    .HasKey(k => k.Id);
-
-            //modelBuilder.Entity<Holidays>()
-            //    .HasKey(k => k.Id);
-
-            //modelBuilder.Entity<ScheduledClass>()
-            //    .HasKey(k => k.Id);
-
-            // Define nullable one-to-many relationships
-            //modelBuilder.Entity<ScheduledClass>()
-            //    .HasOptional(sc => sc.Instructor)
-            //    .WithMany()
-            //    .WillCascadeOnDelete(false);
-
-            // Define notnull one-to-many relationships
-            //modelBuilder.Entity<ClassType>()
-            //    .HasRequired(ct => ct.ClassTimetable)
-            //    .WithMany()
-            //    .WillCascadeOnDelete(true);
-
-            //modelBuilder.Entity<ClassType>()
-            //    .HasRequired(ct => ct.ScheduledClass)
-            //    .WithMany()
-            //    .WillCascadeOnDelete(true);
-
-            //modelBuilder.Entity<ScheduledClass>()
-            //    .HasRequired(sc => sc.ClassAttendances)
-            //    .WithMany()
-            //    .WillCascadeOnDelete(true);
-
-            //modelBuilder.Entity<GymUser>()
-            //    .HasRequired(gu => gu.ClassAttendances)
-            //    .WithMany()
-            //    .WillCascadeOnDelete(true);
         }
 
         public class IdentityUserLoginConfiguration : EntityTypeConfiguration<IdentityUserLogin>

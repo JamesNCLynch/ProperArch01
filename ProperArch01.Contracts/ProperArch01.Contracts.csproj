@@ -43,6 +43,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\..\MVCUserRoles01\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.2\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -70,7 +73,33 @@
     <Content Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\IClassAttendanceWriter.cs" />
+    <Compile Include="Commands\IClassTimetableWriter.cs" />
+    <Compile Include="Commands\IClassTypeWriter.cs" />
+    <Compile Include="Commands\IGymWriter.cs" />
+    <Compile Include="Commands\IHolidayWriter.cs" />
+    <Compile Include="Commands\IScheduledClassWriter.cs" />
+    <Compile Include="Commands\IUserWriter.cs" />
+    <Compile Include="Models\Account\GymUser.cs" />
+    <Compile Include="Models\Account\RegisterViewModel.cs" />
+    <Compile Include="Models\ClassTimetable\AddClassTimetableModel.cs" />
+    <Compile Include="Models\ClassTimetable\ClassTimetable.cs" />
+    <Compile Include="Models\ClassTimetable\EditClassTimetableModel.cs" />
+    <Compile Include="Models\ClassType\AddClassTypeModel.cs" />
+    <Compile Include="Models\ClassType\ClassType.cs" />
+    <Compile Include="Models\ClassType\EditClassTypeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queries\IClassAttendanceReader.cs" />
+    <Compile Include="Queries\IClassTimetableReader.cs" />
+    <Compile Include="Queries\IClassTypeReader.cs" />
+    <Compile Include="Queries\IGymUserReader.cs" />
+    <Compile Include="Queries\IHolidayReader.cs" />
+    <Compile Include="Queries\IScheduledClassReader.cs" />
+    <Compile Include="Models\Account\CreateUserViewModel.cs" />
+    <Compile Include="Queries\IUserReader.cs" />
+    <Compile Include="Services\IAccountService.cs" />
+    <Compile Include="Services\IClassTimetableService.cs" />
+    <Compile Include="Services\IClassTypeService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -82,9 +111,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commands\" />
     <Folder Include="Dto\" />
-    <Folder Include="Queries\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

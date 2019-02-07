@@ -14,11 +14,12 @@ namespace ProperArch01.Persistence.Interfaces
     {
         DbSet<ClassAttendance> ClassAttendances { get; set; }
         DbSet<ScheduledClass> ScheduledClasses { get; set; }
-        DbSet<ClassType> ScheduledClassTypes { get; set; }
+        DbSet<ClassType> ClassTypes { get; set; }
         DbSet<ClassTimetable> ClassTimetable { get; set; }
         DbSet<IdentityUserRole> UserRoles { get; set; }
         DbSet<Holidays> Holiday { get; set; }
-        
+        DbSet<GymUser> User { get; set; }
+
         int SaveChanges();
         Task<int> SaveChangesAsync();
         DbSet<TEntity> Set<TEntity>() where TEntity : class;

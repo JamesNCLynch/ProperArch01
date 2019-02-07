@@ -1,15 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using ProperArch01.Persistence;
-using ProperArch01.Persistence.EntityModels;
+using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
+using ProperArch01.WebApp.Models;
+using ProperArch01.Persistence;
+using ProperArch01.Persistence.EntityModels;
 
-namespace Ingenium.WebApp
+namespace ProperArch01.WebApp
 {
     public class EmailService : IIdentityMessageService
     {
@@ -37,7 +42,7 @@ namespace Ingenium.WebApp
         {
         }
 
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
+        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
         {
             var manager = new ApplicationUserManager(new UserStore<GymUser>(context.Get<ProperArch01DbContext>()));
             // Configure validation logic for usernames
@@ -64,23 +69,23 @@ namespace Ingenium.WebApp
 
             // Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
             // You can write your own provider and plug it in here.
-            //manager.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<GymUser>
-            //{
-            //    MessageFormat = "Your security code is {0}"
-            //});
-            //manager.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<GymUser>
-            //{
-            //    Subject = "Security Code",
-            //    BodyFormat = "Your security code is {0}"
-            //});
-            //manager.EmailService = new EmailService();
-            //manager.SmsService = new SmsService();
-            //var dataProtectionProvider = options.DataProtectionProvider;
-            //if (dataProtectionProvider != null)
-            //{
-            //    manager.UserTokenProvider =
-            //        new DataProtectorTokenProvider<GymUser>(dataProtectionProvider.Create("ASP.NET Identity"));
-            //}
+            manager.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<GymUser>
+            {
+                MessageFormat = "Your security code is {0}"
+            });
+            manager.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<GymUser>
+            {
+                Subject = "Security Code",
+                BodyFormat = "Your security code is {0}"
+            });
+            manager.EmailService = new EmailService();
+            manager.SmsService = new SmsService();
+            var dataProtectionProvider = options.DataProtectionProvider;
+            if (dataProtectionProvider != null)
+            {
+                manager.UserTokenProvider = 
+                    new DataProtectorTokenProvider<GymUser>(dataProtectionProvider.Create("ASP.NET Identity"));
+            }
             return manager;
         }
     }
@@ -93,7 +98,7 @@ namespace Ingenium.WebApp
         {
         }
 
-        //public override Task<ClaimsIdentity> CreateUserIdentityAsync(IngeniumUser user)
+        //public override Task<ClaimsIdentity> CreateUserIdentityAsync(GymUser user)
         //{
         //    return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
         //}
