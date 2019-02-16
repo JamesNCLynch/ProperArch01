@@ -13,7 +13,7 @@ namespace ProperArch01.Persistence.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201902030953151_FirstMigration"; }
+            get { return "201902161155047_FirstMigration"; }
         }
         
         string IMigrationMetadata.Source

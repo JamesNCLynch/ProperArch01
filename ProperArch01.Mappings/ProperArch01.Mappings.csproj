@@ -76,6 +76,7 @@
     <Content Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mappings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -86,6 +87,27 @@
     <None Include="app.Release.config">
       <DependentUpon>app.config</DependentUpon>
     </None>
+    <Content Include="web.config" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ProperArch01.Contracts\ProperArch01.Contracts.csproj">
+      <Project>{6e694958-0d89-4e60-9869-f292a2744d62}</Project>
+      <Name>ProperArch01.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProperArch01.Domain\ProperArch01.Domain.csproj">
+      <Project>{0d265367-1f4d-4289-8300-0b132bbb4ae5}</Project>
+      <Name>ProperArch01.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProperArch01.Persistence\ProperArch01.Persistence.csproj">
+      <Project>{231423fb-b5f4-4b3b-ad4e-5905ddeb8ccc}</Project>
+      <Name>ProperArch01.Persistence</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

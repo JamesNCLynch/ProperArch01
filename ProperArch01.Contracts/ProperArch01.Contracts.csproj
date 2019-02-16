@@ -76,10 +76,10 @@
     <Compile Include="Commands\IClassAttendanceWriter.cs" />
     <Compile Include="Commands\IClassTimetableWriter.cs" />
     <Compile Include="Commands\IClassTypeWriter.cs" />
-    <Compile Include="Commands\IGymWriter.cs" />
+    <Compile Include="Commands\IGymUserWriter.cs" />
     <Compile Include="Commands\IHolidayWriter.cs" />
     <Compile Include="Commands\IScheduledClassWriter.cs" />
-    <Compile Include="Commands\IUserWriter.cs" />
+    <Compile Include="Constants\RoleNames.cs" />
     <Compile Include="Models\Account\GymUser.cs" />
     <Compile Include="Models\Account\RegisterViewModel.cs" />
     <Compile Include="Models\ClassTimetable\AddClassTimetableModel.cs" />

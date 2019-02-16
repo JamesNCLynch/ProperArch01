@@ -9,11 +9,11 @@ namespace ProperArch01.Persistence.EntityModels
 {
     public class ClassTimetable : IEntity
     {
-        //[Key]
-        public string ClassTimetableId { get; set; }
+        [Key]
+        public string Id { get; set; }
 
-        //public string ScheduledClassTypeId { get; set; }
-        //[ForeignKey("ScheduledClassTypeId")]
+        public string ClassTypeId { get; set; }
+        [ForeignKey("ClassTypeId")]
         public ClassType ClassType { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }

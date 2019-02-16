@@ -18,7 +18,6 @@ namespace ProperArch01.Persistence.Interfaces
         DbSet<ClassTimetable> ClassTimetable { get; set; }
         DbSet<IdentityUserRole> UserRoles { get; set; }
         DbSet<Holidays> Holiday { get; set; }
-        DbSet<GymUser> User { get; set; }
 
         int SaveChanges();
         Task<int> SaveChangesAsync();

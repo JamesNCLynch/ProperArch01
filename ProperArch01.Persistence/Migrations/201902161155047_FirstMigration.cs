@@ -11,21 +11,21 @@ namespace ProperArch01.Persistence.Migrations
                 "dbo.ClassAttendances",
                 c => new
                     {
-                        ClassAttendanceId = c.String(nullable: false, maxLength: 128),
+                        Id = c.String(nullable: false, maxLength: 128),
                         EnrolledDate = c.DateTime(nullable: false),
                         EnrolledBy = c.String(maxLength: 50),
+                        AttendeeId = c.String(maxLength: 128),
+                        ScheduledClassId = c.String(maxLength: 128),
                         NoShow = c.Boolean(nullable: false),
-                        Attendee_Id = c.String(maxLength: 128),
-                        ScheduledClass_ScheduledClassId = c.String(maxLength: 128),
                     })
-                .PrimaryKey(t => t.ClassAttendanceId)
-                .ForeignKey("dbo.GymUsers", t => t.Attendee_Id)
-                .ForeignKey("dbo.ScheduledClasses", t => t.ScheduledClass_ScheduledClassId)
-                .Index(t => t.Attendee_Id)
-                .Index(t => t.ScheduledClass_ScheduledClassId);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.AspNetUser", t => t.AttendeeId)
+                .ForeignKey("dbo.ScheduledClasses", t => t.ScheduledClassId)
+                .Index(t => t.AttendeeId)
+                .Index(t => t.ScheduledClassId);
             
             CreateTable(
-                "dbo.GymUsers",
+                "dbo.AspNetUser",
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
@@ -49,89 +49,86 @@ namespace ProperArch01.Persistence.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.IdentityUserClaims",
+                "dbo.AspNetUserClaim",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        UserId = c.String(),
+                        UserId = c.String(nullable: false, maxLength: 128),
                         ClaimType = c.String(),
                         ClaimValue = c.String(),
-                        GymUser_Id = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.GymUsers", t => t.GymUser_Id)
+                .ForeignKey("dbo.AspNetUser", t => t.UserId, cascadeDelete: true)
+                .Index(t => t.UserId);
+            
+            CreateTable(
+                "dbo.AspNetUserLogins",
+                c => new
+                    {
+                        LoginProvider = c.String(nullable: false, maxLength: 128),
+                        ProviderKey = c.String(nullable: false, maxLength: 128),
+                        UserId = c.String(nullable: false, maxLength: 128),
+                        GymUser_Id = c.String(maxLength: 128),
+                    })
+                .PrimaryKey(t => new { t.LoginProvider, t.ProviderKey, t.UserId })
+                .ForeignKey("dbo.AspNetUser", t => t.GymUser_Id)
                 .Index(t => t.GymUser_Id);
             
             CreateTable(
-                "dbo.IdentityUserLogins",
+                "dbo.AspNetUserRole",
                 c => new
                     {
                         UserId = c.String(nullable: false, maxLength: 128),
-                        LoginProvider = c.String(),
-                        ProviderKey = c.String(),
-                        GymUser_Id = c.String(maxLength: 128),
-                    })
-                .PrimaryKey(t => t.UserId)
-                .ForeignKey("dbo.GymUsers", t => t.GymUser_Id)
-                .Index(t => t.GymUser_Id);
-            
-            CreateTable(
-                "dbo.IdentityUserRoles",
-                c => new
-                    {
                         RoleId = c.String(nullable: false, maxLength: 128),
-                        UserId = c.String(),
-                        GymUser_Id = c.String(maxLength: 128),
-                        IdentityRole_Id = c.String(maxLength: 128),
                     })
-                .PrimaryKey(t => t.RoleId)
-                .ForeignKey("dbo.GymUsers", t => t.GymUser_Id)
-                .ForeignKey("dbo.IdentityRoles", t => t.IdentityRole_Id)
-                .Index(t => t.GymUser_Id)
-                .Index(t => t.IdentityRole_Id);
+                .PrimaryKey(t => new { t.UserId, t.RoleId })
+                .ForeignKey("dbo.AspNetUser", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetRole", t => t.RoleId, cascadeDelete: true)
+                .Index(t => t.UserId)
+                .Index(t => t.RoleId);
             
             CreateTable(
                 "dbo.ScheduledClasses",
                 c => new
                     {
-                        ScheduledClassId = c.String(nullable: false, maxLength: 128),
+                        Id = c.String(nullable: false, maxLength: 128),
                         ClassStartTime = c.DateTime(nullable: false),
+                        ClassTypeId = c.String(maxLength: 128),
+                        InstructorId = c.String(maxLength: 128),
                         IsCancelled = c.Boolean(nullable: false),
-                        ClassType_ClassTypeId = c.String(maxLength: 128),
-                        Instructor_Id = c.String(maxLength: 128),
                     })
-                .PrimaryKey(t => t.ScheduledClassId)
-                .ForeignKey("dbo.ClassTypes", t => t.ClassType_ClassTypeId)
-                .ForeignKey("dbo.GymUsers", t => t.Instructor_Id)
-                .Index(t => t.ClassType_ClassTypeId)
-                .Index(t => t.Instructor_Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.ClassTypes", t => t.ClassTypeId)
+                .ForeignKey("dbo.AspNetUser", t => t.InstructorId)
+                .Index(t => t.ClassTypeId)
+                .Index(t => t.InstructorId);
             
             CreateTable(
                 "dbo.ClassTypes",
                 c => new
                     {
-                        ClassTypeId = c.String(nullable: false, maxLength: 128),
+                        Id = c.String(nullable: false, maxLength: 128),
                         Name = c.String(maxLength: 50),
                         IsActive = c.Boolean(nullable: false),
                         ClassColour = c.Int(nullable: false),
                         Difficulty = c.Int(nullable: false),
                         Description = c.String(maxLength: 500),
                     })
-                .PrimaryKey(t => t.ClassTypeId);
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.ClassTimetables",
                 c => new
                     {
-                        ClassTimetableId = c.String(nullable: false, maxLength: 128),
+                        Id = c.String(nullable: false, maxLength: 128),
+                        ClassTypeId = c.String(maxLength: 128),
                         StartTime = c.DateTime(nullable: false),
                         EndTime = c.DateTime(nullable: false),
                         Weekday = c.Int(nullable: false),
-                        ClassType_ClassTypeId = c.String(maxLength: 128),
                     })
-                .PrimaryKey(t => t.ClassTimetableId)
-                .ForeignKey("dbo.ClassTypes", t => t.ClassType_ClassTypeId)
-                .Index(t => t.ClassType_ClassTypeId);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.ClassTypes", t => t.ClassTypeId)
+                .Index(t => t.ClassTypeId);
             
             CreateTable(
                 "dbo.Holidays",
@@ -144,7 +141,7 @@ namespace ProperArch01.Persistence.Migrations
                 .PrimaryKey(t => t.HolidaysId);
             
             CreateTable(
-                "dbo.IdentityRoles",
+                "dbo.AspNetRole",
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
@@ -156,33 +153,33 @@ namespace ProperArch01.Persistence.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.IdentityUserRoles", "IdentityRole_Id", "dbo.IdentityRoles");
-            DropForeignKey("dbo.ScheduledClasses", "Instructor_Id", "dbo.GymUsers");
-            DropForeignKey("dbo.ScheduledClasses", "ClassType_ClassTypeId", "dbo.ClassTypes");
-            DropForeignKey("dbo.ClassTimetables", "ClassType_ClassTypeId", "dbo.ClassTypes");
-            DropForeignKey("dbo.ClassAttendances", "ScheduledClass_ScheduledClassId", "dbo.ScheduledClasses");
-            DropForeignKey("dbo.IdentityUserRoles", "GymUser_Id", "dbo.GymUsers");
-            DropForeignKey("dbo.IdentityUserLogins", "GymUser_Id", "dbo.GymUsers");
-            DropForeignKey("dbo.ClassAttendances", "Attendee_Id", "dbo.GymUsers");
-            DropForeignKey("dbo.IdentityUserClaims", "GymUser_Id", "dbo.GymUsers");
-            DropIndex("dbo.ClassTimetables", new[] { "ClassType_ClassTypeId" });
-            DropIndex("dbo.ScheduledClasses", new[] { "Instructor_Id" });
-            DropIndex("dbo.ScheduledClasses", new[] { "ClassType_ClassTypeId" });
-            DropIndex("dbo.IdentityUserRoles", new[] { "IdentityRole_Id" });
-            DropIndex("dbo.IdentityUserRoles", new[] { "GymUser_Id" });
-            DropIndex("dbo.IdentityUserLogins", new[] { "GymUser_Id" });
-            DropIndex("dbo.IdentityUserClaims", new[] { "GymUser_Id" });
-            DropIndex("dbo.ClassAttendances", new[] { "ScheduledClass_ScheduledClassId" });
-            DropIndex("dbo.ClassAttendances", new[] { "Attendee_Id" });
-            DropTable("dbo.IdentityRoles");
+            DropForeignKey("dbo.AspNetUserRole", "RoleId", "dbo.AspNetRole");
+            DropForeignKey("dbo.ScheduledClasses", "InstructorId", "dbo.AspNetUser");
+            DropForeignKey("dbo.ScheduledClasses", "ClassTypeId", "dbo.ClassTypes");
+            DropForeignKey("dbo.ClassTimetables", "ClassTypeId", "dbo.ClassTypes");
+            DropForeignKey("dbo.ClassAttendances", "ScheduledClassId", "dbo.ScheduledClasses");
+            DropForeignKey("dbo.AspNetUserRole", "UserId", "dbo.AspNetUser");
+            DropForeignKey("dbo.AspNetUserLogins", "GymUser_Id", "dbo.AspNetUser");
+            DropForeignKey("dbo.ClassAttendances", "AttendeeId", "dbo.AspNetUser");
+            DropForeignKey("dbo.AspNetUserClaim", "UserId", "dbo.AspNetUser");
+            DropIndex("dbo.ClassTimetables", new[] { "ClassTypeId" });
+            DropIndex("dbo.ScheduledClasses", new[] { "InstructorId" });
+            DropIndex("dbo.ScheduledClasses", new[] { "ClassTypeId" });
+            DropIndex("dbo.AspNetUserRole", new[] { "RoleId" });
+            DropIndex("dbo.AspNetUserRole", new[] { "UserId" });
+            DropIndex("dbo.AspNetUserLogins", new[] { "GymUser_Id" });
+            DropIndex("dbo.AspNetUserClaim", new[] { "UserId" });
+            DropIndex("dbo.ClassAttendances", new[] { "ScheduledClassId" });
+            DropIndex("dbo.ClassAttendances", new[] { "AttendeeId" });
+            DropTable("dbo.AspNetRole");
             DropTable("dbo.Holidays");
             DropTable("dbo.ClassTimetables");
             DropTable("dbo.ClassTypes");
             DropTable("dbo.ScheduledClasses");
-            DropTable("dbo.IdentityUserRoles");
-            DropTable("dbo.IdentityUserLogins");
-            DropTable("dbo.IdentityUserClaims");
-            DropTable("dbo.GymUsers");
+            DropTable("dbo.AspNetUserRole");
+            DropTable("dbo.AspNetUserLogins");
+            DropTable("dbo.AspNetUserClaim");
+            DropTable("dbo.AspNetUser");
             DropTable("dbo.ClassAttendances");
         }
     }

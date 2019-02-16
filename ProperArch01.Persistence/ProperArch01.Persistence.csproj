@@ -43,9 +43,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=8.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.8.0.0\lib\net461\AutoMapper.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -111,8 +108,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\BaseWriter.cs" />
     <Compile Include="Commands\ClassTypeWriter.cs" />
+    <Compile Include="Commands\GymUserWriter.cs" />
     <Compile Include="EntityModels\ClassAttendance.cs" />
     <Compile Include="EntityModels\ClassTimetable.cs" />
     <Compile Include="EntityModels\GymUser.cs" />
@@ -121,13 +118,14 @@
     <Compile Include="EntityModels\ClassType.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="Interfaces\IProperArch01DbContext.cs" />
-    <Compile Include="Migrations\201902030953151_FirstMigration.cs" />
-    <Compile Include="Migrations\201902030953151_FirstMigration.Designer.cs">
-      <DependentUpon>201902030953151_FirstMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201902161155047_FirstMigration.cs" />
+    <Compile Include="Migrations\201902161155047_FirstMigration.Designer.cs">
+      <DependentUpon>201902161155047_FirstMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ProperArch01DbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queries\GymUserReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -149,12 +147,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201902030953151_FirstMigration.resx">
-      <DependentUpon>201902030953151_FirstMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902161155047_FirstMigration.resx">
+      <DependentUpon>201902161155047_FirstMigration.cs</DependentUpon>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Queries\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

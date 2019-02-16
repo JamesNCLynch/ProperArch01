@@ -27,29 +27,38 @@ namespace ProperArch01.Persistence
         public virtual DbSet<ClassTimetable> ClassTimetable { get; set; }
         public virtual DbSet<IdentityUserRole> UserRoles { get; set; }
         public virtual DbSet<Holidays> Holiday { get; set; }
-        public virtual DbSet<GymUser> User { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Configurations.Add(new IdentityUserLoginConfiguration());
-            modelBuilder.Configurations.Add(new IdentityUserRoleConfiguration());
-        }
+            modelBuilder.Entity<GymUser>().ToTable("AspNetUser");
+            modelBuilder.Entity<IdentityRole>().ToTable("AspNetRole");
+            modelBuilder.Entity<IdentityUserClaim>().ToTable("AspNetUserClaim");
+            modelBuilder.Entity<IdentityUserRole>().HasKey(iur => new { iur.UserId, iur.RoleId }).ToTable("AspNetUserRole");
+            modelBuilder.Entity<IdentityUserLogin>().HasKey(l => new { l.LoginProvider, l.ProviderKey, l.UserId }).ToTable("AspNetUserLogins");
 
-        public class IdentityUserLoginConfiguration : EntityTypeConfiguration<IdentityUserLogin>
-        {
-            public IdentityUserLoginConfiguration()
-            {
-                HasKey(iul => iul.UserId);
-            }
-        }
+            modelBuilder.Entity<IdentityRole>()
+                .HasMany(e => e.Users)
+                .WithRequired()
+                .HasForeignKey(e => e.RoleId)
+                .WillCascadeOnDelete(true);
 
+            modelBuilder.Entity<GymUser>()
+                .HasMany(e => e.Roles)
+                .WithRequired()
+                .HasForeignKey(e => e.UserId)
+                .WillCascadeOnDelete(true);
 
-        public class IdentityUserRoleConfiguration : EntityTypeConfiguration<IdentityUserRole>
-        {
-            public IdentityUserRoleConfiguration()
-            {
-                HasKey(iur => iur.RoleId);
-            }
+            //modelBuilder.Entity<IdentityUserClaim>()
+            //    .HasOptional(e => e.UserId)
+            //    .WithRequired()
+            //    .HasForeignKey(e => e)
+            //    .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<GymUser>()
+                .HasMany(e => e.Claims)
+                .WithRequired()
+                .HasForeignKey(e => e.UserId)
+                .WillCascadeOnDelete(true);
         }
     }
 }

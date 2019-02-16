@@ -12,6 +12,8 @@ using ProperArch01.WebApp.Models;
 using ProperArch01.Persistence;
 using ProperArch01.Persistence.EntityModels;
 using ProperArch01.Contracts.Services;
+using ProperArch01.Contracts.Models.Account;
+using RegisterViewModel = ProperArch01.Contracts.Models.Account.RegisterViewModel;
 
 namespace ProperArch01.WebApp.Controllers
 {
@@ -20,16 +22,18 @@ namespace ProperArch01.WebApp.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private readonly IAccountService accountService;
-
-        public AccountController()
+        private IAccountService _accountService;
+        
+        public AccountController(IAccountService accountService)
         {
+            _accountService = accountService;
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IAccountService accountService)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _accountService = accountService;
         }
 
         public ApplicationSignInManager SignInManager
@@ -151,25 +155,30 @@ namespace ProperArch01.WebApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public ActionResult Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new GymUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                //var user = new GymUser { UserName = model.Email, Email = model.Email };
+                //var result = await UserManager.CreateAsync(user, model.Password);
+                //if (result.Succeeded)
+                //{
+                //    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
-                    return RedirectToAction("Index", "Home");
+                //    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                //    // Send an email with this link
+                //    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                //    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                //    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                //    return RedirectToAction("Index", "Home");
+                //}
+                var errors = _accountService.AddUserByRegistration(model);
+
+                foreach(var error in errors)
+                {
+                    ModelState.AddModelError("", error);
                 }
-                AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
@@ -363,27 +372,27 @@ namespace ProperArch01.WebApp.Controllers
                 return RedirectToAction("Index", "Manage");
             }
 
-            if (ModelState.IsValid)
-            {
-                // Get the information about the user from the external login provider
-                var info = await AuthenticationManager.GetExternalLoginInfoAsync();
-                if (info == null)
-                {
-                    return View("ExternalLoginFailure");
-                }
-                var user = new GymUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    result = await UserManager.AddLoginAsync(user.Id, info.Login);
-                    if (result.Succeeded)
-                    {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        return RedirectToLocal(returnUrl);
-                    }
-                }
-                AddErrors(result);
-            }
+            //if (ModelState.IsValid)
+            //{
+            //    // Get the information about the user from the external login provider
+            //    var info = await AuthenticationManager.GetExternalLoginInfoAsync();
+            //    if (info == null)
+            //    {
+            //        return View("ExternalLoginFailure");
+            //    }
+            //    var user = new GymUser { UserName = model.Email, Email = model.Email };
+            //    var result = await UserManager.CreateAsync(user);
+            //    if (result.Succeeded)
+            //    {
+            //        result = await UserManager.AddLoginAsync(user.Id, info.Login);
+            //        if (result.Succeeded)
+            //        {
+            //            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+            //            return RedirectToLocal(returnUrl);
+            //        }
+            //    }
+            //    AddErrors(result);
+            //}
 
             ViewBag.ReturnUrl = returnUrl;
             return View(model);

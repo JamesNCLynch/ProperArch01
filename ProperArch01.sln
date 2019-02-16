@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperArch01.Persistence", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperArch01.Contracts", "ProperArch01.Contracts\ProperArch01.Contracts.csproj", "{6E694958-0D89-4E60-9869-F292A2744D62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperArch01.Mappings", "ProperArch01.Mappings\ProperArch01.Mappings.csproj", "{C2372CEF-4DD2-4E52-91FF-87D24576F603}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperArch01.WebApp", "ProperArch01.WebApp\ProperArch01.WebApp.csproj", "{611D597F-08E4-48D0-ACD1-AD53E8D12AD0}"
 EndProject
 Global
@@ -31,10 +29,6 @@ Global
 		{6E694958-0D89-4E60-9869-F292A2744D62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E694958-0D89-4E60-9869-F292A2744D62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E694958-0D89-4E60-9869-F292A2744D62}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C2372CEF-4DD2-4E52-91FF-87D24576F603}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C2372CEF-4DD2-4E52-91FF-87D24576F603}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C2372CEF-4DD2-4E52-91FF-87D24576F603}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C2372CEF-4DD2-4E52-91FF-87D24576F603}.Release|Any CPU.Build.0 = Release|Any CPU
 		{611D597F-08E4-48D0-ACD1-AD53E8D12AD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{611D597F-08E4-48D0-ACD1-AD53E8D12AD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{611D597F-08E4-48D0-ACD1-AD53E8D12AD0}.Release|Any CPU.ActiveCfg = Release|Any CPU

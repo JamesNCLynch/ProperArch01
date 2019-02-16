@@ -9,8 +9,8 @@ namespace ProperArch01.Persistence.EntityModels
 {
     public class ClassType : IEntity
     {
-        //[Key]
-        public string ClassTypeId { get; set; }
+        [Key]
+        public string Id { get; set; }
         [Column(TypeName = "nvarchar")]
         [MaxLength(50)]
         public string Name { get; set; }

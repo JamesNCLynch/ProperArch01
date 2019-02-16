@@ -21,7 +21,6 @@ namespace ProperArch01.Persistence.EntityModels
         //    // Add custom user claims here
         //    return userIdentity;
         //}
-
         public virtual ICollection<ClassAttendance> ClassAttendances { get; set; }
         public virtual ICollection<ScheduledClass> ScheduledClasses { get; set; }
         public DateTime? DateCreated { get; set; }

@@ -9,22 +9,22 @@ namespace ProperArch01.Persistence.EntityModels
 {
     public class ClassAttendance : IEntity
     {
-        //[Key]
-        public string ClassAttendanceId { get; set; }
+        [Key]
+        public string Id { get; set; }
         public DateTime EnrolledDate { get; set; }
 
         [Column(TypeName = "nvarchar")]
         [MaxLength(50)]
         public string EnrolledBy { get; set; }
 
-        //public string AttendeeId { get; set; }
+        public string AttendeeId { get; set; }
 
-        //[ForeignKey("AttendeeId")]
+        [ForeignKey("AttendeeId")]
         public virtual GymUser Attendee { get; set; }
 
-        //public string ScheduledClassId { get; set; }
+        public string ScheduledClassId { get; set; }
 
-        //[ForeignKey("ScheduledClassId")]
+        [ForeignKey("ScheduledClassId")]
         public virtual ScheduledClass ScheduledClass { get; set; }
         public bool NoShow { get; set; }
     }
