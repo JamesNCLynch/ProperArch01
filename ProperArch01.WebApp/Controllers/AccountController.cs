@@ -13,6 +13,7 @@ using ProperArch01.Persistence;
 using ProperArch01.Persistence.EntityModels;
 using ProperArch01.Contracts.Services;
 using ProperArch01.Contracts.Models.Account;
+using ProperArch01.Contracts.Dto;
 using RegisterViewModel = ProperArch01.Contracts.Models.Account.RegisterViewModel;
 
 namespace ProperArch01.WebApp.Controllers
@@ -155,7 +156,8 @@ namespace ProperArch01.WebApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model)
+            //public ActionResult Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -173,11 +175,33 @@ namespace ProperArch01.WebApp.Controllers
 
                 //    return RedirectToAction("Index", "Home");
                 //}
-                var errors = _accountService.AddUserByRegistration(model);
-
-                foreach(var error in errors)
+                var gymUser = new GymUserDto()
                 {
-                    ModelState.AddModelError("", error);
+                    UserName = model.UserName,
+                    Email = model.Email,
+                    Password = model.Password
+                };
+
+                var errors = _accountService.AddUserByRegistration(gymUser);
+
+                if (errors != null)
+                {
+                    foreach (var error in errors)
+                    {
+                        ModelState.AddModelError("", error);
+                    }
+                }
+                else
+                {
+                    var newlyCreatedUser = _accountService.GetUserByEmailAddress(model.Email);
+                    var user = new GymUser() {
+                        Id = newlyCreatedUser.Id,
+                        Email = model.Email,
+                        UserName = model.Email
+                    };
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    return RedirectToAction("Index", "Home");
                 }
             }
 

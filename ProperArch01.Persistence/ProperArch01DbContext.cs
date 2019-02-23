@@ -48,12 +48,6 @@ namespace ProperArch01.Persistence
                 .HasForeignKey(e => e.UserId)
                 .WillCascadeOnDelete(true);
 
-            //modelBuilder.Entity<IdentityUserClaim>()
-            //    .HasOptional(e => e.UserId)
-            //    .WithRequired()
-            //    .HasForeignKey(e => e)
-            //    .WillCascadeOnDelete(true);
-
             modelBuilder.Entity<GymUser>()
                 .HasMany(e => e.Claims)
                 .WithRequired()

@@ -70,12 +70,15 @@ namespace ProperArch01.WebApp.App_Start
         {
             // services
             kernel.Bind<IAccountService>().To<AccountService>();
+            kernel.Bind<IClassTypeService>().To<ClassTypeService>();
 
             // readers
             kernel.Bind<IGymUserReader>().To<GymUserReader>();
+            kernel.Bind<IClassTypeReader>().To<ClassTypeReader>();
 
             // writers
             kernel.Bind<IGymUserWriter>().To<GymUserWriter>();
+            kernel.Bind<IClassTypeWriter>().To<ClassTypeWriter>();
         }        
     }
 }

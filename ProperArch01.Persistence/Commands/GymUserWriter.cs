@@ -8,6 +8,7 @@ using ProperArch01.Contracts.Constants;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ProperArch01.Persistence.EntityModels;
+using ProperArch01.Contracts.Dto;
 
 namespace ProperArch01.Persistence.Commands
 {
@@ -19,12 +20,12 @@ namespace ProperArch01.Persistence.Commands
         {
             _context = context;
         }
-        public IEnumerable<string> AddGymUser(RegisterViewModel model)
+        public IEnumerable<string> AddGymUser(GymUserDto model)
         {
-            var userManager = new UserManager<EntityModels.GymUser>(new UserStore<EntityModels.GymUser>(_context));
+            var userManager = new UserManager<GymUser>(new UserStore<GymUser>(_context));
 
             // replace with automapper at some point
-            var gymUser = new EntityModels.GymUser()
+            var gymUser = new GymUser()
             {
                 Email = model.Email,
                 UserName = model.UserName?? model.Email,
@@ -43,27 +44,32 @@ namespace ProperArch01.Persistence.Commands
             return result.Errors;
         }
 
+        //public IEnumerable<string> AddGymUser(GymUserDto model)
+        //{
+        //    var userManager = new UserManager<GymUser>(new UserStore<GymUser>(_context));
+
+        //    var gymUser = new EntityModels.GymUser() {
+        //        Id = Guid.NewGuid().ToString(),
+        //        UserName = model.UserName,
+        //        Email = model.Email,
+        //        FirstName = model.FirstName,
+        //        LastName = model.LastName,
+        //        DateCreated = DateTime.UtcNow                
+        //    };
+
+        //    var result = userManager.Create(gymUser, model.Password);
+        //    if (result.Succeeded)
+        //    {
+        //        userManager.AddToRole(gymUser.Id, RoleNames.AttendeeName);
+        //        return null;
+        //    }
+
+        //    return result.Errors;
+        //}
+
         public IEnumerable<string> AddGymUser(CreateUserViewModel model)
         {
-            var userManager = new UserManager<EntityModels.GymUser>(new UserStore<EntityModels.GymUser>(_context));
-
-            var gymUser = new EntityModels.GymUser() {
-                Id = Guid.NewGuid().ToString(),
-                UserName = model.UserName,
-                Email = model.Email,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                DateCreated = DateTime.UtcNow                
-            };
-
-            var result = userManager.Create(gymUser, model.Password);
-            if (result.Succeeded)
-            {
-                userManager.AddToRole(gymUser.Id, RoleNames.AttendeeName);
-                return null;
-            }
-
-            return result.Errors;
+            throw new NotImplementedException();
         }
     }
 }

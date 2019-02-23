@@ -4,16 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ProperArch01.Contracts.Models.ClassType;
+using ProperArch01.Contracts.Dto;
 
 namespace ProperArch01.Contracts.Services
 {
     public interface IClassTypeService
     {
-        ClassType GetClassType(string id);
-        IList<ClassType> GetAllClassTypes();
-        IList<ClassType> GetAllActiveClassTypes();
-        bool AddClassType(AddClassTypeModel model);
-        bool EditClassType(EditClassTypeModel model);
+        ClassTypeDto GetClassType(string id);
+        IList<ClassTypeDto> GetAllClassTypes();
+        IList<ClassTypeDto> GetAllActiveClassTypes();
+        bool AddClassType(AddClassTypeViewModel model);
+        bool EditClassType(EditClassTypeViewModel model);
         bool DeleteClassType(string id);
     }
 }

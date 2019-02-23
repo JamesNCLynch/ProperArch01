@@ -125,6 +125,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ProperArch01DbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queries\ClassTypeReader.cs" />
     <Compile Include="Queries\GymUserReader.cs" />
   </ItemGroup>
   <ItemGroup>

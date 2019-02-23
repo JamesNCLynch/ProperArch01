@@ -10,6 +10,8 @@ using Microsoft.Owin.Security;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ProperArch01.Contracts.Commands;
 using ProperArch01.Contracts.Queries;
+using ProperArch01.Contracts.Dto;
+
 
 namespace ProperArch01.Domain.Services
 {
@@ -28,27 +30,27 @@ namespace ProperArch01.Domain.Services
             _gymUserReader = gymUserReader;
         }
         
-        public IList<GymUser> GetInstructorByScheduledClass(string id)
+        public IList<GymUserDto> GetInstructorByScheduledClass(string id)
         {
             throw new NotImplementedException();
         }
 
-        public GymUser GetUser(string id)
+        public GymUserDto GetUser(string id)
         {
             throw new NotImplementedException();
         }
 
-        public IList<GymUser> GetUsersByScheduledClass(string id)
+        public IList<GymUserDto> GetUsersByScheduledClass(string id)
         {
             throw new NotImplementedException();
         }
 
-        public IList<GymUser> GetUsers(IList<string> userIds)
+        public IList<GymUserDto> GetUsers(IList<string> userIds)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<string> AddUserByRegistration(RegisterViewModel model)
+        public IEnumerable<string> AddUserByRegistration(GymUserDto model)
         {
             var listOfErrors = _gymUserWriter.AddGymUser(model);
 
@@ -60,6 +62,13 @@ namespace ProperArch01.Domain.Services
             var listOfErrors = _gymUserWriter.AddGymUser(model);
 
             return listOfErrors;
+        }
+
+        public GymUserDto GetUserByEmailAddress(string email)
+        {
+            var user = _gymUserReader.GetUserByEmail(email);
+
+            return user;
         }
     }
 }

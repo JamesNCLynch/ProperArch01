@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using ProperArch01.Contracts.Constants;
 
 namespace ProperArch01.Persistence.EntityModels
 {
@@ -15,25 +16,7 @@ namespace ProperArch01.Persistence.EntityModels
         [MaxLength(50)]
         public string Name { get; set; }
         public bool IsActive { get; set; }
-        public Colour ClassColour { get; set; }
-        public enum Colour
-        {
-            Aqua,
-            DeepPink,
-            DeepSkyBlue,
-            MediumOrchid,
-            Lime,
-            MidnightBlue,
-            Navy,
-            Plum,
-            RebeccaPurple,
-            Red,
-            Salmon,
-            SkyBlue,
-            Thistle,
-            Violet,
-            YellowGreen
-        }
+        public Colours.Colour ClassColour { get; set; }
         public int Difficulty { get; set; }
 
         [Column(TypeName = "nvarchar")]
