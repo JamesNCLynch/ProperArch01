@@ -5,6 +5,7 @@ using System.Web;
 using ProperArch01.Contracts.Commands;
 using ProperArch01.Contracts.Models.ClassType;
 using ProperArch01.Contracts.Constants;
+using ProperArch01.Contracts.Dto;
 
 namespace ProperArch01.Persistence.Commands
 {
@@ -59,7 +60,7 @@ namespace ProperArch01.Persistence.Commands
             return false;
         }
 
-        public bool EditClassType(EditClassTypeViewModel model)
+        public bool EditClassType(ClassTypeDto model)
         {
             if (model.Id == null)
             {
@@ -78,6 +79,8 @@ namespace ProperArch01.Persistence.Commands
 
                 _context.Entry(classType).State = System.Data.Entity.EntityState.Modified;
                 _context.SaveChanges();
+
+                return true;
             }
 
             return false;

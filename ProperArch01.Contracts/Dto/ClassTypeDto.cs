@@ -13,5 +13,6 @@ namespace ProperArch01.Contracts.Dto
         public Colours.Colour ClassColour { get; set; }
         public int Difficulty { get; set; }
         public string Description { get; set; }
+        public string Id { get; set; }
     }
 }

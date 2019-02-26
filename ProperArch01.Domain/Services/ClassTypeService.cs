@@ -33,7 +33,7 @@ namespace ProperArch01.Domain.Services
             return result;
         }
 
-        public bool EditClassType(EditClassTypeViewModel model)
+        public bool EditClassType(ClassTypeDto model)
         {
             var result = _classTypeWriter.EditClassType(model);
             return result;
@@ -41,17 +41,20 @@ namespace ProperArch01.Domain.Services
 
         public IList<ClassTypeDto> GetAllActiveClassTypes()
         {
-            throw new NotImplementedException();
+            var result = _classTypeReader.GetAllClassTypes().Where(x => x.IsActive).ToList();
+            return result;
         }
 
         public IList<ClassTypeDto> GetAllClassTypes()
         {
-            throw new NotImplementedException();
+            var result = _classTypeReader.GetAllClassTypes();
+            return result;
         }
 
         public ClassTypeDto GetClassType(string id)
         {
-            throw new NotImplementedException();
+            var result = _classTypeReader.GetClassType(id);
+            return result;
         }
     }
 }
