@@ -12,5 +12,7 @@ namespace ProperArch01.Contracts.Commands
     {
         IEnumerable<string> AddGymUser(GymUserDto model);
         IEnumerable<string> AddGymUser(CreateUserViewModel model);
+        bool EditUser(GymUserDto gymUser);
+        bool DeleteUser(GymUserDto gymUser);
     }
 }

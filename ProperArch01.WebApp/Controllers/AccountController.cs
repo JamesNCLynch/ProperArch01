@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Net;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -13,6 +14,7 @@ using ProperArch01.Persistence;
 using ProperArch01.Persistence.EntityModels;
 using ProperArch01.Contracts.Services;
 using ProperArch01.Contracts.Models.Account;
+using ProperArch01.Contracts.Constants;
 using ProperArch01.Contracts.Dto;
 using RegisterViewModel = ProperArch01.Contracts.Models.Account.RegisterViewModel;
 
@@ -59,6 +61,150 @@ namespace ProperArch01.WebApp.Controllers
             {
                 _userManager = value;
             }
+        }
+
+        // GET: /Account/Index
+        [Authorize(Roles = RoleNames.AdminName)]
+        public ActionResult Index()
+        {
+            // need to add filtering for this controller 
+
+            // need to adjust reader to return role names
+
+            var users = _accountService.GetAllUsers();
+
+            return View(users);
+        }
+
+        // GET: /Account/Create
+        [Authorize(Roles = RoleNames.AdminName)]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: /Account/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.AdminName)]
+        public ActionResult Create(CreateUserViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = _accountService.AddUserByPortal(viewModel);
+
+                if (result == null)
+                {
+                    
+                    return RedirectToAction("Index");
+                }
+            }
+
+            return View(viewModel);
+        }
+
+        // GET: /Account/Details
+        [Authorize(Roles = RoleNames.AdminName)]
+        public ActionResult Details(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var gymUser = _accountService.GetUser(id);
+
+            if (gymUser == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(gymUser);
+        }
+
+
+        // GET: /Account/Edit
+        [Authorize(Roles = RoleNames.AdminName)]
+        public ActionResult Edit(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var gymUser = _accountService.GetUser(id);
+            
+            if (gymUser == null)
+            {
+                return HttpNotFound();
+            }
+            
+            var viewModel = new EditUserViewModel(gymUser);
+
+            return View(viewModel);
+        }
+
+        // POST: /Account/Edit
+        [Authorize(Roles = RoleNames.AdminName)]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(EditUserViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var dto = new GymUserDto()
+                {
+                    Id = viewModel.Id,
+                    Email = viewModel.Email,
+                    UserName = viewModel.UserName,
+                    FirstName = viewModel.FirstName,
+                    LastName = viewModel.LastName,
+                    RoleName = viewModel.RoleName
+                };
+                var result = _accountService.EditUser(dto);
+
+                if (!result)
+                {
+                    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return View(viewModel);
+                }
+            }
+
+            return RedirectToAction("Index"); 
+        }
+
+        // GET: /Account/Delete
+        [Authorize(Roles = RoleNames.AdminName)]
+        public ActionResult Delete(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var gymUser = _accountService.GetUser(id);
+            if (gymUser == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(gymUser);
+        }
+
+        // POST: /Account/Delete
+        [Authorize(Roles = RoleNames.AdminName)]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(GymUserDto gymUser)
+        {
+            var result = _accountService.DeleteUser(gymUser);
+
+            if (!result)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            return RedirectToAction("Index");
         }
 
         //

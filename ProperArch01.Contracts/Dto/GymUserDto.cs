@@ -13,5 +13,6 @@ namespace ProperArch01.Contracts.Dto
         public string Password { get; set; }
         public string Email { get; set; }
         public string Id { get; set; }
+        public string RoleName { get; set; }
     }
 }

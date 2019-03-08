@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using ProperArch01.Contracts.Commands;
 using ProperArch01.Contracts.Queries;
 using ProperArch01.Contracts.Dto;
+using ProperArch01.Contracts.Constants;
 
 
 namespace ProperArch01.Domain.Services
@@ -37,7 +38,8 @@ namespace ProperArch01.Domain.Services
 
         public GymUserDto GetUser(string id)
         {
-            throw new NotImplementedException();
+            var gymUser = _gymUserReader.GetUser(id);
+            return gymUser;
         }
 
         public IList<GymUserDto> GetUsersByScheduledClass(string id)
@@ -66,9 +68,34 @@ namespace ProperArch01.Domain.Services
 
         public GymUserDto GetUserByEmailAddress(string email)
         {
-            var user = _gymUserReader.GetUserByEmail(email);
+            var user = _gymUserReader.GetAllUsers().FirstOrDefault(x => x.Email == email);
 
             return user;
+        }
+
+        public IList<GymUserDto> GetAllUsers()
+        {
+            var users = _gymUserReader.GetAllUsers().ToList();
+
+            return users;
+        }
+
+        public bool EditUser(GymUserDto gymUser)
+        {
+            bool result = _gymUserWriter.EditUser(gymUser);
+            return result;
+        }
+
+        public bool DeleteUser(GymUserDto gymUser)
+        {
+            bool result = _gymUserWriter.DeleteUser(gymUser);
+            return result;
+        }
+
+        public string GetRoleNameByUser(string id)
+        {
+            string roleName = _gymUserReader.GetRoleNameByUser(id);
+            return roleName;
         }
     }
 }

@@ -11,11 +11,15 @@ namespace ProperArch01.Contracts.Services
     public interface IAccountService
     {
         GymUserDto GetUser(string id);
+        IList<GymUserDto> GetAllUsers();
         GymUserDto GetUserByEmailAddress(string email);
         IList<GymUserDto> GetUsers(IList<string> userIds);
         IList<GymUserDto> GetUsersByScheduledClass(string id);
         IList<GymUserDto> GetInstructorByScheduledClass(string id);
         IEnumerable<string> AddUserByRegistration(GymUserDto model);
         IEnumerable<string> AddUserByPortal(CreateUserViewModel model);
+        bool EditUser(GymUserDto gymUser);
+        bool DeleteUser(GymUserDto gymUser);
+        string GetRoleNameByUser(string id);
     }
 }

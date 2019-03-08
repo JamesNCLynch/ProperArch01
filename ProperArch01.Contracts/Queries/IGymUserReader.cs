@@ -10,7 +10,7 @@ namespace ProperArch01.Contracts.Queries
     public interface IGymUserReader
     {
         GymUserDto GetUser(string id);
-        IList<GymUserDto> GetUsers(List<string> ids);
-        GymUserDto GetUserByEmail(string emailAddress);
+        IList<GymUserDto> GetAllUsers();
+        string GetRoleNameByUser(string id);
     }
 }

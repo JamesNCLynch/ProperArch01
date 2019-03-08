@@ -82,6 +82,7 @@
     <Compile Include="Constants\Colours.cs" />
     <Compile Include="Constants\RoleNames.cs" />
     <Compile Include="Dto\GymUserDto.cs" />
+    <Compile Include="Models\Account\EditUserViewModel.cs" />
     <Compile Include="Models\Account\RegisterViewModel.cs" />
     <Compile Include="Models\ClassTimetable\AddClassTimetableModel.cs" />
     <Compile Include="Models\ClassTimetable\ClassTimetable.cs" />

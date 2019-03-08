@@ -54,5 +54,7 @@ namespace ProperArch01.Persistence
                 .HasForeignKey(e => e.UserId)
                 .WillCascadeOnDelete(true);
         }
+
+        //public System.Data.Entity.DbSet<ProperArch01.Contracts.Dto.GymUserDto> GymUserDtoes { get; set; }
     }
 }
