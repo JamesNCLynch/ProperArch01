@@ -13,6 +13,7 @@ namespace ProperArch01.Contracts.Services
         ClassTypeDto GetClassType(string id);
         IList<ClassTypeDto> GetAllClassTypes();
         IList<ClassTypeDto> GetAllActiveClassTypes();
+        IList<string> GetAllActiveClassTypeNames();
         bool AddClassType(AddClassTypeViewModel model);
         bool EditClassType(ClassTypeDto model);
         bool DeleteClassType(string id);

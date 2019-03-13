@@ -1,0 +1,8 @@
+﻿@model ProperArch01.Contracts.Models.ClassTimetable.ClassTimetableSlotViewModel
+
+<p>@Model.ClassName</p>
+<p>@Model.StartTime.ToShortTimeString() - @Model.EndTime.ToShortTimeString()</p>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = @Model.Id }) |
+    @Html.ActionLink("Delete", "Delete", new { id = @Model.Id })
+</p>

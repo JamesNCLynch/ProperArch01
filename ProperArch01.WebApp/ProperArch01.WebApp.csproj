@@ -196,6 +196,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ClassTimetableController.cs" />
     <Compile Include="Controllers\ClassTypeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -285,6 +286,11 @@
     <Content Include="Views\Account\Details.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\ClassTimetable\Index.cshtml" />
+    <Content Include="Views\ClassTimetable\Create.cshtml" />
+    <Content Include="Views\ClassTimetable\_ClassSlotViewModel.cshtml" />
+    <Content Include="Views\ClassTimetable\Delete.cshtml" />
+    <Content Include="Views\ClassTimetable\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

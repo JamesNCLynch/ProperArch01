@@ -56,6 +56,10 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\MVCUserRoles01\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -85,7 +89,9 @@
     <Compile Include="Models\Account\EditUserViewModel.cs" />
     <Compile Include="Models\Account\RegisterViewModel.cs" />
     <Compile Include="Models\ClassTimetable\AddClassTimetableModel.cs" />
-    <Compile Include="Models\ClassTimetable\ClassTimetable.cs" />
+    <Compile Include="Dto\ClassTimetableDto.cs" />
+    <Compile Include="Models\ClassTimetable\ClassTimetableRowViewModel.cs" />
+    <Compile Include="Models\ClassTimetable\ClassTimetableSlotViewModel.cs" />
     <Compile Include="Models\ClassTimetable\EditClassTimetableModel.cs" />
     <Compile Include="Models\ClassType\AddClassTypeViewModel.cs" />
     <Compile Include="Dto\ClassTypeDto.cs" />

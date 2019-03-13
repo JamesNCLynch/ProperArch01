@@ -1,0 +1,75 @@
+﻿@model ProperArch01.Contracts.Models.ClassTimetable.AddClassTimetableModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>ClassTimetable</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ClassTypeNames, "ClassTypeId", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.ClassTypeName, Model.ClassTypeSelectList, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ClassTypeNames, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.StartHour, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-1">
+            @Html.DropDownListFor(m => m.StartHour, ProperArch01.WebApp.Helpers.HelperMethods.GetSlotHours().Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.StartHour, "", new { @class = "text-danger" })
+        </div>
+        @Html.LabelFor(model => model.StartMinutes, htmlAttributes: new { @class = "control-label col-md-1" })
+        <div class="col-md-1">
+            @Html.DropDownListFor(m => m.StartMinutes, ProperArch01.WebApp.Helpers.HelperMethods.GetSlotMinutes().Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.StartMinutes, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.EndHour, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-1">
+            @Html.DropDownListFor(m => m.EndHour, ProperArch01.WebApp.Helpers.HelperMethods.GetSlotHours().Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.EndHour, "", new { @class = "text-danger" })
+        </div>
+        @Html.LabelFor(model => model.EndMinutes, htmlAttributes: new { @class = "control-label col-md-1" })
+        <div class="col-md-1">
+            @Html.DropDownListFor(m => m.EndMinutes, ProperArch01.WebApp.Helpers.HelperMethods.GetSlotMinutes().Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.EndMinutes, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Weekday, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EnumDropDownListFor(model => model.Weekday, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Weekday, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

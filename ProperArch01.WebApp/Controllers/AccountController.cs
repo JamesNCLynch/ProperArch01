@@ -91,9 +91,9 @@ namespace ProperArch01.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = _accountService.AddUserByPortal(viewModel);
+                var errors = _accountService.AddUserByPortal(viewModel);
 
-                if (result == null)
+                if (errors == null)
                 {
                     
                     return RedirectToAction("Index");
@@ -161,9 +161,9 @@ namespace ProperArch01.WebApp.Controllers
                     LastName = viewModel.LastName,
                     RoleName = viewModel.RoleName
                 };
-                var result = _accountService.EditUser(dto);
+                var isSuccess = _accountService.EditUser(dto);
 
-                if (!result)
+                if (!isSuccess)
                 {
                     //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     return View(viewModel);
@@ -197,9 +197,9 @@ namespace ProperArch01.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(GymUserDto gymUser)
         {
-            var result = _accountService.DeleteUser(gymUser);
+            var isSuccess = _accountService.DeleteUser(gymUser);
 
-            if (!result)
+            if (!isSuccess)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }

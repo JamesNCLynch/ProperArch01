@@ -39,6 +39,12 @@ namespace ProperArch01.Domain.Services
             return result;
         }
 
+        public IList<string> GetAllActiveClassTypeNames()
+        {
+            var result = _classTypeReader.GetAllClassTypes().Where(x => x.IsActive).Select(ctn => ctn.Name).ToList();
+            return result;
+        }
+
         public IList<ClassTypeDto> GetAllActiveClassTypes()
         {
             var result = _classTypeReader.GetAllClassTypes().Where(x => x.IsActive).ToList();

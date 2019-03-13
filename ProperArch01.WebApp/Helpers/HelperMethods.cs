@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using ProperArch01.Contracts.Constants;
+using ProperArch01.Contracts.Services;
 
 namespace ProperArch01.WebApp.Helpers
 {
@@ -18,6 +19,18 @@ namespace ProperArch01.WebApp.Helpers
             };
 
             return roles;
+        }
+
+        public static List<int> GetSlotMinutes ()
+        {
+            return new List<int> {0, 15, 30, 45};
+        }
+
+        public static List<int> GetSlotHours()
+        {
+            IEnumerable<int> hours = Enumerable.Range(7, 15);
+
+            return hours.ToList();
         }
     }
 }

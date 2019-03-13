@@ -1,0 +1,125 @@
+﻿@model IEnumerable<ProperArch01.Contracts.Models.ClassTimetable.ClassTimetableRowViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+
+<table class="table">
+    <tr>
+        <th>        </th>
+        <th>
+            Monday
+        </th>
+        <th>
+            Tueday
+        </th>
+        <th>
+            Wednesday
+        </th>
+        <th>
+            Thursday
+        </th>
+        <th>
+            Friday
+        </th>
+        <th>
+            Saturday
+        </th>
+        <th>
+            Sunday
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.StartHour
+            </td>
+            <td>
+                @if (item.MondayTimeSlot == null)
+                {
+                    @Html.ActionLink("Add class", "Create", new { weekday = 1, startHour = @item.StartHour })
+                }
+                else
+                {
+                    @Html.Partial("_ClassSlotViewModel", item.MondayTimeSlot)
+                }
+            </td>
+
+            <td>
+                @if (item.TuesdayTimeSlot == null)
+                {
+                    @Html.ActionLink("Add class", "Create", new { weekday = 2, startHour = @item.StartHour })
+                }
+                else
+                {
+                    @Html.Partial("_ClassSlotViewModel", item.TuesdayTimeSlot)
+                }
+            </td>
+
+            <td>
+                @if (item.WednesdayTimeSlot == null)
+                {
+                    @Html.ActionLink("Add class", "Create", new { weekday = 3, startHour = @item.StartHour })
+                }
+                else
+                {
+                    @Html.Partial("_ClassSlotViewModel", item.WednesdayTimeSlot)
+                }
+            </td>
+
+            <td>
+                @if (item.ThursdayTimeSlot == null)
+                {
+                    @Html.ActionLink("Add class", "Create", new { weekday = 4, startHour = @item.StartHour })
+                }
+                else
+                {
+                    @Html.Partial("_ClassSlotViewModel", item.ThursdayTimeSlot)
+                }
+            </td>
+
+            <td>
+                @if (item.FridayTimeSlot == null)
+                {
+                    @Html.ActionLink("Add class", "Create", new { weekday = 5, startHour = @item.StartHour })
+                }
+                else
+                {
+                    @Html.Partial("_ClassSlotViewModel", item.FridayTimeSlot)
+                }
+            </td>
+
+            <td>
+                @if (item.SaturdayTimeSlot == null)
+                {
+                    @Html.ActionLink("Add class", "Create", new { weekday = 6, startHour = @item.StartHour })
+                }
+                else
+                {
+                    @Html.Partial("_ClassSlotViewModel", item.SaturdayTimeSlot)
+                }
+            </td>
+
+            <td>
+                @if (item.SundayTimeSlot == null)
+                {
+                    @Html.ActionLink("Add class", "Create", new { weekday = 0, startHour = @item.StartHour })
+                }
+                else
+                {
+                    @Html.Partial("_ClassSlotViewModel", item.SundayTimeSlot)
+                }
+            </td>
+        </tr>
+    }
+</table>

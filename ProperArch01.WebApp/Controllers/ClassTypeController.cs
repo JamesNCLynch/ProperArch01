@@ -66,9 +66,9 @@ namespace ProperArch01.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = _classTypeService.AddClassType(classType);
+                var isSuccess = _classTypeService.AddClassType(classType);
 
-                if (result)
+                if (isSuccess)
                 {
                     return RedirectToAction("Index");
                 }
@@ -104,9 +104,9 @@ namespace ProperArch01.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = _classTypeService.EditClassType(classType);
+                var isSuccess = _classTypeService.EditClassType(classType);
 
-                if (!result)
+                if (!isSuccess)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
@@ -135,9 +135,9 @@ namespace ProperArch01.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            var result = _classTypeService.DeleteClassType(id);
+            var isSuccess = _classTypeService.DeleteClassType(id);
 
-            if (!result)
+            if (!isSuccess)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }

@@ -2,31 +2,114 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Configuration;
 using ProperArch01.Contracts.Services;
 using ProperArch01.Contracts.Models.ClassTimetable;
+using ProperArch01.Contracts.Dto;
+using ProperArch01.Contracts.Commands;
+using ProperArch01.Contracts.Queries;
 
 namespace ProperArch01.Domain.Services
 {
     public class ClassTimetableService : IClassTimetableService
     {
-        public bool AddClassTimetable(AddClassTimetableModel model)
+        private readonly IClassTimetableReader _classTimetableReader;
+        private readonly IClassTimetableWriter _classTimetableWriter;
+
+        public ClassTimetableService(IClassTimetableReader classTimetableReader, IClassTimetableWriter classTimetableWriter)
         {
-            throw new NotImplementedException();
+            _classTimetableReader = classTimetableReader;
+            _classTimetableWriter = classTimetableWriter;
         }
 
-        public bool DeleteClassTimetable(string id)
+        public bool AddClassTimetable(AddClassTimetableModel model)
         {
-            throw new NotImplementedException();
+            var isSuccess = _classTimetableWriter.AddClassTimetable(model);
+            return isSuccess;
+        }
+
+        public IEnumerable<ClassTimetableRowViewModel> BuildTimetableViewModel()
+        {
+            var timetables = _classTimetableReader.GetAllClassTimetables();
+
+            var earliestSlotStartHour = Int32.Parse(ConfigurationManager.AppSettings["GymOpeningHour"]);
+            var latestSlotEndHour = Int32.Parse(ConfigurationManager.AppSettings["GymClosingHour"]);
+
+            var timetableViewModel = new List<ClassTimetableRowViewModel>();
+
+            for (int i = earliestSlotStartHour; i <= latestSlotEndHour; i++)
+            {
+                var row = new ClassTimetableRowViewModel() {
+                    StartHour = i
+                };
+
+                // get the timetable slots across this week for this time only
+                var weekOfClassesAtThisHour = timetables.Where(x => x.StartHour == i).Select(r => new ClassTimetableSlotViewModel() {
+                    Day = r.Weekday,
+                    StartTime = new DateTime(2000, 1, 1, i, r.StartMinutes, 0),
+                    EndTime = new DateTime(2000, 1, 1, r.EndHour, r.EndMinutes, 0),
+                    ClassName = r.ClassTypeName,
+                    Id = r.Id
+                }).ToList();
+
+                foreach (var daySlot in weekOfClassesAtThisHour)
+                {
+                    switch (daySlot.Day)
+                    {
+                        case (DayOfWeek.Monday):
+                            row.MondayTimeSlot = daySlot;
+                            break;
+                        case (DayOfWeek.Tuesday):
+                            row.TuesdayTimeSlot = daySlot;
+                            break;
+                        case (DayOfWeek.Wednesday):
+                            row.WednesdayTimeSlot = daySlot;
+                            break;
+                        case (DayOfWeek.Thursday):
+                            row.ThursdayTimeSlot = daySlot;
+                            break;
+                        case (DayOfWeek.Friday):
+                            row.FridayTimeSlot = daySlot;
+                            break;
+                        case (DayOfWeek.Saturday):
+                            row.SaturdayTimeSlot = daySlot;
+                            break;
+                        case (DayOfWeek.Sunday):
+                            row.SundayTimeSlot = daySlot;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                timetableViewModel.Add(row);
+            }
+
+            return timetableViewModel.AsEnumerable();
+        }
+
+        public bool DeleteClassTimetable(ClassTimetableDto dto)
+        {
+            var isSuccess = _classTimetableWriter.DeleteClassTimetable(dto);
+            return isSuccess;
         }
 
         public bool EditClassTimetable(EditClassTimetableModel model)
         {
-            throw new NotImplementedException();
+            var isSuccess = _classTimetableWriter.UpdateClassTimetable(model);
+            return isSuccess;
         }
 
-        public IEnumerable<ClassTimetable> GetClassTimetables()
+        public ClassTimetableDto GetClassTimetable(string id)
         {
-            throw new NotImplementedException();
+            var dto = _classTimetableReader.GetClassTimetable(id);
+            return dto;
+        }
+
+        public IEnumerable<ClassTimetableDto> GetClassTimetables()
+        {
+            var timetables = _classTimetableReader.GetAllClassTimetables();
+            return timetables;
         }
     }
 }
