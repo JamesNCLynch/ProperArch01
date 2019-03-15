@@ -8,6 +8,7 @@ using ProperArch01.Contracts.Models.ClassTimetable;
 using ProperArch01.Contracts.Dto;
 using ProperArch01.Contracts.Commands;
 using ProperArch01.Contracts.Queries;
+using ProperArch01.Contracts.Constants;
 
 namespace ProperArch01.Domain.Services
 {
@@ -15,11 +16,13 @@ namespace ProperArch01.Domain.Services
     {
         private readonly IClassTimetableReader _classTimetableReader;
         private readonly IClassTimetableWriter _classTimetableWriter;
+        private readonly IColourServices _colourServices;
 
-        public ClassTimetableService(IClassTimetableReader classTimetableReader, IClassTimetableWriter classTimetableWriter)
+        public ClassTimetableService(IClassTimetableReader classTimetableReader, IClassTimetableWriter classTimetableWriter, IColourServices colourServices)
         {
             _classTimetableReader = classTimetableReader;
             _classTimetableWriter = classTimetableWriter;
+            _colourServices = colourServices;
         }
 
         public bool AddClassTimetable(AddClassTimetableModel model)
@@ -49,7 +52,8 @@ namespace ProperArch01.Domain.Services
                     StartTime = new DateTime(2000, 1, 1, i, r.StartMinutes, 0),
                     EndTime = new DateTime(2000, 1, 1, r.EndHour, r.EndMinutes, 0),
                     ClassName = r.ClassTypeName,
-                    Id = r.Id
+                    Id = r.Id,
+                    Colour = _colourServices.GetRGBAModelFromColourEnum(r.Colour)
                 }).ToList();
 
                 foreach (var daySlot in weekOfClassesAtThisHour)

@@ -98,6 +98,7 @@
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\ClassTimetableService.cs" />
     <Compile Include="Services\ClassTypeService.cs" />
+    <Compile Include="Services\ColourServices.cs" />
     <Compile Include="Services\IdentityEmailService.cs" />
   </ItemGroup>
   <ItemGroup>

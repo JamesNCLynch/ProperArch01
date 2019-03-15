@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using ProperArch01.Contracts.Constants;
 
 namespace ProperArch01.Contracts.Dto
 {
@@ -14,5 +15,6 @@ namespace ProperArch01.Contracts.Dto
         public int EndHour { get; set; }
         public int EndMinutes { get; set; }
         public DayOfWeek Weekday { get; set; }
+        public Colours.Colour Colour { get; set; }
     }
 }

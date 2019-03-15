@@ -111,7 +111,7 @@ namespace ProperArch01.WebApp.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
             }
-            return View(classType);
+            return RedirectToAction("Index");
         }
 
         // GET: ClassType/Delete/5

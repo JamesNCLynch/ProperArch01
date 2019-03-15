@@ -95,6 +95,7 @@
     <Compile Include="Models\ClassTimetable\EditClassTimetableModel.cs" />
     <Compile Include="Models\ClassType\AddClassTypeViewModel.cs" />
     <Compile Include="Dto\ClassTypeDto.cs" />
+    <Compile Include="Models\Colour\RGBAModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\IClassAttendanceReader.cs" />
     <Compile Include="Queries\IClassTimetableReader.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Services\IAccountService.cs" />
     <Compile Include="Services\IClassTimetableService.cs" />
     <Compile Include="Services\IClassTypeService.cs" />
+    <Compile Include="Services\IColourServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

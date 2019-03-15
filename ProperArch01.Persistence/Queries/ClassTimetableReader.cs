@@ -18,14 +18,17 @@ namespace ProperArch01.Persistence.Queries
 
         public IList<ClassTimetableDto> GetAllClassTimetables()
         {
-            var classTimetables = _context.ClassTimetable.Select(x => new ClassTimetableDto() {
+            var classTimetables = _context.ClassTimetable
+                .Include("ClassType")
+                .Select(x => new ClassTimetableDto() {
                 Id = x.Id,
                 ClassTypeName = x.ClassType.Name,
                 StartHour = x.StartTime.Hour,
                 StartMinutes = x.StartTime.Minute,
                 EndHour = x.EndTime.Hour,
                 EndMinutes = x.EndTime.Minute,
-                Weekday = x.Weekday
+                Weekday = x.Weekday,
+                Colour = x.ClassType.ClassColour
             }).ToList();
 
             return classTimetables;
@@ -44,7 +47,8 @@ namespace ProperArch01.Persistence.Queries
                 StartMinutes = classTimetable.StartTime.Minute,
                 EndHour = classTimetable.EndTime.Hour,
                 EndMinutes = classTimetable.EndTime.Minute,
-                Weekday = classTimetable.Weekday
+                Weekday = classTimetable.Weekday,
+                Colour = classTimetable.ClassType.ClassColour
             };
 
             return dto;

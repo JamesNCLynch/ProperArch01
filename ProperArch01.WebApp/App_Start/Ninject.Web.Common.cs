@@ -72,6 +72,7 @@ namespace ProperArch01.WebApp.App_Start
             kernel.Bind<IAccountService>().To<AccountService>();
             kernel.Bind<IClassTypeService>().To<ClassTypeService>();
             kernel.Bind<IClassTimetableService>().To<ClassTimetableService>();
+            kernel.Bind<IColourServices>().To<ColourServices>();
 
             // readers
             kernel.Bind<IGymUserReader>().To<GymUserReader>();
