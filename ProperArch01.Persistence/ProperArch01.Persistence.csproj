@@ -111,6 +111,7 @@
     <Compile Include="Commands\ClassTimetableWriter.cs" />
     <Compile Include="Commands\ClassTypeWriter.cs" />
     <Compile Include="Commands\GymUserWriter.cs" />
+    <Compile Include="Commands\HolidayWriter.cs" />
     <Compile Include="EntityModels\ClassAttendance.cs" />
     <Compile Include="EntityModels\ClassTimetable.cs" />
     <Compile Include="EntityModels\GymUser.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Queries\ClassTimetableReader.cs" />
     <Compile Include="Queries\ClassTypeReader.cs" />
     <Compile Include="Queries\GymUserReader.cs" />
+    <Compile Include="Queries\HolidayReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

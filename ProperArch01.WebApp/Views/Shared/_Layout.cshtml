@@ -21,14 +21,12 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @*<li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
                     @if (User.IsInRole(ProperArch01.Contracts.Constants.RoleNames.AdminName))
                     {
-                        <li>@Html.ActionLink("ClassTypes", "Index", "ClassType")</li>
-                        <li>@Html.ActionLink("ClassTimetable", "Index", "ClassTimetable")</li>
-                        <li>@Html.ActionLink("Account", "Index", "ClassType")</li>
+                        <li>@Html.ActionLink("Class Types", "Index", "ClassType")</li>
+                        <li>@Html.ActionLink("Timetable", "Index", "ClassTimetable")</li>
+                        <li>@Html.ActionLink("Accounts", "Index", "Account")</li>
+                        <li>@Html.ActionLink("Holidays", "Index", "Holiday")</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -45,6 +43,8 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/Content/datepicker")
+    @Scripts.Render("~/bundles/datePicker")
     @RenderSection("scripts", required: false)
 </body>
 </html>

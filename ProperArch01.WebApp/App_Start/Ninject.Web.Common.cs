@@ -73,16 +73,19 @@ namespace ProperArch01.WebApp.App_Start
             kernel.Bind<IClassTypeService>().To<ClassTypeService>();
             kernel.Bind<IClassTimetableService>().To<ClassTimetableService>();
             kernel.Bind<IColourServices>().To<ColourServices>();
+            kernel.Bind<IHolidayService>().To<HolidayService>();
 
             // readers
             kernel.Bind<IGymUserReader>().To<GymUserReader>();
             kernel.Bind<IClassTypeReader>().To<ClassTypeReader>();
             kernel.Bind<IClassTimetableReader>().To<ClassTimetableReader>();
+            kernel.Bind<IHolidayReader>().To<HolidayReader>();
 
             // writers
             kernel.Bind<IGymUserWriter>().To<GymUserWriter>();
             kernel.Bind<IClassTypeWriter>().To<ClassTypeWriter>();
             kernel.Bind<IClassTimetableWriter>().To<ClassTimetableWriter>();
+            kernel.Bind<IHolidayWriter>().To<HolidayWriter>();
         }        
     }
 }
