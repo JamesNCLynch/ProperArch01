@@ -201,6 +201,7 @@
     <Compile Include="Controllers\HolidayController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ScheduledClassController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -395,6 +396,14 @@
     <Content Include="Views\Holiday\Details.cshtml" />
     <Content Include="Views\Holiday\Edit.cshtml" />
     <Content Include="Views\Holiday\Index.cshtml" />
+    <Content Include="Views\ScheduledClass\Create.cshtml" />
+    <Content Include="Views\ScheduledClass\Delete.cshtml" />
+    <Content Include="Views\ScheduledClass\Details.cshtml" />
+    <Content Include="Views\ScheduledClass\Edit.cshtml" />
+    <Content Include="Views\ScheduledClass\Index.cshtml" />
+    <Content Include="Views\ScheduledClass\_IncompleteScheduledClasses.cshtml" />
+    <Content Include="Views\ScheduledClass\_UpcomingScheduledClasses.cshtml" />
+    <Content Include="Views\ScheduledClass\_UpcomingCancelledClasses.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

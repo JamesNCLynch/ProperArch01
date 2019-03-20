@@ -101,6 +101,7 @@
     <Compile Include="Services\ColourServices.cs" />
     <Compile Include="Services\HolidayService.cs" />
     <Compile Include="Services\IdentityEmailService.cs" />
+    <Compile Include="Services\ScheduledClassService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

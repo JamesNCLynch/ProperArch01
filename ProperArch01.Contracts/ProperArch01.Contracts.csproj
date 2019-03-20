@@ -87,6 +87,7 @@
     <Compile Include="Constants\RoleNames.cs" />
     <Compile Include="Dto\GymUserDto.cs" />
     <Compile Include="Dto\HolidayDto.cs" />
+    <Compile Include="Dto\ScheduledClassDto.cs" />
     <Compile Include="Models\Account\EditUserViewModel.cs" />
     <Compile Include="Models\Account\RegisterViewModel.cs" />
     <Compile Include="Models\ClassTimetable\AddClassTimetableModel.cs" />
@@ -99,6 +100,10 @@
     <Compile Include="Models\Colour\RGBAModel.cs" />
     <Compile Include="Models\Holiday\CreateHolidayViewModel.cs" />
     <Compile Include="Models\Holiday\EditHolidayViewModel.cs" />
+    <Compile Include="Models\ScheduledClass\CreateScheduledClassViewModel.cs" />
+    <Compile Include="Models\ScheduledClass\DetailedScheduledClassViewModel.cs" />
+    <Compile Include="Models\ScheduledClass\EditScheduledClassViewModel.cs" />
+    <Compile Include="Models\ScheduledClass\ScheduledClassIndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\IClassAttendanceReader.cs" />
     <Compile Include="Queries\IClassTimetableReader.cs" />
@@ -113,6 +118,7 @@
     <Compile Include="Services\IClassTypeService.cs" />
     <Compile Include="Services\IColourServices.cs" />
     <Compile Include="Services\IHolidayService.cs" />
+    <Compile Include="Services\IScheduledClassService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

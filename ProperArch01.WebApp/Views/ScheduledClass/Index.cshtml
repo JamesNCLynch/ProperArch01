@@ -1,0 +1,17 @@
+﻿@model ProperArch01.Contracts.Models.ScheduledClass.ScheduledClassIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Upcoming classes that require attention</h2>
+
+@Html.Partial("_IncompleteScheduledClasses", Model.ScheduledClassesRequiringCompletion)
+
+<h2>Upcoming classes that do not require attention</h2>
+
+@Html.Partial("_UpcomingScheduledClasses", Model.ScheduledClassesCompleted)
+
+<h2>Upcoming classes that have been cancelled</h2>
+
+@Html.Partial("_UpcomingCancelledClasses", Model.CancelledScheduledClasses)
