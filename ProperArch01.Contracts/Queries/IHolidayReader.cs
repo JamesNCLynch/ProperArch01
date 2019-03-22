@@ -9,7 +9,7 @@ namespace ProperArch01.Contracts.Queries
 {
     public interface IHolidayReader
     {
-        List<HolidayDto> GetAllHolidays();
-        HolidayDto GetHoliday(string id);
+        Task<List<HolidayDto>> GetAllHolidays();
+        Task<HolidayDto> GetHoliday(string id);
     }
 }

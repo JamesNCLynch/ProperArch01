@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using ProperArch01.Contracts.Dto;
 using ProperArch01.Contracts.Models.ClassTimetable;
@@ -16,9 +18,9 @@ namespace ProperArch01.Persistence.Queries
             _context = context;
         }
 
-        public IList<ClassTimetableDto> GetAllClassTimetables()
+        public async Task<IList<ClassTimetableDto>> GetAllClassTimetables()
         {
-            var classTimetables = _context.ClassTimetable
+            var classTimetables = await _context.ClassTimetable
                 .Include("ClassType")
                 .Select(x => new ClassTimetableDto() {
                 Id = x.Id,
@@ -29,16 +31,16 @@ namespace ProperArch01.Persistence.Queries
                 EndMinutes = x.EndTime.Minute,
                 Weekday = x.Weekday,
                 Colour = x.ClassType.ClassColour
-            }).ToList();
+            }).ToListAsync();
 
             return classTimetables;
         }
 
-        public ClassTimetableDto GetClassTimetable(string id)
+        public async Task<ClassTimetableDto> GetClassTimetable(string id)
         {
-            var classTimetable = _context.ClassTimetable
+            var classTimetable = await _context.ClassTimetable
                 .Include("ClassType")
-                .FirstOrDefault(x => x.Id == id);
+                .FirstOrDefaultAsync(x => x.Id == id);
 
             var dto = new ClassTimetableDto() {
                 Id = classTimetable.Id,

@@ -27,22 +27,22 @@ namespace ProperArch01.WebApp.Controllers
         }
 
         // GET: ClassType
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var results = _classTypeService.GetAllClassTypes();
+            var results = await _classTypeService.GetAllClassTypes();
 
             return View(results);
         }
 
         // GET: ClassType/Details/5
-        public ActionResult Details(string id)
+        public async Task<ActionResult> Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var classType = _classTypeService.GetClassType(id);
+            var classType = await _classTypeService.GetClassType(id);
 
             if (classType == null)
             {
@@ -62,11 +62,11 @@ namespace ProperArch01.WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AddClassTypeViewModel classType)
+        public async Task<ActionResult> Create(AddClassTypeViewModel classType)
         {
             if (ModelState.IsValid)
             {
-                var isSuccess = _classTypeService.AddClassType(classType);
+                var isSuccess = await _classTypeService.AddClassType(classType);
 
                 if (isSuccess)
                 {
@@ -80,13 +80,13 @@ namespace ProperArch01.WebApp.Controllers
         }
 
         // GET: ClassType/Edit/5
-        public ActionResult Edit(string id)
+        public async Task<ActionResult> Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var classType = _classTypeService.GetClassType(id);
+            var classType = await _classTypeService.GetClassType(id);
 
             if (classType == null)
             {
@@ -100,11 +100,11 @@ namespace ProperArch01.WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(ClassTypeDto classType)
+        public async Task<ActionResult> Edit(ClassTypeDto classType)
         {
             if (ModelState.IsValid)
             {
-                var isSuccess = _classTypeService.EditClassType(classType);
+                var isSuccess = await _classTypeService.EditClassType(classType);
 
                 if (!isSuccess)
                 {
@@ -115,14 +115,14 @@ namespace ProperArch01.WebApp.Controllers
         }
 
         // GET: ClassType/Delete/5
-        public ActionResult Delete(string id)
+        public async Task<ActionResult> Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var classType = _classTypeService.GetClassType(id);
+            var classType = await _classTypeService.GetClassType(id);
             if (classType == null)
             {
                 return HttpNotFound();
@@ -133,9 +133,9 @@ namespace ProperArch01.WebApp.Controllers
         // POST: ClassType/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public async Task<ActionResult> DeleteConfirmed(string id)
         {
-            var isSuccess = _classTypeService.DeleteClassType(id);
+            var isSuccess = await _classTypeService.DeleteClassType(id);
 
             if (!isSuccess)
             {

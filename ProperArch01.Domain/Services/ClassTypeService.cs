@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using ProperArch01.Contracts.Models.ClassType;
 using ProperArch01.Contracts.Dto;
 using ProperArch01.Contracts.Services;
 using ProperArch01.Contracts.Commands;
 using ProperArch01.Contracts.Queries;
+using System.Threading.Tasks;
+using System;
 
 namespace ProperArch01.Domain.Services
 {
@@ -21,45 +21,55 @@ namespace ProperArch01.Domain.Services
             _classTypeWriter = classTypeWriter;
         }
 
-        public bool AddClassType(AddClassTypeViewModel model)
+        public async Task<bool> AddClassType(AddClassTypeViewModel viewModel)
         {
-            var result = _classTypeWriter.AddClassType(model);
+            var dto = new ClassTypeDto()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = viewModel.Name,
+                ClassColour = viewModel.ClassColour,
+                Difficulty = viewModel.Difficulty,
+                Description = viewModel.Description
+            };
+
+            var result = await _classTypeWriter.AddClassType(dto);
             return result;
         }
 
-        public bool DeleteClassType(string id)
+        public async Task<bool> DeleteClassType(string id)
         {
-            var result = _classTypeWriter.DeleteClassType(id);
+            var result = await _classTypeWriter.DeleteClassType(id);
             return result;
         }
 
-        public bool EditClassType(ClassTypeDto model)
+        public async Task<bool> EditClassType(ClassTypeDto model)
         {
-            var result = _classTypeWriter.EditClassType(model);
+            var result = await _classTypeWriter.EditClassType(model);
             return result;
         }
 
-        public IList<string> GetAllActiveClassTypeNames()
+        public async Task<IList<string>> GetAllActiveClassTypeNames()
         {
-            var result = _classTypeReader.GetAllClassTypes().Where(x => x.IsActive).Select(ctn => ctn.Name).ToList();
+            var classTypes = await _classTypeReader.GetAllActiveClassTypes();
+            var names = classTypes.Select(x => x.Name).ToList();
+            return names;
+        }
+
+        public async Task<IList<ClassTypeDto>> GetAllActiveClassTypes()
+        {
+            var result = await _classTypeReader.GetAllActiveClassTypes();
             return result;
         }
 
-        public IList<ClassTypeDto> GetAllActiveClassTypes()
+        public async Task<IList<ClassTypeDto>> GetAllClassTypes()
         {
-            var result = _classTypeReader.GetAllClassTypes().Where(x => x.IsActive).ToList();
+            var result = await _classTypeReader.GetAllClassTypes();
             return result;
         }
 
-        public IList<ClassTypeDto> GetAllClassTypes()
+        public async Task<ClassTypeDto> GetClassType(string id)
         {
-            var result = _classTypeReader.GetAllClassTypes();
-            return result;
-        }
-
-        public ClassTypeDto GetClassType(string id)
-        {
-            var result = _classTypeReader.GetClassType(id);
+            var result = await _classTypeReader.GetClassType(id);
             return result;
         }
     }

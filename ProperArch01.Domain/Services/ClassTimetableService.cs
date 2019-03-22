@@ -9,6 +9,7 @@ using ProperArch01.Contracts.Dto;
 using ProperArch01.Contracts.Commands;
 using ProperArch01.Contracts.Queries;
 using ProperArch01.Contracts.Constants;
+using System.Threading.Tasks;
 
 namespace ProperArch01.Domain.Services
 {
@@ -25,15 +26,26 @@ namespace ProperArch01.Domain.Services
             _colourServices = colourServices;
         }
 
-        public bool AddClassTimetable(AddClassTimetableModel model)
+        public async Task<bool> AddClassTimetable(AddClassTimetableViewModel viewModel)
         {
-            var isSuccess = _classTimetableWriter.AddClassTimetable(model);
+            var dto = new ClassTimetableDto()
+            {
+                Id = Guid.NewGuid().ToString(),
+                StartHour = viewModel.StartHour,
+                StartMinutes = viewModel.StartMinutes,
+                EndHour = viewModel.EndHour,
+                EndMinutes = viewModel.EndMinutes,
+                Weekday = viewModel.Weekday,
+                ClassTypeName = viewModel.ClassTypeName
+            };
+
+            var isSuccess = await _classTimetableWriter.AddClassTimetable(dto);
             return isSuccess;
         }
 
-        public IEnumerable<ClassTimetableRowViewModel> BuildTimetableViewModel()
+        public async Task<IEnumerable<ClassTimetableRowViewModel>> BuildTimetableViewModel()
         {
-            var timetables = _classTimetableReader.GetAllClassTimetables();
+            var timetables = await _classTimetableReader.GetAllClassTimetables();
 
             var earliestSlotStartHour = Int32.Parse(ConfigurationManager.AppSettings["GymOpeningHour"]);
             var latestSlotEndHour = Int32.Parse(ConfigurationManager.AppSettings["GymClosingHour"]);
@@ -92,27 +104,38 @@ namespace ProperArch01.Domain.Services
             return timetableViewModel.AsEnumerable();
         }
 
-        public bool DeleteClassTimetable(ClassTimetableDto dto)
+        public async Task<bool> DeleteClassTimetable(ClassTimetableDto dto)
         {
-            var isSuccess = _classTimetableWriter.DeleteClassTimetable(dto);
+            var isSuccess = await _classTimetableWriter.DeleteClassTimetable(dto);
             return isSuccess;
         }
 
-        public bool EditClassTimetable(EditClassTimetableModel model)
+        public async Task<bool> EditClassTimetable(EditClassTimetableViewModel viewModel)
         {
-            var isSuccess = _classTimetableWriter.UpdateClassTimetable(model);
+            var dto = new ClassTimetableDto()
+            {
+                Id = viewModel.Id,
+                StartHour = viewModel.StartHour,
+                StartMinutes = viewModel.StartMinutes,
+                EndHour = viewModel.EndHour,
+                EndMinutes = viewModel.EndMinutes,
+                Weekday = viewModel.Weekday,
+                ClassTypeName = viewModel.ClassTypeName
+            };
+
+            var isSuccess = await _classTimetableWriter.UpdateClassTimetable(dto);
             return isSuccess;
         }
 
-        public ClassTimetableDto GetClassTimetable(string id)
+        public async Task<ClassTimetableDto> GetClassTimetable(string id)
         {
-            var dto = _classTimetableReader.GetClassTimetable(id);
+            var dto = await _classTimetableReader.GetClassTimetable(id);
             return dto;
         }
 
-        public IEnumerable<ClassTimetableDto> GetClassTimetables()
+        public async Task<IEnumerable<ClassTimetableDto>> GetClassTimetables()
         {
-            var timetables = _classTimetableReader.GetAllClassTimetables();
+            var timetables = await _classTimetableReader.GetAllClassTimetables();
             return timetables;
         }
     }

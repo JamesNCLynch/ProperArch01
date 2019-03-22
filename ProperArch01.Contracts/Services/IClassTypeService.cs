@@ -10,12 +10,12 @@ namespace ProperArch01.Contracts.Services
 {
     public interface IClassTypeService
     {
-        ClassTypeDto GetClassType(string id);
-        IList<ClassTypeDto> GetAllClassTypes();
-        IList<ClassTypeDto> GetAllActiveClassTypes();
-        IList<string> GetAllActiveClassTypeNames();
-        bool AddClassType(AddClassTypeViewModel model);
-        bool EditClassType(ClassTypeDto model);
-        bool DeleteClassType(string id);
+        Task<ClassTypeDto> GetClassType(string id);
+        Task<IList<ClassTypeDto>> GetAllClassTypes();
+        Task<IList<ClassTypeDto>> GetAllActiveClassTypes();
+        Task<IList<string>> GetAllActiveClassTypeNames();
+        Task<bool> AddClassType(AddClassTypeViewModel model);
+        Task<bool> EditClassType(ClassTypeDto model);
+        Task<bool> DeleteClassType(string id);
     }
 }

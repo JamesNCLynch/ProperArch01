@@ -52,7 +52,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.RoleName, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(m => m.RoleName, ProperArch01.WebApp.Helpers.HelperMethods.GetAllRoleNames().ToList().Select(x => new SelectListItem { Text = x, Value = x }), new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DropDownListFor(m => m.RoleName, ProperArch01.WebApp.Helpers.HelperMethods.GetAllRoleNames().ToList().Select(x => new SelectListItem { Text = x, Value = x }), htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.RoleName, "", new { @class = "text-danger" })
         </div>
     </div>

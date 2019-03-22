@@ -9,6 +9,7 @@ using ProperArch01.Contracts.Services;
 using ProperArch01.Contracts.Commands;
 using ProperArch01.Contracts.Queries;
 using ProperArch01.Contracts.Constants;
+using System.Threading.Tasks;
 
 namespace ProperArch01.Domain.Services
 {
@@ -36,7 +37,7 @@ namespace ProperArch01.Domain.Services
             _gymReader = gymReader;
         }
 
-        public bool AddScheduledClass(CreateScheduledClassViewModel viewModel)
+        public async Task<bool> AddScheduledClass(CreateScheduledClassViewModel viewModel)
         {
             if (viewModel == null)
             {
@@ -52,22 +53,24 @@ namespace ProperArch01.Domain.Services
                 IsCancelled = false
             };
 
-            bool isSuccess = _scheduledClassWriter.AddScheduledClass(dto);
+            bool isSuccess = await _scheduledClassWriter.AddScheduledClass(dto);
 
             return isSuccess;
         }
 
-        public ScheduledClassIndexViewModel BuildIndexViewModel()
+        public async Task<ScheduledClassIndexViewModel> BuildIndexViewModel()
         {
-            var allScheduledClasses = _scheduledClassReader.GetAllScheduledClasses();
+            var allScheduledClasses = await _scheduledClassReader.GetAllScheduledClasses();
 
             var indexViewModel = new ScheduledClassIndexViewModel() {
                 ScheduledClassesCompleted = allScheduledClasses.Where(x => x.InstructorName != null),
                 CancelledScheduledClasses = allScheduledClasses.Where(x => x.IsCancelled)
             };
 
-            var timetable = _classTimetableReader.GetAllClassTimetables();
-            var holidayDates = _holidayReader.GetAllHolidays().Where(x => x.HolidayDate > DateTime.UtcNow).Select(x => x.HolidayDate.Date);
+            var timetable = await _classTimetableReader.GetAllClassTimetables();
+
+            var holidayDtos = await _holidayReader.GetAllHolidays();
+            var holidayDates = holidayDtos.Where(x => x.HolidayDate > DateTime.UtcNow).Select(x => x.HolidayDate.Date);
 
             var plannerTimespan = Int32.Parse(ConfigurationManager.AppSettings["ScheduledClassTimeSpanInDays"]);
             var earliestSlotStartHour = Int32.Parse(ConfigurationManager.AppSettings["GymOpeningHour"]);
@@ -115,25 +118,27 @@ namespace ProperArch01.Domain.Services
             return indexViewModel;
         }
 
-        public bool DeleteScheduledClass(string id)
+        public async Task<bool> DeleteScheduledClass(string id)
         {
-            var isSuccess = _scheduledClassWriter.DeleteScheduledClass(id);
+            var isSuccess = await _scheduledClassWriter.DeleteScheduledClass(id);
             return isSuccess;
         }
 
-        public List<string> GetAllInstructorNames()
+        public async Task<List<string>> GetAllInstructorNames()
         {
-            var instructors = _gymReader.GetAllUsers().Where(x => x.RoleName == RoleNames.InstructorName).Select(u => u.UserName).ToList();
-            return instructors;
+            var instructors = await _gymReader.GetAllUsers();
+            var instructorNames = instructors.Where(x => x.RoleName == RoleNames.InstructorName).Select(u => u.UserName).ToList();
+
+            return instructorNames;
         }
 
-        public ScheduledClassDto GetScheduledClass(string id)
+        public async Task<ScheduledClassDto> GetScheduledClass(string id)
         {
-            var dto = _scheduledClassReader.GetScheduledClass(id);
+            var dto = await _scheduledClassReader.GetScheduledClass(id);
             return dto;
         }
 
-        public bool UpdateScheduledClass(EditScheduledClassViewModel viewModel)
+        public async Task<bool> UpdateScheduledClass(EditScheduledClassViewModel viewModel)
         {
             var dto = new ScheduledClassDto()
             {
@@ -144,7 +149,7 @@ namespace ProperArch01.Domain.Services
                 IsCancelled = viewModel.IsCancelled
             };
 
-            var isSuccess = _scheduledClassWriter.UpdateScheduledClass(dto);
+            var isSuccess = await _scheduledClassWriter.UpdateScheduledClass(dto);
             return isSuccess;
         }
     }

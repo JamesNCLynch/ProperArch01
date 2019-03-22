@@ -8,23 +8,23 @@ using System.Web.Mvc;
 
 namespace ProperArch01.Contracts.Models.ClassTimetable
 {
-    public class EditClassTimetableModel
+    public class EditClassTimetableViewModel
     {
-        public EditClassTimetableModel()
+        public EditClassTimetableViewModel()
         {
 
         }
 
-        public EditClassTimetableModel(ClassTimetableDto dto) {
-            Id = dto.Id;
-            StartHour = dto.StartHour;
-            StartMinutes = dto.StartMinutes;
-            EndHour = dto.EndHour;
-            EndMinutes = dto.EndMinutes;
-            ClassTypeName = dto.ClassTypeName;
-        }
+        //public EditClassTimetableViewModel(ClassTimetableDto dto) {
+        //    Id = dto.Id;
+        //    StartHour = dto.StartHour;
+        //    StartMinutes = dto.StartMinutes;
+        //    EndHour = dto.EndHour;
+        //    EndMinutes = dto.EndMinutes;
+        //    ClassTypeName = dto.ClassTypeName;
+        //}
 
-        public EditClassTimetableModel(ClassTimetableDto dto, IList<string> classTypeNames)
+        public EditClassTimetableViewModel(ClassTimetableDto dto, IList<string> classTypeNames)
         {
             Id = dto.Id;
             StartHour = dto.StartHour;
@@ -33,6 +33,7 @@ namespace ProperArch01.Contracts.Models.ClassTimetable
             EndMinutes = dto.EndMinutes;
             ClassTypeName = dto.ClassTypeName;
             ClassTypeNames = classTypeNames;
+            Weekday = dto.Weekday;
         }
 
         public string Id { get; set; }
@@ -52,6 +53,8 @@ namespace ProperArch01.Contracts.Models.ClassTimetable
         [Required]
         [Display(Name = "Class")]
         public IList<string> ClassTypeNames { get; set; }
+        [Required]
+        [Display(Name = "Class")]
         public string ClassTypeName { get; set; }
         [Required]
         [Display(Name = "Day")]

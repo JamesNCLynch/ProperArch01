@@ -65,13 +65,13 @@ namespace ProperArch01.WebApp.Controllers
 
         // GET: /Account/Index
         [Authorize(Roles = RoleNames.AdminName)]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             // need to add filtering for this controller 
 
             // need to adjust reader to return role names
 
-            var users = _accountService.GetAllUsers();
+            var users = await _accountService.GetAllUsers();
 
             return View(users);
         }
@@ -87,11 +87,11 @@ namespace ProperArch01.WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = RoleNames.AdminName)]
-        public ActionResult Create(CreateUserViewModel viewModel)
+        public async Task<ActionResult> Create(CreateUserViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                var errors = _accountService.AddUserByPortal(viewModel);
+                var errors = await _accountService.AddUserByPortal(viewModel);
 
                 if (errors == null)
                 {
@@ -105,14 +105,14 @@ namespace ProperArch01.WebApp.Controllers
 
         // GET: /Account/Details
         [Authorize(Roles = RoleNames.AdminName)]
-        public ActionResult Details(string id)
+        public async Task<ActionResult> Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var gymUser = _accountService.GetUser(id);
+            var gymUser = await _accountService.GetUser(id);
 
             if (gymUser == null)
             {
@@ -125,14 +125,14 @@ namespace ProperArch01.WebApp.Controllers
 
         // GET: /Account/Edit
         [Authorize(Roles = RoleNames.AdminName)]
-        public ActionResult Edit(string id)
+        public async Task<ActionResult> Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var gymUser = _accountService.GetUser(id);
+            var gymUser = await _accountService.GetUser(id);
             
             if (gymUser == null)
             {
@@ -148,7 +148,7 @@ namespace ProperArch01.WebApp.Controllers
         [Authorize(Roles = RoleNames.AdminName)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(EditUserViewModel viewModel)
+        public async Task<ActionResult> Edit(EditUserViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -161,7 +161,7 @@ namespace ProperArch01.WebApp.Controllers
                     LastName = viewModel.LastName,
                     RoleName = viewModel.RoleName
                 };
-                var isSuccess = _accountService.EditUser(dto);
+                var isSuccess = await _accountService.EditUser(dto);
 
                 if (!isSuccess)
                 {
@@ -175,14 +175,14 @@ namespace ProperArch01.WebApp.Controllers
 
         // GET: /Account/Delete
         [Authorize(Roles = RoleNames.AdminName)]
-        public ActionResult Delete(string id)
+        public async Task<ActionResult> Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var gymUser = _accountService.GetUser(id);
+            var gymUser = await _accountService.GetUser(id);
             if (gymUser == null)
             {
                 return HttpNotFound();
@@ -195,9 +195,9 @@ namespace ProperArch01.WebApp.Controllers
         [Authorize(Roles = RoleNames.AdminName)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(GymUserDto gymUser)
+        public async Task<ActionResult> Delete(GymUserDto gymUser)
         {
-            var isSuccess = _accountService.DeleteUser(gymUser);
+            var isSuccess = await _accountService.DeleteUser(gymUser);
 
             if (!isSuccess)
             {
@@ -328,7 +328,7 @@ namespace ProperArch01.WebApp.Controllers
                     Password = model.Password
                 };
 
-                var errors = _accountService.AddUserByRegistration(gymUser);
+                var errors = await _accountService.AddUserByRegistration(gymUser);
 
                 if (errors != null)
                 {
@@ -339,7 +339,7 @@ namespace ProperArch01.WebApp.Controllers
                 }
                 else
                 {
-                    var newlyCreatedUser = _accountService.GetUserByEmailAddress(model.Email);
+                    var newlyCreatedUser = await _accountService.GetUserByEmailAddress(model.Email);
                     var user = new GymUser() {
                         Id = newlyCreatedUser.Id,
                         Email = model.Email,

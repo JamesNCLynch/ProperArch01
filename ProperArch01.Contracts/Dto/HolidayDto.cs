@@ -9,23 +9,6 @@ namespace ProperArch01.Contracts.Dto
 {
     public class HolidayDto
     {
-        public HolidayDto()
-        {
-
-        }
-        public HolidayDto(CreateHolidayViewModel viewModel)
-        {
-            Name = viewModel.Name;
-            HolidayDate = viewModel.HolidayDate;
-        }
-
-        public HolidayDto(EditHolidayViewModel viewModel)
-        {
-            Id = viewModel.Id;
-            Name = viewModel.Name;
-            HolidayDate = viewModel.HolidayDate;
-        }
-
         public string Id { get; set; }
         public string Name { get; set; }
         [DataType(DataType.Date)]

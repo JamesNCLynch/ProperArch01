@@ -90,11 +90,11 @@
     <Compile Include="Dto\ScheduledClassDto.cs" />
     <Compile Include="Models\Account\EditUserViewModel.cs" />
     <Compile Include="Models\Account\RegisterViewModel.cs" />
-    <Compile Include="Models\ClassTimetable\AddClassTimetableModel.cs" />
+    <Compile Include="Models\ClassTimetable\AddClassTimetableViewModel.cs" />
     <Compile Include="Dto\ClassTimetableDto.cs" />
     <Compile Include="Models\ClassTimetable\ClassTimetableRowViewModel.cs" />
     <Compile Include="Models\ClassTimetable\ClassTimetableSlotViewModel.cs" />
-    <Compile Include="Models\ClassTimetable\EditClassTimetableModel.cs" />
+    <Compile Include="Models\ClassTimetable\EditClassTimetableViewModel.cs" />
     <Compile Include="Models\ClassType\AddClassTypeViewModel.cs" />
     <Compile Include="Dto\ClassTypeDto.cs" />
     <Compile Include="Models\Colour\RGBAModel.cs" />

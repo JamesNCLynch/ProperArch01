@@ -10,16 +10,16 @@ namespace ProperArch01.Contracts.Services
 {
     public interface IAccountService
     {
-        GymUserDto GetUser(string id);
-        IList<GymUserDto> GetAllUsers();
-        GymUserDto GetUserByEmailAddress(string email);
-        IList<GymUserDto> GetUsers(IList<string> userIds);
-        IList<GymUserDto> GetUsersByScheduledClass(string id);
-        IList<GymUserDto> GetInstructorByScheduledClass(string id);
-        IEnumerable<string> AddUserByRegistration(GymUserDto model);
-        IEnumerable<string> AddUserByPortal(CreateUserViewModel model);
-        bool EditUser(GymUserDto gymUser);
-        bool DeleteUser(GymUserDto gymUser);
-        string GetRoleNameByUser(string id);
+        Task<GymUserDto> GetUser(string id);
+        Task<IList<GymUserDto>> GetAllUsers();
+        Task<GymUserDto> GetUserByEmailAddress(string email);
+        Task<IList<GymUserDto>> GetUsers(IList<string> userIds);
+        Task<IList<GymUserDto>> GetUsersByScheduledClass(string id);
+        Task<IList<GymUserDto>> GetInstructorByScheduledClass(string id);
+        Task<IEnumerable<string>> AddUserByRegistration(GymUserDto model);
+        Task<IEnumerable<string>> AddUserByPortal(CreateUserViewModel model);
+        Task<bool> EditUser(GymUserDto gymUser);
+        Task<bool> DeleteUser(GymUserDto gymUser);
+        Task<string> GetRoleNameByUser(string id);
     }
 }

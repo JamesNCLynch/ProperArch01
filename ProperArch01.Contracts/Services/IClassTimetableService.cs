@@ -10,11 +10,11 @@ namespace ProperArch01.Contracts.Services
 {
     public interface IClassTimetableService
     {
-        IEnumerable<ClassTimetableDto> GetClassTimetables();
-        bool AddClassTimetable(AddClassTimetableModel model);
-        bool EditClassTimetable(EditClassTimetableModel model);
-        bool DeleteClassTimetable(ClassTimetableDto dto);
-        ClassTimetableDto GetClassTimetable(string id);
-        IEnumerable<ClassTimetableRowViewModel> BuildTimetableViewModel();
+        Task<IEnumerable<ClassTimetableDto>> GetClassTimetables();
+        Task<bool> AddClassTimetable(AddClassTimetableViewModel model);
+        Task<bool> EditClassTimetable(EditClassTimetableViewModel model);
+        Task<bool> DeleteClassTimetable(ClassTimetableDto dto);
+        Task<ClassTimetableDto> GetClassTimetable(string id);
+        Task<IEnumerable<ClassTimetableRowViewModel>> BuildTimetableViewModel();
     }
 }

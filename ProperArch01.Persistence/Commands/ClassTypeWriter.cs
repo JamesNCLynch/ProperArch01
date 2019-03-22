@@ -6,6 +6,8 @@ using ProperArch01.Contracts.Commands;
 using ProperArch01.Contracts.Models.ClassType;
 using ProperArch01.Contracts.Constants;
 using ProperArch01.Contracts.Dto;
+using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace ProperArch01.Persistence.Commands
 {
@@ -17,30 +19,30 @@ namespace ProperArch01.Persistence.Commands
             _context = context;
         }
 
-        public bool AddClassType(AddClassTypeViewModel model)
+        public async Task<bool> AddClassType(ClassTypeDto dto)
         {
             var classType = new EntityModels.ClassType
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = dto.Id,
                 IsActive = true,
-                ClassColour = model.ClassColour,
-                Name = model.Name,
-                Description = model.Description,
-                Difficulty = model.Difficulty
+                ClassColour = dto.ClassColour,
+                Name = dto.Name,
+                Description = dto.Description,
+                Difficulty = dto.Difficulty
             };
 
             _context.ClassTypes.Add(classType);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return true;
         }
 
-        public bool DeleteClassType(string id)
+        public async Task<bool> DeleteClassType(string id)
         {
             if (id == null)
             {
                 return false;
             }
-            var classType = _context.ClassTypes.FirstOrDefault(x => x.Id == id);
+            var classType = await _context.ClassTypes.FirstOrDefaultAsync(x => x.Id == id);
 
             if (classType != null)
             {
@@ -52,7 +54,7 @@ namespace ProperArch01.Persistence.Commands
 
                 // remove classtype and save
                 _context.ClassTypes.Remove(classType);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
                 return true;
             }
@@ -60,25 +62,25 @@ namespace ProperArch01.Persistence.Commands
             return false;
         }
 
-        public bool EditClassType(ClassTypeDto model)
+        public async Task<bool> EditClassType(ClassTypeDto dto)
         {
-            if (model.Id == null)
+            if (dto.Id == null)
             {
                 return false;
             }
 
-            var classType = _context.ClassTypes.FirstOrDefault(x => x.Id == model.Id);
+            var classType = await _context.ClassTypes.FirstOrDefaultAsync(x => x.Id == dto.Id);
 
             if (classType != null)
             {
-                classType.IsActive = model.IsActive;
-                classType.Name = model.Name;
-                classType.Difficulty = model.Difficulty;
-                classType.Description = model.Description;
-                classType.ClassColour = model.ClassColour;
+                classType.IsActive = dto.IsActive;
+                classType.Name = dto.Name;
+                classType.Difficulty = dto.Difficulty;
+                classType.Description = dto.Description;
+                classType.ClassColour = dto.ClassColour;
 
                 _context.Entry(classType).State = System.Data.Entity.EntityState.Modified;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
                 return true;
             }

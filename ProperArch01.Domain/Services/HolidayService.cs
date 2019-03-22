@@ -7,6 +7,7 @@ using ProperArch01.Contracts.Models.Holiday;
 using ProperArch01.Contracts.Services;
 using ProperArch01.Contracts.Commands;
 using ProperArch01.Contracts.Queries;
+using System.Threading.Tasks;
 
 namespace ProperArch01.Domain.Services
 {
@@ -21,36 +22,48 @@ namespace ProperArch01.Domain.Services
             _holidayWriter = holidayWriter;
         }
 
-        public bool AddHoliday(CreateHolidayViewModel viewModel)
+        public async Task<bool> AddHoliday(CreateHolidayViewModel viewModel)
         {
-            var dto = new HolidayDto(viewModel);
+            var dto = new HolidayDto() {
+                Id = Guid.NewGuid().ToString(),
+                Name = viewModel.Name,
+                HolidayDate = viewModel.HolidayDate
+            };
 
-            var isSuccess = _holidayWriter.AddHoliday(dto);
+            var isSuccess = await _holidayWriter.AddHoliday(dto);
             return isSuccess;
         }
 
-        public bool DeleteHoliday(string id)
+        public async Task<bool> DeleteHoliday(string id)
         {
-            var isSuccess = _holidayWriter.DeleteHoliday(id);
+            var isSuccess = await _holidayWriter.DeleteHoliday(id);
             return isSuccess;
         }
 
-        public bool EditHoliday(EditHolidayViewModel viewModel)
+        public async Task<bool> EditHoliday(EditHolidayViewModel viewModel)
         {
-            var dto = new HolidayDto(viewModel);
-            var isSuccess = _holidayWriter.UpdateHoliday(dto);
+            var dto = new HolidayDto()
+            {
+                Id = viewModel.Id,
+                Name = viewModel.Name,
+                HolidayDate = viewModel.HolidayDate
+            };
+
+            var isSuccess = await _holidayWriter.UpdateHoliday(dto);
             return isSuccess;
         }
 
-        public IList<HolidayDto> GetAllHolidays()
+        public async Task<IList<HolidayDto>> GetAllHolidays()
         {
-            var holidays = _holidayReader.GetAllHolidays();
+            var dtos = await _holidayReader.GetAllHolidays();
+            var holidays = dtos.OrderByDescending(x => x.HolidayDate).ToList();
+
             return holidays;
         }
 
-        public HolidayDto GetHoliday(string id)
+        public async Task<HolidayDto> GetHoliday(string id)
         {
-            var holiday = _holidayReader.GetHoliday(id);
+            var holiday = await _holidayReader.GetHoliday(id);
             return holiday;
         }
     }

@@ -7,24 +7,24 @@ using System.Web.Mvc;
 
 namespace ProperArch01.Contracts.Models.ClassTimetable
 {
-    public class AddClassTimetableModel
+    public class AddClassTimetableViewModel
     {
-        public AddClassTimetableModel()
+        public AddClassTimetableViewModel()
         {
             ClassTypeNames = new List<string>();
         }
 
-        public AddClassTimetableModel(int weekday, int startHour)
-        {
-            Weekday = (DayOfWeek)weekday;
-            StartHour = startHour;
-            EndHour = startHour + 1;
-            StartMinutes = 0;
-            EndMinutes = 0;
-            ClassTypeNames = new List<string>();
-        }
+        //public AddClassTimetableViewModel(int weekday, int startHour)
+        //{
+        //    Weekday = (DayOfWeek)weekday;
+        //    StartHour = startHour;
+        //    EndHour = startHour + 1;
+        //    StartMinutes = 0;
+        //    EndMinutes = 0;
+        //    ClassTypeNames = new List<string>();
+        //}
 
-        public AddClassTimetableModel(int weekday, int startHour, IList<string> classTypeNames)
+        public AddClassTimetableViewModel(int weekday, int startHour, IList<string> classTypeNames)
         {
             Weekday = (DayOfWeek)weekday;
             StartHour = startHour;

@@ -10,10 +10,10 @@ namespace ProperArch01.Contracts.Services
 {
     public interface IHolidayService
     {
-        IList<HolidayDto> GetAllHolidays();
-        HolidayDto GetHoliday(string id);
-        bool AddHoliday(CreateHolidayViewModel viewModel);
-        bool EditHoliday(EditHolidayViewModel viewModel);
-        bool DeleteHoliday(string id);
+        Task<IList<HolidayDto>> GetAllHolidays();
+        Task<HolidayDto> GetHoliday(string id);
+        Task<bool> AddHoliday(CreateHolidayViewModel viewModel);
+        Task<bool> EditHoliday(EditHolidayViewModel viewModel);
+        Task<bool> DeleteHoliday(string id);
     }
 }

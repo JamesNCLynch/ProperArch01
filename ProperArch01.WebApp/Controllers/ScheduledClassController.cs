@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using ProperArch01.Contracts.Services;
 using ProperArch01.Contracts.Dto;
 using ProperArch01.Contracts.Models.ScheduledClass;
+using System.Threading.Tasks;
 
 namespace ProperArch01.WebApp.Controllers
 {
@@ -22,20 +23,20 @@ namespace ProperArch01.WebApp.Controllers
         }
 
         // GET: ScheduledClass
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var viewModel = _scheduledClassService.BuildIndexViewModel();
+            var viewModel = await _scheduledClassService.BuildIndexViewModel();
             return View(viewModel);
         }
 
         // GET: ScheduledClass/Details/5
-        public ActionResult Details(string id)
+        public async Task<ActionResult> Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var dto = _scheduledClassService.GetScheduledClass(id);
+            var dto = await _scheduledClassService.GetScheduledClass(id);
             if (dto == null)
             {
                 return HttpNotFound();
@@ -50,9 +51,9 @@ namespace ProperArch01.WebApp.Controllers
         }
 
         // GET: ScheduledClass/Create
-        public ActionResult Create(string className, DateTime startTime)
+        public async Task<ActionResult> Create(string className, DateTime startTime)
         {
-            var instructors = _scheduledClassService.GetAllInstructorNames();
+            var instructors = await _scheduledClassService.GetAllInstructorNames();
             var viewModel = new CreateScheduledClassViewModel(className, startTime, instructors);
 
             return View(viewModel);
@@ -63,11 +64,11 @@ namespace ProperArch01.WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CreateScheduledClassViewModel viewModel)
+        public async Task<ActionResult> Create(CreateScheduledClassViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                bool isSuccess = _scheduledClassService.AddScheduledClass(viewModel);
+                bool isSuccess = await _scheduledClassService.AddScheduledClass(viewModel);
 
                 if (isSuccess)
                 {
@@ -79,16 +80,16 @@ namespace ProperArch01.WebApp.Controllers
         }
 
         // GET: ScheduledClass/Edit/5
-        public ActionResult Edit(string id)
+        public async Task<ActionResult> Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var instructors = _scheduledClassService.GetAllInstructorNames();
+            var instructors = await _scheduledClassService.GetAllInstructorNames();
 
-            ScheduledClassDto dto = _scheduledClassService.GetScheduledClass(id);
+            ScheduledClassDto dto = await _scheduledClassService.GetScheduledClass(id);
 
             if (dto == null)
             {
@@ -105,11 +106,11 @@ namespace ProperArch01.WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(EditScheduledClassViewModel viewModel)
+        public async Task<ActionResult> Edit(EditScheduledClassViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                var isSuccess = _scheduledClassService.UpdateScheduledClass(viewModel);
+                var isSuccess = await _scheduledClassService.UpdateScheduledClass(viewModel);
                 if (isSuccess)
                 {
                     return RedirectToAction("Index");
@@ -120,14 +121,14 @@ namespace ProperArch01.WebApp.Controllers
         }
 
         // GET: ScheduledClass/Delete/5
-        public ActionResult Delete(string id)
+        public async Task<ActionResult> Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            ScheduledClassDto dto = _scheduledClassService.GetScheduledClass(id);
+            ScheduledClassDto dto = await _scheduledClassService.GetScheduledClass(id);
             if (dto == null)
             {
                 return HttpNotFound();
@@ -138,9 +139,9 @@ namespace ProperArch01.WebApp.Controllers
         // POST: ScheduledClass/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public async Task<ActionResult> DeleteConfirmed(string id)
         {
-            var isSuccess = _scheduledClassService.DeleteScheduledClass(id);
+            var isSuccess = await _scheduledClassService.DeleteScheduledClass(id);
 
             if (isSuccess)
             {

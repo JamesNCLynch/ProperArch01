@@ -9,6 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ProperArch01.Persistence.EntityModels;
 using ProperArch01.Contracts.Dto;
+using System.Threading.Tasks;
+using System.Data;
+using System.Data.Entity;
 
 namespace ProperArch01.Persistence.Commands
 {
@@ -20,11 +23,11 @@ namespace ProperArch01.Persistence.Commands
         {
             _context = context;
         }
-        public IEnumerable<string> AddGymUser(GymUserDto model)
+
+        public async Task<IEnumerable<string>> AddGymUser(GymUserDto model)
         {
             var userManager = new UserManager<GymUser>(new UserStore<GymUser>(_context));
-
-            // replace with automapper at some point
+            
             var gymUser = new GymUser()
             {
                 Email = model.Email,
@@ -34,71 +37,72 @@ namespace ProperArch01.Persistence.Commands
                 DateCreated = DateTime.UtcNow
             };
 
-            var result = userManager.Create(gymUser, model.Password);
+            var result = await userManager.CreateAsync(gymUser, model.Password);
             if (result.Succeeded)
             {
-                userManager.AddToRole(gymUser.Id, RoleNames.AttendeeName);
+                await userManager.AddToRoleAsync(gymUser.Id, RoleNames.AttendeeName);
                 return null;
             }
 
             return result.Errors;
         }
 
-        public IEnumerable<string> AddGymUser(CreateUserViewModel model)
-        {
-            var userManager = new UserManager<GymUser>(new UserStore<GymUser>(_context));
+        //public async Task<IEnumerable<string>> AddGymUser(CreateUserViewModel model)
+        //{
+        //    var userManager = new UserManager<GymUser>(new UserStore<GymUser>(_context));
 
-            // replace with automapper at some point
-            var gymUser = new GymUser()
-            {
-                Email = model.Email,
-                UserName = model.UserName ?? model.Email,
-                FirstName = model.FirstName ?? "",
-                LastName = model.LastName ?? "",
-                DateCreated = DateTime.UtcNow
-            };
+        //    // replace with automapper at some point
+        //    var gymUser = new GymUser()
+        //    {
+        //        Email = model.Email,
+        //        UserName = model.UserName ?? model.Email,
+        //        FirstName = model.FirstName ?? "",
+        //        LastName = model.LastName ?? "",
+        //        DateCreated = DateTime.UtcNow
+        //    };
 
-            var result = userManager.Create(gymUser, model.Password);
-            if (result.Succeeded)
-            {
-                userManager.AddToRole(gymUser.Id, RoleNames.AttendeeName);
-                return null;
-            }
+        //    var result = await userManager.CreateAsync(gymUser, model.Password);
+        //    if (result.Succeeded)
+        //    {
+        //        await userManager.AddToRoleAsync(gymUser.Id, RoleNames.AttendeeName);
+        //        return null;
+        //    }
 
-            return result.Errors;
-        }
+        //    return result.Errors;
+        //}
 
-        public bool DeleteUser(GymUserDto gymUser)
+        public async Task<bool> DeleteUser(GymUserDto gymUser)
         {
             if (gymUser == null)
             {
                 return false;
             }
 
-            var user = _context.Users.FirstOrDefault(x => x.Id == gymUser.Id);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == gymUser.Id);
             if (user == null)
             {
                 return false;
             }
 
             // if instructor, remove association between user and scheduled class. do no remove scheduled class
-            _context.ScheduledClasses.Where(x => x.InstructorId == gymUser.Id).ToList().ForEach(sc => { sc.InstructorId = null; });
+            var scheduledClasses = await _context.ScheduledClasses.Where(x => x.InstructorId == gymUser.Id).ToListAsync();
+            scheduledClasses.ForEach(sc => { sc.InstructorId = null; });
 
             // remove associated attendances
-            var attendances = _context.ClassAttendances.Where(x => x.AttendeeId == gymUser.Id);
+            var attendances = await _context.ClassAttendances.Where(x => x.AttendeeId == gymUser.Id).ToListAsync();
             _context.ClassAttendances.RemoveRange(attendances);
 
             //remove userroles
-            var userRoles = _context.UserRoles.Where(x => x.UserId == gymUser.Id);
+            var userRoles = await _context.UserRoles.Where(x => x.UserId == gymUser.Id).ToListAsync();
             _context.UserRoles.RemoveRange(userRoles);
 
             _context.Users.Remove(user);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return true;
         }
 
-        public bool EditUser(GymUserDto gymUser)
+        public async Task<bool> EditUser(GymUserDto gymUser)
         {
             if (gymUser == null)
             {
@@ -108,7 +112,7 @@ namespace ProperArch01.Persistence.Commands
             var userManager = new UserManager<GymUser>(new UserStore<GymUser>(_context));
 
             //var user = _context.Users.FirstOrDefault(x => x.Id == gymUser.Id);
-            var user = userManager.Users.FirstOrDefault(x => x.Id == gymUser.Id);
+            var user = await userManager.Users.FirstOrDefaultAsync(x => x.Id == gymUser.Id);
 
             if (user == null)
             {
@@ -127,15 +131,15 @@ namespace ProperArch01.Persistence.Commands
 
             if (currentRoleName != gymUser.RoleName)
             {
-                userManager.RemoveFromRole(user.Id, currentRoleName);
-                userManager.AddToRole(user.Id, gymUser.RoleName);
+                await userManager.RemoveFromRoleAsync(user.Id, currentRoleName);
+                await userManager.AddToRoleAsync(user.Id, gymUser.RoleName);
             }
 
 
             // todo: might have to do something with password soon
 
             _context.Entry(user).State = System.Data.Entity.EntityState.Modified;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return true;
         }

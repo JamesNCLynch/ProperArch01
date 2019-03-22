@@ -6,6 +6,8 @@ using ProperArch01.Contracts.Dto;
 using ProperArch01.Contracts.Models.ClassTimetable;
 using ProperArch01.Contracts.Commands;
 using ProperArch01.Persistence.EntityModels;
+using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace ProperArch01.Persistence.Commands
 {
@@ -17,7 +19,7 @@ namespace ProperArch01.Persistence.Commands
             _context = context;
         }
 
-        public bool AddClassTimetable(AddClassTimetableModel model)
+        public async Task<bool> AddClassTimetable(ClassTimetableDto model)
         {
             var classType = _context.ClassTypes.FirstOrDefault(x => x.Name == model.ClassTypeName);
 
@@ -37,12 +39,12 @@ namespace ProperArch01.Persistence.Commands
             };
 
             _context.ClassTimetable.Add(classTimetable);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return true;
         }
 
-        public bool DeleteClassTimetable(ClassTimetableDto dto)
+        public async Task<bool> DeleteClassTimetable(ClassTimetableDto dto)
         {
             var classTimetable = _context.ClassTimetable.FirstOrDefault(x => x.Id == dto.Id);
 
@@ -52,7 +54,7 @@ namespace ProperArch01.Persistence.Commands
             }
 
             _context.ClassTimetable.Remove(classTimetable);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return true;
 
@@ -60,7 +62,7 @@ namespace ProperArch01.Persistence.Commands
             // however, scheduled classes should be linked, so there may have been a flaw in the original model design
         }
 
-        public bool UpdateClassTimetable(EditClassTimetableModel model)
+        public async Task<bool> UpdateClassTimetable(ClassTimetableDto model)
         {
             var classTimetable = _context.ClassTimetable.FirstOrDefault(x => x.Id == model.Id);
 
@@ -73,12 +75,12 @@ namespace ProperArch01.Persistence.Commands
 
             classTimetable.ClassType = classType;
             classTimetable.ClassTypeId = classType.Id;
-            classTimetable.StartTime = new DateTime(0, 0, 0, model.StartHour, model.StartMinutes, 0);
-            classTimetable.EndTime = new DateTime(0, 0, 0, model.EndHour, model.EndMinutes, 0);
+            classTimetable.StartTime = new DateTime(2000, 1, 1, model.StartHour, model.StartMinutes, 0);
+            classTimetable.EndTime = new DateTime(2000, 1, 1, model.EndHour, model.EndMinutes, 0);
             classTimetable.Weekday = model.Weekday;
 
-            _context.Entry(classTimetable).State = System.Data.Entity.EntityState.Modified;
-            _context.SaveChanges();
+            _context.Entry(classTimetable).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
 
             return true;
         }

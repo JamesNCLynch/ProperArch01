@@ -10,9 +10,8 @@ namespace ProperArch01.Contracts.Commands
 {
     public interface IGymUserWriter
     {
-        IEnumerable<string> AddGymUser(GymUserDto model);
-        IEnumerable<string> AddGymUser(CreateUserViewModel model);
-        bool EditUser(GymUserDto gymUser);
-        bool DeleteUser(GymUserDto gymUser);
+        Task<IEnumerable<string>> AddGymUser(GymUserDto model);
+        Task<bool> EditUser(GymUserDto gymUser);
+        Task<bool> DeleteUser(GymUserDto gymUser);
     }
 }

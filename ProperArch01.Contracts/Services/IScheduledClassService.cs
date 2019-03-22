@@ -10,11 +10,11 @@ namespace ProperArch01.Contracts.Services
 {
     public interface IScheduledClassService
     {
-        ScheduledClassIndexViewModel BuildIndexViewModel();
-        ScheduledClassDto GetScheduledClass(string id);
-        bool AddScheduledClass(CreateScheduledClassViewModel viewModel);
-        bool UpdateScheduledClass(EditScheduledClassViewModel viewModel);
-        bool DeleteScheduledClass(string id);
-        List<string> GetAllInstructorNames();
+        Task<ScheduledClassIndexViewModel> BuildIndexViewModel();
+        Task<ScheduledClassDto> GetScheduledClass(string id);
+        Task<bool> AddScheduledClass(CreateScheduledClassViewModel viewModel);
+        Task<bool> UpdateScheduledClass(EditScheduledClassViewModel viewModel);
+        Task<bool> DeleteScheduledClass(string id);
+        Task<List<string>> GetAllInstructorNames();
     }
 }

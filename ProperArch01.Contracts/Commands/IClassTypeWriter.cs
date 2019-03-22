@@ -10,8 +10,8 @@ namespace ProperArch01.Contracts.Commands
 {
     public interface IClassTypeWriter
     {
-        bool AddClassType(AddClassTypeViewModel model);
-        bool EditClassType(ClassTypeDto model);
-        bool DeleteClassType(string id);
+        Task<bool> AddClassType(ClassTypeDto model);
+        Task<bool> EditClassType(ClassTypeDto model);
+        Task<bool> DeleteClassType(string id);
     }
 }

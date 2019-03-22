@@ -10,7 +10,7 @@ namespace ProperArch01.Contracts.Queries
 {
     public interface IClassTimetableReader
     {
-        ClassTimetableDto GetClassTimetable(string id);
-        IList<ClassTimetableDto> GetAllClassTimetables();
+        Task<ClassTimetableDto> GetClassTimetable(string id);
+        Task<IList<ClassTimetableDto>> GetAllClassTimetables();
     }
 }

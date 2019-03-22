@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using ProperArch01.Contracts.Dto;
 using ProperArch01.Contracts.Queries;
+using System.Data.Entity;
 
 namespace ProperArch01.Persistence.Queries
 {
@@ -15,13 +17,14 @@ namespace ProperArch01.Persistence.Queries
         {
             _context = context;
         }
-        public GymUserDto GetUser(string id)
+        public async Task<GymUserDto> GetUser(string id)
         {
-            var gymUser = _context.Users.FirstOrDefault(x => x.Id == id);
+            var gymUser = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
 
             var roleId = gymUser.Roles.FirstOrDefault().RoleId;
 
-            var roleName = _context.Roles.FirstOrDefault(x => x.Id == roleId).Name;
+            var role = await _context.Roles.FirstOrDefaultAsync(x => x.Id == roleId);
+            var roleName = role.Name;
 
             return new GymUserDto()
             {
@@ -34,11 +37,14 @@ namespace ProperArch01.Persistence.Queries
             };
         }
 
-        public IList<GymUserDto> GetAllUsers()
+        public async Task<IList<GymUserDto>> GetAllUsers()
         {
-            var roles = _context.Roles.AsEnumerable();
+            var roles = await _context.Roles.ToListAsync();
+            
 
-            var gymUsers = _context.Users.Select(x => new GymUserDto() {
+            var gymUsers = await _context.Users.ToListAsync();
+
+            var dtos = gymUsers.Select(x => new GymUserDto() {
                 Id = x.Id,
                 Email = x.Email,
                 FirstName = x.FirstName,
@@ -47,16 +53,16 @@ namespace ProperArch01.Persistence.Queries
                 RoleName = roles.FirstOrDefault(r => r.Id == x.Roles.FirstOrDefault().RoleId).Name
             }).ToList();
 
-            return gymUsers;
+            return dtos;
         }
 
-        public string GetRoleNameByUser(string id)
+        public async Task<string> GetRoleNameByUser(string id)
         {
-            //var roleName = _context.Roles
-            //    .FirstOrDefault(r => r.Id == _context.UserRoles.FirstOrDefault(x => x.UserId == id).RoleId)
-            //    .Name;
-            var userRole = _context.Users.FirstOrDefault(x => x.Id == id).Roles.FirstOrDefault();
-            var roleName = _context.Roles.FirstOrDefault(r => r.Id == userRole.RoleId).Name;
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            var userRole = user.Roles.FirstOrDefault();
+
+            var role = await _context.Roles.FirstOrDefaultAsync(r => r.Id == userRole.RoleId);
+            var roleName = role.Name;
 
             return roleName;
         }

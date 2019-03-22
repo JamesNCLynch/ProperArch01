@@ -9,7 +9,7 @@ namespace ProperArch01.Contracts.Queries
 {
     public interface IScheduledClassReader
     {
-        List<ScheduledClassDto> GetAllScheduledClasses();
-        ScheduledClassDto GetScheduledClass(string id);
+        Task<List<ScheduledClassDto>> GetAllScheduledClasses();
+        Task<ScheduledClassDto> GetScheduledClass(string id);
     }
 }

@@ -10,8 +10,8 @@ namespace ProperArch01.Contracts.Commands
 {
     public interface IHolidayWriter
     {
-        bool AddHoliday(HolidayDto viewModel);
-        bool DeleteHoliday(string id);
-        bool UpdateHoliday(HolidayDto dto);
+        Task<bool> AddHoliday(HolidayDto viewModel);
+        Task<bool> DeleteHoliday(string id);
+        Task<bool> UpdateHoliday(HolidayDto dto);
     }
 }

@@ -12,7 +12,7 @@ using ProperArch01.Contracts.Commands;
 using ProperArch01.Contracts.Queries;
 using ProperArch01.Contracts.Dto;
 using ProperArch01.Contracts.Constants;
-
+using System.Threading.Tasks;
 
 namespace ProperArch01.Domain.Services
 {
@@ -21,9 +21,7 @@ namespace ProperArch01.Domain.Services
         private readonly IGymUserWriter _gymUserWriter;
         private readonly IGymUserReader _gymUserReader;
 
-        //public AccountService()
-        //{
-        //}
+        // Need to update Account services and all piping so that Persistence does not map viewmodels directly to entity models
 
         public AccountService(IGymUserWriter gymUserWriter, IGymUserReader gymUserReader)
         {
@@ -31,70 +29,80 @@ namespace ProperArch01.Domain.Services
             _gymUserReader = gymUserReader;
         }
         
-        public IList<GymUserDto> GetInstructorByScheduledClass(string id)
+        public async Task<IList<GymUserDto>> GetInstructorByScheduledClass(string id)
         {
             throw new NotImplementedException();
         }
 
-        public GymUserDto GetUser(string id)
+        public async Task<GymUserDto> GetUser(string id)
         {
-            var gymUser = _gymUserReader.GetUser(id);
+            var gymUser = await _gymUserReader.GetUser(id);
             return gymUser;
         }
 
-        public IList<GymUserDto> GetUsersByScheduledClass(string id)
+        public async Task<IList<GymUserDto>> GetUsersByScheduledClass(string id)
         {
             throw new NotImplementedException();
         }
 
-        public IList<GymUserDto> GetUsers(IList<string> userIds)
+        public async Task<IList<GymUserDto>> GetUsers(IList<string> userIds)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<string> AddUserByRegistration(GymUserDto model)
+        public async Task<IEnumerable<string>> AddUserByRegistration(GymUserDto dto)
         {
-            var listOfErrors = _gymUserWriter.AddGymUser(model);
+            var listOfErrors = await _gymUserWriter.AddGymUser(dto);
 
             return listOfErrors;
         }
 
-        public IEnumerable<string> AddUserByPortal(CreateUserViewModel model)
+        public async Task<IEnumerable<string>> AddUserByPortal(CreateUserViewModel viewModel)
         {
-            var listOfErrors = _gymUserWriter.AddGymUser(model);
+            var dto = new GymUserDto()
+            {
+                Email = viewModel.Email,
+                UserName = viewModel.UserName ?? viewModel.Email,
+                FirstName = viewModel.FirstName ?? "",
+                LastName = viewModel.LastName ?? "",
+                Password = viewModel.Password
+            };
+
+            var listOfErrors = await _gymUserWriter.AddGymUser(dto);
 
             return listOfErrors;
         }
 
-        public GymUserDto GetUserByEmailAddress(string email)
+        public async Task<GymUserDto> GetUserByEmailAddress(string email)
         {
-            var user = _gymUserReader.GetAllUsers().FirstOrDefault(x => x.Email == email);
+            var dto = await _gymUserReader.GetAllUsers();
+            var user = dto.FirstOrDefault(x => x.Email == email);
 
             return user;
         }
 
-        public IList<GymUserDto> GetAllUsers()
+        public async Task<IList<GymUserDto>> GetAllUsers()
         {
-            var users = _gymUserReader.GetAllUsers().ToList();
+            var users = await _gymUserReader.GetAllUsers();
 
             return users;
         }
 
-        public bool EditUser(GymUserDto gymUser)
+        public async Task<bool> EditUser(GymUserDto gymUser)
         {
-            bool result = _gymUserWriter.EditUser(gymUser);
+            bool result = await _gymUserWriter.EditUser(gymUser);
             return result;
         }
 
-        public bool DeleteUser(GymUserDto gymUser)
+        public async Task<bool> DeleteUser(GymUserDto gymUser)
         {
-            bool result = _gymUserWriter.DeleteUser(gymUser);
+            bool result = await _gymUserWriter.DeleteUser(gymUser);
             return result;
         }
 
-        public string GetRoleNameByUser(string id)
+        public async Task<string> GetRoleNameByUser(string id)
         {
-            string roleName = _gymUserReader.GetRoleNameByUser(id);
+            string roleName = await _gymUserReader.GetRoleNameByUser(id);
             return roleName;
         }
     }

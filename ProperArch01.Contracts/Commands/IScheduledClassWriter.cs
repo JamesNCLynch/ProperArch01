@@ -9,8 +9,8 @@ namespace ProperArch01.Contracts.Commands
 {
     public interface IScheduledClassWriter
     {
-        bool AddScheduledClass(ScheduledClassDto dto);
-        bool DeleteScheduledClass(string id);
-        bool UpdateScheduledClass(ScheduledClassDto dto);
+        Task<bool> AddScheduledClass(ScheduledClassDto dto);
+        Task<bool> DeleteScheduledClass(string id);
+        Task<bool> UpdateScheduledClass(ScheduledClassDto dto);
     }
 }
