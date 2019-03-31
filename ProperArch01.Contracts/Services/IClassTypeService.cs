@@ -15,7 +15,7 @@ namespace ProperArch01.Contracts.Services
         Task<IList<ClassTypeDto>> GetAllActiveClassTypes();
         Task<IList<string>> GetAllActiveClassTypeNames();
         Task<bool> AddClassType(AddClassTypeViewModel model);
-        Task<bool> EditClassType(ClassTypeDto model);
+        Task<bool> EditClassType(EditClassTypeViewModel model);
         Task<bool> DeleteClassType(string id);
     }
 }

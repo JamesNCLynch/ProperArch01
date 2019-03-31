@@ -1,0 +1,58 @@
+﻿@model ProperArch01.Contracts.Dto.ClassAttendanceDto
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ClassAttendance</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Attendee.ModifiedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Attendee.ModifiedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ScheduledClass.ClassTypeId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ScheduledClass.ClassTypeId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EnrolledDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EnrolledDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EnrolledBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EnrolledBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NoShow)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoShow)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

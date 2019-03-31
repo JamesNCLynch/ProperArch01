@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace ProperArch01.WebApp.Controllers
 {
+    [Authorize(Roles = RoleNames.AdminName)]
     public class HolidayController : Controller
     {
         private IHolidayService _holidayService;

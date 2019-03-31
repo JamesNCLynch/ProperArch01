@@ -1,0 +1,24 @@
+﻿@model IEnumerable<ProperArch01.Contracts.Dto.ClassAttendanceDto>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(x => x.ScheduledClassName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(x => x.ClassStartDateTime)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScheduledClassName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClassStartDateTime)
+            </td>
+        </tr>
+    }
+</table>

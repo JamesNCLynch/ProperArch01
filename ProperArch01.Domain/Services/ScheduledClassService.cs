@@ -21,13 +21,15 @@ namespace ProperArch01.Domain.Services
         private readonly IClassTimetableReader _classTimetableReader;
         private readonly IHolidayReader _holidayReader;
         private readonly IGymUserReader _gymReader;
+        private readonly IClassAttendanceReader _classAttendanceReader;
 
         public ScheduledClassService(IScheduledClassReader scheduledClassReader, 
             IScheduledClassWriter scheduledClassWriter, 
             IClassTypeReader classTypeReader, 
             IClassTimetableReader classTimetableReader,
             IHolidayReader holidayReader,
-            IGymUserReader gymReader)
+            IGymUserReader gymReader,
+            IClassAttendanceReader classAttendanceReader)
         {
             _scheduledClassReader = scheduledClassReader;
             _scheduledClassWriter = scheduledClassWriter;
@@ -35,6 +37,7 @@ namespace ProperArch01.Domain.Services
             _classTimetableReader = classTimetableReader;
             _holidayReader = holidayReader;
             _gymReader = gymReader;
+            _classAttendanceReader = classAttendanceReader;
         }
 
         public async Task<bool> AddScheduledClass(CreateScheduledClassViewModel viewModel)
@@ -116,6 +119,29 @@ namespace ProperArch01.Domain.Services
             indexViewModel.ScheduledClassesRequiringCompletion = incompleteScheduledClassSlots;
 
             return indexViewModel;
+        }
+
+        public async Task<DetailedScheduledClassViewModel> BuildScheduledClassDetailsViewModel(string id)
+        {
+            var dto = await _scheduledClassReader.GetScheduledClass(id);
+            var attendances = await _classAttendanceReader.GetClassAttendanceByScheduledClass(id);
+
+            if (dto == null || attendances == null)
+            {
+                return null;
+            }
+
+            var viewModel = new DetailedScheduledClassViewModel()
+            {
+                Id = dto.Id,
+                ClassStartTime = dto.ClassStartTime,
+                ClassTypeName = dto.ClassTypeName,
+                InstructorName = dto.InstructorName,
+                IsCancelled = dto.IsCancelled,
+                Attendances = attendances
+            };
+
+            return viewModel;
         }
 
         public async Task<bool> DeleteScheduledClass(string id)

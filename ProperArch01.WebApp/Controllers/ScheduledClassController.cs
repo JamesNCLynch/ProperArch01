@@ -10,9 +10,11 @@ using ProperArch01.Contracts.Services;
 using ProperArch01.Contracts.Dto;
 using ProperArch01.Contracts.Models.ScheduledClass;
 using System.Threading.Tasks;
+using ProperArch01.Contracts.Constants;
 
 namespace ProperArch01.WebApp.Controllers
 {
+    [Authorize(Roles = RoleNames.AdminName)]
     public class ScheduledClassController : Controller
     {
         private IScheduledClassService _scheduledClassService;
@@ -42,10 +44,7 @@ namespace ProperArch01.WebApp.Controllers
                 return HttpNotFound();
             }
 
-            // replace this with service call to retrieve list of attendees
-            var listOfAttendees = new List<string> { "Unpersisted attendee 1", "Unpersisted attendee 2", "Unpersisted attendee 3" };
-
-            var viewModel = new DetailedScheduledClassViewModel(dto, listOfAttendees);
+            var viewModel = await _scheduledClassService.BuildScheduledClassDetailsViewModel(id);
 
             return View(viewModel);
         }

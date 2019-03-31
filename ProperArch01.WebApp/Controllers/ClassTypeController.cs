@@ -86,13 +86,16 @@ namespace ProperArch01.WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var classType = await _classTypeService.GetClassType(id);
+            var dto = await _classTypeService.GetClassType(id);
 
-            if (classType == null)
+            if (dto == null)
             {
                 return HttpNotFound();
             }
-            return View(classType);
+
+            var viewModel = new EditClassTypeViewModel(dto);
+
+            return View(viewModel);
         }
 
         // POST: ClassType/Edit/5
@@ -100,11 +103,11 @@ namespace ProperArch01.WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(ClassTypeDto classType)
+        public async Task<ActionResult> Edit(EditClassTypeViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                var isSuccess = await _classTypeService.EditClassType(classType);
+                var isSuccess = await _classTypeService.EditClassType(viewModel);
 
                 if (!isSuccess)
                 {

@@ -37,7 +37,9 @@
     </dl>
 </div>
 
-@*TODO: Place list of attendees here*@
+<h2>Users signed up for this class</h2>
+
+@Html.Partial("_Users", Model.Attendances)
 
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |

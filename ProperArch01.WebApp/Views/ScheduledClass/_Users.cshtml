@@ -1,0 +1,34 @@
+﻿@model IEnumerable<ProperArch01.Contracts.Dto.ClassAttendanceDto>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AttendeeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EnrolledDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NoShow)
+        </th>
+        <th>
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AttendeeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnrolledDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoShow)
+            </td>
+            <td>
+                @Html.ActionLink("Remove", "Delete", "ClassAttendance", new { id = item.Id})
+            </td>
+        </tr>
+    }
+</table>

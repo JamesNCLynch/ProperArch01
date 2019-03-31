@@ -42,9 +42,23 @@ namespace ProperArch01.Domain.Services
             return result;
         }
 
-        public async Task<bool> EditClassType(ClassTypeDto model)
+        public async Task<bool> EditClassType(EditClassTypeViewModel viewModel)
         {
-            var result = await _classTypeWriter.EditClassType(model);
+            if (viewModel == null)
+            {
+                return false;
+            }
+
+            var dto = new ClassTypeDto
+            {
+                Id = viewModel.Id,
+                Name = viewModel.Name,
+                ClassColour = viewModel.ClassColour,
+                Difficulty = viewModel.Difficulty,
+                Description = viewModel.Description,
+                IsActive = viewModel.IsActive
+            };
+            var result = await _classTypeWriter.EditClassType(dto);
             return result;
         }
 

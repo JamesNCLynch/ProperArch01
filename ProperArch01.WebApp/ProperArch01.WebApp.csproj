@@ -196,6 +196,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ClassAttendanceController.cs" />
     <Compile Include="Controllers\ClassTimetableController.cs" />
     <Compile Include="Controllers\ClassTypeController.cs" />
     <Compile Include="Controllers\HolidayController.cs" />
@@ -404,6 +405,15 @@
     <Content Include="Views\ScheduledClass\_IncompleteScheduledClasses.cshtml" />
     <Content Include="Views\ScheduledClass\_UpcomingScheduledClasses.cshtml" />
     <Content Include="Views\ScheduledClass\_UpcomingCancelledClasses.cshtml" />
+    <Content Include="Views\ClassAttendance\Create.cshtml" />
+    <Content Include="Views\ClassAttendance\Delete.cshtml" />
+    <Content Include="Views\ClassAttendance\Details.cshtml" />
+    <Content Include="Views\ClassAttendance\Edit.cshtml" />
+    <Content Include="Views\ClassAttendance\Index.cshtml" />
+    <Content Include="Views\ClassAttendance\_UpcomingScheduledClasses.cshtml" />
+    <Content Include="Views\ClassAttendance\_ClassesCurrentlySignedUp.cshtml" />
+    <Content Include="Views\ClassAttendance\_PastClassesAttended.cshtml" />
+    <Content Include="Views\ScheduledClass\_Users.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

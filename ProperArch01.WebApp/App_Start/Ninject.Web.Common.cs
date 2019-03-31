@@ -75,6 +75,7 @@ namespace ProperArch01.WebApp.App_Start
             kernel.Bind<IColourServices>().To<ColourServices>();
             kernel.Bind<IHolidayService>().To<HolidayService>();
             kernel.Bind<IScheduledClassService>().To<ScheduledClassService>();
+            kernel.Bind<IClassAttendanceService>().To<ClassAttendanceService>();
 
             // readers
             kernel.Bind<IGymUserReader>().To<GymUserReader>();
@@ -82,6 +83,7 @@ namespace ProperArch01.WebApp.App_Start
             kernel.Bind<IClassTimetableReader>().To<ClassTimetableReader>();
             kernel.Bind<IHolidayReader>().To<HolidayReader>();
             kernel.Bind<IScheduledClassReader>().To<ScheduledClassReader>();
+            kernel.Bind<IClassAttendanceReader>().To<ClassAttendanceReader>();
 
             // writers
             kernel.Bind<IGymUserWriter>().To<GymUserWriter>();
@@ -89,6 +91,7 @@ namespace ProperArch01.WebApp.App_Start
             kernel.Bind<IClassTimetableWriter>().To<ClassTimetableWriter>();
             kernel.Bind<IHolidayWriter>().To<HolidayWriter>();
             kernel.Bind<IScheduledClassWriter>().To<ScheduledClassWriter>();
+            kernel.Bind<IClassAttendanceWriter>().To<ClassAttendanceWriter>();
         }        
     }
 }

@@ -1,0 +1,17 @@
+﻿@model ProperArch01.Contracts.Models.ClassAttendance.ClassAttendanceIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Available classes:</h2>
+
+@Html.Partial("_UpcomingScheduledClasses", Model.UpcomingScheduledClasses)
+
+<h2>Currently signed up to:</h2>
+
+@Html.Partial("_ClassesCurrentlySignedUp", Model.ClassesCurrentlySignedUp)
+
+<h2>Previously attended:</h2>
+
+@Html.Partial("_PastClassesAttended", Model.PastClassesAttended)

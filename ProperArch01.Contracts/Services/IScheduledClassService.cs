@@ -16,5 +16,6 @@ namespace ProperArch01.Contracts.Services
         Task<bool> UpdateScheduledClass(EditScheduledClassViewModel viewModel);
         Task<bool> DeleteScheduledClass(string id);
         Task<List<string>> GetAllInstructorNames();
+        Task<DetailedScheduledClassViewModel> BuildScheduledClassDetailsViewModel(string id);
     }
 }

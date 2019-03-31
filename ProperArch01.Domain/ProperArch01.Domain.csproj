@@ -96,6 +96,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AccountService.cs" />
+    <Compile Include="Services\ClassAttendanceService.cs" />
     <Compile Include="Services\ClassTimetableService.cs" />
     <Compile Include="Services\ClassTypeService.cs" />
     <Compile Include="Services\ColourServices.cs" />
@@ -110,6 +111,13 @@
     </None>
     <None Include="app.Release.config">
       <DependentUpon>app.config</DependentUpon>
+    </None>
+    <Content Include="web.config" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>

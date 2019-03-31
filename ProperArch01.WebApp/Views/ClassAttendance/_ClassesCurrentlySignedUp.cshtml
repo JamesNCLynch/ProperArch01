@@ -1,0 +1,30 @@
+﻿@model IEnumerable<ProperArch01.Contracts.Dto.ClassAttendanceDto>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(x => x.ScheduledClassName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(x => x.ClassStartDateTime)
+        </th>
+        <th>
+            
+        </th>
+    </tr>
+
+    @foreach(var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.ScheduledClassName, "Details", "ScheduledClass", new { id = item.ScheduledClassId }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClassStartDateTime)
+            </td>
+            <td>
+                @Html.ActionLink("Cancel", "Delete", new { id = item.Id})
+            </td>
+        </tr>
+    }
+</table>
