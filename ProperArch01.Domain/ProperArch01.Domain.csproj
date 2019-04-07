@@ -101,6 +101,7 @@
     <Compile Include="Services\ClassTypeService.cs" />
     <Compile Include="Services\ColourServices.cs" />
     <Compile Include="Services\HolidayService.cs" />
+    <Compile Include="Services\HomeService.cs" />
     <Compile Include="Services\IdentityEmailService.cs" />
     <Compile Include="Services\ScheduledClassService.cs" />
   </ItemGroup>

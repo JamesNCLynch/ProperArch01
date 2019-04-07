@@ -123,6 +123,7 @@
     <Compile Include="Models\Colour\RGBAModel.cs" />
     <Compile Include="Models\Holiday\CreateHolidayViewModel.cs" />
     <Compile Include="Models\Holiday\EditHolidayViewModel.cs" />
+    <Compile Include="Models\Home\ClassTypeMenuViewModel.cs" />
     <Compile Include="Models\ScheduledClass\CreateScheduledClassViewModel.cs" />
     <Compile Include="Models\ScheduledClass\DetailedScheduledClassViewModel.cs" />
     <Compile Include="Models\ScheduledClass\EditScheduledClassViewModel.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Services\IClassTypeService.cs" />
     <Compile Include="Services\IColourServices.cs" />
     <Compile Include="Services\IHolidayService.cs" />
+    <Compile Include="Services\IHomeService.cs" />
     <Compile Include="Services\IScheduledClassService.cs" />
   </ItemGroup>
   <ItemGroup>

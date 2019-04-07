@@ -216,6 +216,17 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\HomepageCarousel\mitchelstownleisurecentre-1024x323.jpg" />
+    <Content Include="Assets\HomepageCarousel\mlc-activities-1024x323.jpg" />
+    <Content Include="Assets\HomepageCarousel\mlc_astro-1024x323.jpg" />
+    <Content Include="Assets\HomepageCarousel\mlc_birthday-1024x323.jpg" />
+    <Content Include="Assets\HomepageCarousel\mlc_class-1024x323.jpg" />
+    <Content Include="Assets\HomepageCarousel\mlc_gym-1-1024x323.jpg" />
+    <Content Include="Assets\HomepageCarousel\mlc_hall-1024x323.jpg" />
+    <Content Include="Assets\HomepagePackages\packages-corp.jpg" />
+    <Content Include="Assets\HomepagePackages\packages-couple.jpg" />
+    <Content Include="Assets\HomepagePackages\packages-senior.jpg" />
+    <Content Include="Assets\HomepagePackages\packages-single.jpg" />
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-datepicker.min.css" />
     <Content Include="Content\bootstrap-datepicker.standalone.css" />
@@ -414,6 +425,13 @@
     <Content Include="Views\ClassAttendance\_ClassesCurrentlySignedUp.cshtml" />
     <Content Include="Views\ClassAttendance\_PastClassesAttended.cshtml" />
     <Content Include="Views\ScheduledClass\_Users.cshtml" />
+    <Content Include="Views\Home\MissionAim.cshtml" />
+    <Content Include="Views\Home\History.cshtml" />
+    <Content Include="Views\Home\MembershipRates.cshtml" />
+    <Content Include="Views\Home\CorporateRates.cshtml" />
+    <Content Include="Views\Home\Payg.cshtml" />
+    <Content Include="Views\Home\RoomFacilityRates.cshtml" />
+    <Content Include="Views\Home\BookingForms.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

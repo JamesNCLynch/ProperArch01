@@ -76,6 +76,7 @@ namespace ProperArch01.WebApp.App_Start
             kernel.Bind<IHolidayService>().To<HolidayService>();
             kernel.Bind<IScheduledClassService>().To<ScheduledClassService>();
             kernel.Bind<IClassAttendanceService>().To<ClassAttendanceService>();
+            kernel.Bind<IHomeService>().To<HomeService>();
 
             // readers
             kernel.Bind<IGymUserReader>().To<GymUserReader>();

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using ProperArch01.Contracts.Constants;
 using ProperArch01.Contracts.Services;
+using ProperArch01.Contracts.Dto;
 
 namespace ProperArch01.WebApp.Helpers
 {

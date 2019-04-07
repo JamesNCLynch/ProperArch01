@@ -1,6 +1,8 @@
-﻿using System;
+﻿using ProperArch01.Contracts.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -8,8 +10,18 @@ namespace ProperArch01.WebApp.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        private readonly IHomeService _homeService;
+
+        public HomeController(IHomeService homeService)
         {
+            _homeService = homeService;
+        }
+
+        public async Task<ActionResult> Index()
+        {
+            var classTypes = await _homeService.GetClassTypeDtos();
+            ViewBag.ClassTypes = classTypes;
+
             return View();
         }
 
@@ -23,6 +35,55 @@ namespace ProperArch01.WebApp.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+
+        public ActionResult MissionAim()
+        {
+            ViewBag.Message = "Mission Aim";
+
+            return View();
+        }
+
+        public ActionResult History()
+        {
+            ViewBag.Message = "History";
+
+            return View();
+        }
+
+        public ActionResult MembershipRates()
+        {
+            ViewBag.Message = "Membership Rates";
+
+            return View();
+        }
+
+        public ActionResult CorporateRates()
+        {
+            ViewBag.Message = "Corporate Rates";
+
+            return View();
+        }
+
+        public ActionResult Payg()
+        {
+            ViewBag.Message = "Pay as you go";
+
+            return View();
+        }
+
+        public ActionResult RoomFacilityRates()
+        {
+            ViewBag.Message = "Room/Facility Rates";
+
+            return View();
+        }
+
+        public ActionResult BookingForms()
+        {
+            ViewBag.Message = "Booking Forms";
 
             return View();
         }

@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 100px;
     padding-bottom: 20px;
 }
 
@@ -21,4 +21,31 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.div-border
+{
+    border: solid thin;
+    border-color: lightgray;
+}
+
+.div-border-top {
+    border-top: solid thin;
+    border-color: lightgray;
+}
+
+.div-border-bottom {
+    border-bottom: solid thin;
+    border-color: lightgray;
+}
+
+.div-border-left {
+    border-left: solid thin;
+    border-color: lightgray;
+}
+
+
+.div-border-right {
+    border-right: solid thin;
+    border-color: lightgray;
 }
