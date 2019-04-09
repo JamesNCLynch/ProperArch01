@@ -87,5 +87,61 @@ namespace ProperArch01.WebApp.Controllers
 
             return View();
         }
+
+        public ActionResult SportsHall()
+        {
+            ViewBag.Message = "Sports Hall";
+
+            return View();
+        }
+
+        public ActionResult Gym()
+        {
+            ViewBag.Message = "Gym";
+
+            return View();
+        }
+
+        public ActionResult Activities()
+        {
+            ViewBag.Message = "Activities";
+
+            return View();
+        }
+
+        public ActionResult Pitch()
+        {
+            ViewBag.Message = "Pitch";
+
+            return View();
+        }
+
+        public ActionResult MeetingRooms()
+        {
+            ViewBag.Message = "Meeting Rooms";
+
+            return View();
+        }
+
+        public ActionResult SummerCamps()
+        {
+            ViewBag.Message = "Summer camps";
+
+            return View();
+        }
+
+        public ActionResult Birthday()
+        {
+            ViewBag.Message = "Birthday";
+
+            return View();
+        }
+
+        public ActionResult Gallery()
+        {
+            ViewBag.Message = "Gallery";
+
+            return View();
+        }
     }
 }
