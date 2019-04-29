@@ -11,15 +11,17 @@ using System.Configuration;
 
 namespace ProperArch01.WebApp.Controllers
 {
-    public class ClassTimetableController : Controller
+    public class ClassTimetableController : BaseController
     {
-        private IClassTimetableService _classTimetableService;
-        private IClassTypeService _classTypeService;
+        new private readonly IClassTimetableService _classTimetableService;
+        new private readonly IBaseService _baseService;
 
-        public ClassTimetableController(IClassTimetableService classTimetableService, IClassTypeService classTypeService)
+        // CHANGE ALL BASE CONSTRUCTORS TO baseService!!!
+
+        public ClassTimetableController(IClassTimetableService classTimetableService, IBaseService baseService) : base(baseService)
         {
             _classTimetableService = classTimetableService;
-            _classTypeService = classTypeService;
+            _baseService = baseService;
         }
 
         // GET: ClassTimetable
@@ -48,6 +50,7 @@ namespace ProperArch01.WebApp.Controllers
         }
 
         // GET: ClassTimetable/Create
+        [Authorize(Roles = RoleNames.AdminName)]
         public async Task<ActionResult> Create(int weekday, int startHour)
         {
             if (weekday < 0 || weekday > 7)
@@ -69,6 +72,8 @@ namespace ProperArch01.WebApp.Controllers
 
         // POST: ClassTimetable/Create
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.AdminName)]
         public async Task<ActionResult> Create(AddClassTimetableViewModel viewModel)
         {
             if (viewModel == null)
@@ -141,6 +146,7 @@ namespace ProperArch01.WebApp.Controllers
         }
 
         // GET: ClassTimetable/Edit/5
+        [Authorize(Roles = RoleNames.AdminName)]
         public async Task<ActionResult> Edit(string id)
         {
             if (id == null)
@@ -163,6 +169,8 @@ namespace ProperArch01.WebApp.Controllers
 
         // POST: ClassTimetable/Edit/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.AdminName)]
         public async Task<ActionResult> Edit(EditClassTimetableViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -187,6 +195,7 @@ namespace ProperArch01.WebApp.Controllers
         }
 
         // GET: ClassTimetable/Delete/5
+        [Authorize(Roles = RoleNames.AdminName)]
         public async Task<ActionResult> Delete(string id)
         {
             if (id == null)
@@ -206,6 +215,8 @@ namespace ProperArch01.WebApp.Controllers
 
         // POST: ClassTimetable/Delete/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.AdminName)]
         public async Task<ActionResult> Delete(ClassTimetableDto dto)
         {
             var isSuccess = await _classTimetableService.DeleteClassTimetable(dto);

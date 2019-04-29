@@ -8,20 +8,17 @@ using System.Web.Mvc;
 
 namespace ProperArch01.WebApp.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private readonly IHomeService _homeService;
+        new private readonly IBaseService _baseService;
 
-        public HomeController(IHomeService homeService)
+        public HomeController(IBaseService baseService) : base(baseService)
         {
-            _homeService = homeService;
+            _baseService = baseService;
         }
 
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            var classTypes = await _homeService.GetClassTypeDtos();
-            ViewBag.ClassTypes = classTypes;
-
             return View();
         }
 

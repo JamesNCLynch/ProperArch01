@@ -9,17 +9,23 @@ using System.Web;
 
 namespace ProperArch01.Domain.Services
 {
-    public class HomeService : IHomeService
+    public class BaseService : IBaseService
     {
         private readonly IClassTypeReader _classTypeReader;
-        public HomeService(IClassTypeReader classTypeReader)
+        public BaseService(IClassTypeReader classTypeReader)
         {
             _classTypeReader = classTypeReader;
         }
 
-        public async Task<List<ClassTypeDto>> GetClassTypeDtos()
+        public List<ClassTypeDto> GetClassTypeDtos()
         {
-            var dtos = await _classTypeReader.GetAllActiveClassTypes();
+            var dtos = _classTypeReader.GetAllActiveClassTypes();
+            return dtos.ToList();
+        }
+
+        public async Task<List<ClassTypeDto>> GetClassTypeDtosAsync()
+        {
+            var dtos = await _classTypeReader.GetAllActiveClassTypesAsync();
             return dtos.ToList();
         }
     }

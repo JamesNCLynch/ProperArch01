@@ -13,6 +13,7 @@ namespace ProperArch01.Contracts.Queries
     {
         Task<ClassTypeDto> GetClassType(string id);
         Task<IList<ClassTypeDto>> GetAllClassTypes();
-        Task<IList<ClassTypeDto>> GetAllActiveClassTypes();
+        Task<IList<ClassTypeDto>> GetAllActiveClassTypesAsync();
+        List<ClassTypeDto> GetAllActiveClassTypes();
     }
 }

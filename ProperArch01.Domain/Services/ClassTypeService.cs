@@ -64,14 +64,14 @@ namespace ProperArch01.Domain.Services
 
         public async Task<IList<string>> GetAllActiveClassTypeNames()
         {
-            var classTypes = await _classTypeReader.GetAllActiveClassTypes();
+            var classTypes = await _classTypeReader.GetAllActiveClassTypesAsync();
             var names = classTypes.Select(x => x.Name).ToList();
             return names;
         }
 
         public async Task<IList<ClassTypeDto>> GetAllActiveClassTypes()
         {
-            var result = await _classTypeReader.GetAllActiveClassTypes();
+            var result = await _classTypeReader.GetAllActiveClassTypesAsync();
             return result;
         }
 

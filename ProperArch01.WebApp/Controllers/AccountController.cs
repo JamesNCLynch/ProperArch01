@@ -21,22 +21,26 @@ using RegisterViewModel = ProperArch01.Contracts.Models.Account.RegisterViewMode
 namespace ProperArch01.WebApp.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private IAccountService _accountService;
-        
-        public AccountController(IAccountService accountService)
+
+        new private readonly IAccountService _accountService;
+        new private readonly IBaseService _baseService;
+
+        public AccountController(IAccountService accountService, IBaseService baseService) : base(baseService)
         {
             _accountService = accountService;
+            _baseService = baseService;
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IAccountService accountService)
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IAccountService accountService, IBaseService baseService) : base(baseService)
         {
             UserManager = userManager;
             SignInManager = signInManager;
             _accountService = accountService;
+            _baseService = baseService;
         }
 
         public ApplicationSignInManager SignInManager

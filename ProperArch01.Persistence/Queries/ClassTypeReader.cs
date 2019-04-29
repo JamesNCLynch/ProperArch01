@@ -17,7 +17,22 @@ namespace ProperArch01.Persistence.Queries
             _context = context;
         }
 
-        public async Task<IList<ClassTypeDto>> GetAllActiveClassTypes()
+        public List<ClassTypeDto> GetAllActiveClassTypes()
+        {
+            var retValue = _context.ClassTypes.Where(x => x.IsActive == true).Select(x => new ClassTypeDto()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                IsActive = x.IsActive,
+                Difficulty = x.Difficulty,
+                Description = x.Description,
+                ClassColour = x.ClassColour
+            });
+
+            return retValue.ToList();
+        }
+
+        public async Task<IList<ClassTypeDto>> GetAllActiveClassTypesAsync()
         {
             var classTypes = await _context.ClassTypes.Where(x => x.IsActive == true).ToListAsync();
 

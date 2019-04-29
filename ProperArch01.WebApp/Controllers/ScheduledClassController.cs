@@ -14,17 +14,19 @@ using ProperArch01.Contracts.Constants;
 
 namespace ProperArch01.WebApp.Controllers
 {
-    [Authorize(Roles = RoleNames.AdminName)]
-    public class ScheduledClassController : Controller
+    public class ScheduledClassController : BaseController
     {
-        private IScheduledClassService _scheduledClassService;
+        new private readonly IScheduledClassService _scheduledClassService;
+        new private readonly IBaseService _baseService;
 
-        public ScheduledClassController(IScheduledClassService scheduledClassService)
+        public ScheduledClassController(IScheduledClassService scheduledClassService, IBaseService baseService) : base(baseService)
         {
             _scheduledClassService = scheduledClassService;
+            _baseService = baseService;
         }
 
         // GET: ScheduledClass
+        [Authorize(Roles = RoleNames.AdminName)]
         public async Task<ActionResult> Index()
         {
             var viewModel = await _scheduledClassService.BuildIndexViewModel();
@@ -32,6 +34,7 @@ namespace ProperArch01.WebApp.Controllers
         }
 
         // GET: ScheduledClass/Details/5
+        [Authorize(Roles = RoleNames.AdminName)]
         public async Task<ActionResult> Details(string id)
         {
             if (id == null)
@@ -50,6 +53,7 @@ namespace ProperArch01.WebApp.Controllers
         }
 
         // GET: ScheduledClass/Create
+        [Authorize(Roles = RoleNames.AdminName)]
         public async Task<ActionResult> Create(string className, DateTime startTime)
         {
             var instructors = await _scheduledClassService.GetAllInstructorNames();
@@ -63,6 +67,7 @@ namespace ProperArch01.WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.AdminName)]
         public async Task<ActionResult> Create(CreateScheduledClassViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -79,6 +84,7 @@ namespace ProperArch01.WebApp.Controllers
         }
 
         // GET: ScheduledClass/Edit/5
+        [Authorize(Roles = RoleNames.AdminName)]
         public async Task<ActionResult> Edit(string id)
         {
             if (id == null)
@@ -105,6 +111,7 @@ namespace ProperArch01.WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.AdminName)]
         public async Task<ActionResult> Edit(EditScheduledClassViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -120,6 +127,7 @@ namespace ProperArch01.WebApp.Controllers
         }
 
         // GET: ScheduledClass/Delete/5
+        [Authorize(Roles = RoleNames.AdminName)]
         public async Task<ActionResult> Delete(string id)
         {
             if (id == null)
@@ -138,6 +146,7 @@ namespace ProperArch01.WebApp.Controllers
         // POST: ScheduledClass/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.AdminName)]
         public async Task<ActionResult> DeleteConfirmed(string id)
         {
             var isSuccess = await _scheduledClassService.DeleteScheduledClass(id);

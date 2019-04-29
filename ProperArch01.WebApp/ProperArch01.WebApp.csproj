@@ -196,6 +196,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ClassAttendanceController.cs" />
     <Compile Include="Controllers\ClassTimetableController.cs" />
     <Compile Include="Controllers\ClassTypeController.cs" />
@@ -445,6 +446,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="DependencyResolution\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

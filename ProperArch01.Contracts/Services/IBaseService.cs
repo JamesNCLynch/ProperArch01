@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace ProperArch01.Contracts.Services
 {
-    public interface IHomeService
+    public interface IBaseService
     {
-        Task<List<ClassTypeDto>> GetClassTypeDtos();
+        Task<List<ClassTypeDto>> GetClassTypeDtosAsync();
+        List<ClassTypeDto> GetClassTypeDtos();
     }
 }

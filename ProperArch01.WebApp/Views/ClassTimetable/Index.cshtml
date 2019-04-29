@@ -4,21 +4,26 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>MLC CLASS AND TIMETABLE</h2>
 
+@if (User.IsInRole(ProperArch01.Contracts.Constants.RoleNames.AdminName))
+{
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+}
+
+    
 
 
-<table class="table">
+<table class="table table-bordered timetable">
     <tr>
         <th>        </th>
         <th>
             Monday
         </th>
         <th>
-            Tueday
+            Tuesday
         </th>
         <th>
             Wednesday
@@ -45,79 +50,79 @@
                 @item.StartHour
             </td>
             <td>
-                @if (item.MondayTimeSlot == null)
-                {
-                    @Html.ActionLink("Add class", "Create", new { weekday = 1, startHour = @item.StartHour })
-                }
-                else
+                @if (item.MondayTimeSlot != null)
                 {
                     @Html.Partial("_ClassSlotViewModel", item.MondayTimeSlot)
                 }
+                else if (User.IsInRole(ProperArch01.Contracts.Constants.RoleNames.AdminName))
+                {
+                    @Html.ActionLink("Add class", "Create", new { weekday = 1, startHour = @item.StartHour })
+                }
             </td>
 
             <td>
-                @if (item.TuesdayTimeSlot == null)
-                {
-                    @Html.ActionLink("Add class", "Create", new { weekday = 2, startHour = @item.StartHour })
-                }
-                else
+                @if (item.TuesdayTimeSlot != null)
                 {
                     @Html.Partial("_ClassSlotViewModel", item.TuesdayTimeSlot)
                 }
+                else if (User.IsInRole(ProperArch01.Contracts.Constants.RoleNames.AdminName))
+                {
+                    @Html.ActionLink("Add class", "Create", new { weekday = 2, startHour = @item.StartHour })
+                }
             </td>
 
             <td>
-                @if (item.WednesdayTimeSlot == null)
-                {
-                    @Html.ActionLink("Add class", "Create", new { weekday = 3, startHour = @item.StartHour })
-                }
-                else
+                @if (item.WednesdayTimeSlot != null)
                 {
                     @Html.Partial("_ClassSlotViewModel", item.WednesdayTimeSlot)
                 }
+                else if (User.IsInRole(ProperArch01.Contracts.Constants.RoleNames.AdminName))
+                {
+                    @Html.ActionLink("Add class", "Create", new { weekday = 3, startHour = @item.StartHour })
+                }
             </td>
 
             <td>
-                @if (item.ThursdayTimeSlot == null)
-                {
-                    @Html.ActionLink("Add class", "Create", new { weekday = 4, startHour = @item.StartHour })
-                }
-                else
+                @if (item.ThursdayTimeSlot != null)
                 {
                     @Html.Partial("_ClassSlotViewModel", item.ThursdayTimeSlot)
                 }
+                else if (User.IsInRole(ProperArch01.Contracts.Constants.RoleNames.AdminName))
+                {
+                    @Html.ActionLink("Add class", "Create", new { weekday = 4, startHour = @item.StartHour })
+                }
             </td>
 
             <td>
-                @if (item.FridayTimeSlot == null)
-                {
-                    @Html.ActionLink("Add class", "Create", new { weekday = 5, startHour = @item.StartHour })
-                }
-                else
+                @if (item.FridayTimeSlot != null)
                 {
                     @Html.Partial("_ClassSlotViewModel", item.FridayTimeSlot)
                 }
+                else if (User.IsInRole(ProperArch01.Contracts.Constants.RoleNames.AdminName))
+                {
+                    @Html.ActionLink("Add class", "Create", new { weekday = 5, startHour = @item.StartHour })
+                }
             </td>
 
             <td>
-                @if (item.SaturdayTimeSlot == null)
-                {
-                    @Html.ActionLink("Add class", "Create", new { weekday = 6, startHour = @item.StartHour })
-                }
-                else
+                @if (item.SaturdayTimeSlot != null)
                 {
                     @Html.Partial("_ClassSlotViewModel", item.SaturdayTimeSlot)
                 }
+                else if (User.IsInRole(ProperArch01.Contracts.Constants.RoleNames.AdminName))
+                {
+                    @Html.ActionLink("Add class", "Create", new { weekday = 6, startHour = @item.StartHour })
+                }
             </td>
 
             <td>
-                @if (item.SundayTimeSlot == null)
-                {
-                    @Html.ActionLink("Add class", "Create", new { weekday = 0, startHour = @item.StartHour })
-                }
-                else
+                @if (item.SundayTimeSlot != null)
                 {
                     @Html.Partial("_ClassSlotViewModel", item.SundayTimeSlot)
+                }
+                else if (User.IsInRole(ProperArch01.Contracts.Constants.RoleNames.AdminName))
+                {
+                    @Html.ActionLink("Add class", "Create", new { weekday = 0, startHour = @item.StartHour })
                 }
             </td>
         </tr>

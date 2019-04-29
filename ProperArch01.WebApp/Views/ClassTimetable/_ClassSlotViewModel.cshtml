@@ -4,10 +4,13 @@
     <div style="">
         <p>@Model.ClassName</p>
         <p>@Model.StartTime.ToShortTimeString() - @Model.EndTime.ToShortTimeString()</p>
+        @if (User.IsInRole(ProperArch01.Contracts.Constants.RoleNames.AdminName))
+        {
         <p>
             @Html.ActionLink("Edit", "Edit", new { id = @Model.Id }) |
             @Html.ActionLink("Delete", "Delete", new { id = @Model.Id })
         </p>
+        }
     </div>
     
 </div>

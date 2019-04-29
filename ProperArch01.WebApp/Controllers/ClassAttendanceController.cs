@@ -15,12 +15,15 @@ using Microsoft.AspNet.Identity;
 
 namespace ProperArch01.WebApp.Controllers
 {
-    public class ClassAttendanceController : Controller
+    public class ClassAttendanceController : BaseController
     {
-        private IClassAttendanceService _classAttendanceService;
+        new private readonly IClassAttendanceService _classAttendanceService;
+        new private readonly IBaseService _baseService;
 
-        public ClassAttendanceController(IClassAttendanceService classAttendanceService) {
+        public ClassAttendanceController(IClassAttendanceService classAttendanceService, IBaseService baseService) : base(baseService)
+        {
             _classAttendanceService = classAttendanceService;
+            _baseService = baseService;
         }
 
         // GET: ClassAttendance
@@ -95,6 +98,7 @@ namespace ProperArch01.WebApp.Controllers
         }
 
         // GET: ClassAttendance/Edit/5
+        [Authorize(Roles = RoleNames.AdminName)]
         public async Task<ActionResult> Edit(string id)
         {
             if (id == null)
@@ -118,6 +122,7 @@ namespace ProperArch01.WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.AdminName)]
         public async Task<ActionResult> Edit(EditClassAttendanceViewModel viewModel)
         {
             if (ModelState.IsValid)

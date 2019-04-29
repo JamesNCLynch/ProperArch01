@@ -5,6 +5,7 @@ using System.Web;
 using ProperArch01.Contracts.Constants;
 using ProperArch01.Contracts.Services;
 using ProperArch01.Contracts.Dto;
+using System.Configuration;
 
 namespace ProperArch01.WebApp.Helpers
 {
@@ -29,7 +30,10 @@ namespace ProperArch01.WebApp.Helpers
 
         public static List<int> GetSlotHours()
         {
-            IEnumerable<int> hours = Enumerable.Range(7, 15);
+            var earliestSlotStartHour = Int32.Parse(ConfigurationManager.AppSettings["GymOpeningHour"]);
+            var latestSlotEndHour = Int32.Parse(ConfigurationManager.AppSettings["GymClosingHour"]);
+
+            IEnumerable<int> hours = Enumerable.Range(earliestSlotStartHour, latestSlotEndHour - earliestSlotStartHour);
 
             return hours.ToList();
         }

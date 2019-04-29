@@ -16,14 +16,15 @@ using ProperArch01.Contracts.Constants;
 
 namespace ProperArch01.WebApp.Controllers
 {
-    [Authorize(Roles = RoleNames.AdminName)]
-    public class ClassTypeController : Controller
+    public class ClassTypeController : BaseController
     {
-        private IClassTypeService _classTypeService;
+        new private readonly IClassTypeService _classTypeService;
+        new private readonly IBaseService _baseService;
 
-        public ClassTypeController(IClassTypeService classTypeService)
+        public ClassTypeController(IClassTypeService classTypeService, IBaseService baseService) : base(baseService)
         {
             _classTypeService = classTypeService;
+            _baseService = baseService;
         }
 
         // GET: ClassType
@@ -52,6 +53,7 @@ namespace ProperArch01.WebApp.Controllers
         }
 
         // GET: ClassType/Create
+        [Authorize(Roles = RoleNames.AdminName)]
         public ActionResult Create()
         {
             return View();
@@ -62,6 +64,7 @@ namespace ProperArch01.WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.AdminName)]
         public async Task<ActionResult> Create(AddClassTypeViewModel classType)
         {
             if (ModelState.IsValid)
@@ -80,6 +83,7 @@ namespace ProperArch01.WebApp.Controllers
         }
 
         // GET: ClassType/Edit/5
+        [Authorize(Roles = RoleNames.AdminName)]
         public async Task<ActionResult> Edit(string id)
         {
             if (id == null)
@@ -103,6 +107,7 @@ namespace ProperArch01.WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.AdminName)]
         public async Task<ActionResult> Edit(EditClassTypeViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -118,6 +123,7 @@ namespace ProperArch01.WebApp.Controllers
         }
 
         // GET: ClassType/Delete/5
+        [Authorize(Roles = RoleNames.AdminName)]
         public async Task<ActionResult> Delete(string id)
         {
             if (id == null)
@@ -136,6 +142,7 @@ namespace ProperArch01.WebApp.Controllers
         // POST: ClassType/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.AdminName)]
         public async Task<ActionResult> DeleteConfirmed(string id)
         {
             var isSuccess = await _classTypeService.DeleteClassType(id);

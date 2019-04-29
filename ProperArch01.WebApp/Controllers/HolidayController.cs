@@ -16,19 +16,21 @@ using System.Threading.Tasks;
 namespace ProperArch01.WebApp.Controllers
 {
     [Authorize(Roles = RoleNames.AdminName)]
-    public class HolidayController : Controller
+    public class HolidayController : BaseController
     {
-        private IHolidayService _holidayService;
+        new private readonly IHolidayService _holidayService;
+        new private readonly IBaseService _baseService;
 
-        public HolidayController(IHolidayService holidayService)
+        public HolidayController(IHolidayService holidayService, IBaseService baseService) : base(baseService)
         {
             _holidayService = holidayService;
+            _baseService = baseService;
         }
 
         // GET: Holiday
         public async Task<ActionResult> Index()
         {
-            var holidays = await _holidayService.GetAllHolidays();
+            var holidays = await base._holidayService.GetAllHolidays();
             return View(holidays);
         }
 
@@ -40,7 +42,7 @@ namespace ProperArch01.WebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var holiday = await _holidayService.GetHoliday(id);
+            var holiday = await base._holidayService.GetHoliday(id);
 
             if (holiday == null)
             {
@@ -50,6 +52,7 @@ namespace ProperArch01.WebApp.Controllers
         }
 
         // GET: Holiday/Create
+        [Authorize(Roles = RoleNames.AdminName)]
         public ActionResult Create()
         {
             return View();
@@ -60,11 +63,12 @@ namespace ProperArch01.WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.AdminName)]
         public async Task<ActionResult> Create(CreateHolidayViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                var isSuccess = await _holidayService.AddHoliday(viewModel);
+                var isSuccess = await base._holidayService.AddHoliday(viewModel);
 
                 if (isSuccess)
                 {
@@ -82,7 +86,7 @@ namespace ProperArch01.WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var dto = await _holidayService.GetHoliday(id);
+            var dto = await base._holidayService.GetHoliday(id);
 
             if (dto == null)
             {
@@ -98,11 +102,12 @@ namespace ProperArch01.WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.AdminName)]
         public async Task<ActionResult> Edit(EditHolidayViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                bool isSuccess = await _holidayService.EditHoliday(viewModel);
+                bool isSuccess = await base._holidayService.EditHoliday(viewModel);
                 if (isSuccess)
                 {
                     return RedirectToAction("Index");
@@ -118,7 +123,7 @@ namespace ProperArch01.WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var dto = await _holidayService.GetHoliday(id);
+            var dto = await base._holidayService.GetHoliday(id);
             if (dto == null)
             {
                 return HttpNotFound();
@@ -129,9 +134,10 @@ namespace ProperArch01.WebApp.Controllers
         // POST: Holiday/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.AdminName)]
         public async Task<ActionResult> DeleteConfirmed(string id)
         {
-            var isSuccess = await _holidayService.DeleteHoliday(id);
+            var isSuccess = await base._holidayService.DeleteHoliday(id);
 
             if (isSuccess)
             {
