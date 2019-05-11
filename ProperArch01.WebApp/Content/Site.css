@@ -29,9 +29,23 @@ textarea {
     border-color: lightgray;
 }
 
+.div-border-padded {
+    border: solid thin;
+    border-color: lightgray;
+    padding: 8px;
+}
+
+.div-border-padded > h4 {
+    padding-left: 16px;
+}
+
 .div-border-top {
     border-top: solid thin;
     border-color: lightgray;
+}
+
+.div-border-top > h4 {
+    padding-left: 16px;
 }
 
 .div-border-bottom {
@@ -59,4 +73,48 @@ textarea {
     padding: 4px 6px;
     width: 2%;
     margin-bottom: 0;
+}
+
+.carousel-mark-blue {
+    background-color: #64B8D9;
+    color: white;
+    padding: 10px;
+    margin: 10px;
+}
+
+.carousel-mark-lightgray {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #21409A;
+    padding: 10px;
+    margin: 10px;
+}
+
+.carousel-mark-blue, .carousel-mark-lightgray > h3, p {
+    font-size: 125%;
+}
+
+.membership-color-darkerblue {
+    background-color: #087DC2;
+    color: white;
+    padding-bottom: 20px;
+    height: inherit;
+}
+
+.membership-color-dullerblue {
+    background-color: #5D9CC1;
+    color: white;
+    padding-bottom: 20px;
+    height: inherit;
+}
+
+.membership-color-salmon {
+    background-color: #E54766;
+    color: white;
+    padding-bottom: 20px;
+    height: inherit;
+}
+
+.deemphasised {
+    font-size: 0.7em;
+    opacity: 0.7;
 }

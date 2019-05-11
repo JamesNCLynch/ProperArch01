@@ -1,4 +1,6 @@
-﻿@{
+﻿@model ProperArch01.Contracts.Models.Home.HomeIndexViewModel
+
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -17,58 +19,58 @@
     <div class="carousel-inner">
         <div class="item active">
             <img src="../../Assets/HomepageCarousel/mitchelstownleisurecentre-1024x323.jpg" alt="MLC">
-            <div class="carousel-caption">
-                <h3>GET FIT</h3>
-                <p>Mitchelstown</p>
-                <p>Leisure Centre</p>
+            <div class="carousel-caption" style="width: 25%">
+                <h3><span class="carousel-mark-blue">GET FIT</span></h3>
+                <p><span class="carousel-mark-lightgray">Mitchelstown</span></p>
+                <p><span class="carousel-mark-lightgray">Leisure Centre</span></p>
             </div>
         </div>
 
         <div class="item">
             <img src="../../Assets/HomepageCarousel/mlc_class-1024x323.jpg" alt="Classes">
-            <div class="carousel-caption">
-                <p>Something for everybody</p>
-                <h3>FITNESS CLASSES</h3>
+            <div class="carousel-caption" style="width: 30%">
+                <p><span class="carousel-mark-blue">Something for everybody</span></p>
+                <h3><span class="carousel-mark-lightgray">FITNESS CLASSES</span></h3>
             </div>
         </div>
 
         <div class="item">
             <img src="../../Assets/HomepageCarousel/mlc_gym-1-1024x323.jpg" alt="Gym">
-            <div class="carousel-caption">
-                <p>Fully equipped</p>
-                <h3>GYM</h3>
+            <div class="carousel-caption" style="width: 30%">
+                <p><span class="carousel-mark-blue">Fully equipped</span></p>
+                <h3><span class="carousel-mark-lightgray">GYM</span></h3>
             </div>
         </div>
 
         <div class="item">
             <img src="../../Assets/HomepageCarousel/mlc_hall-1024x323.jpg" alt="Hall">
-            <div class="carousel-caption">
-                <p>State of the art</p>
-                <h3>SPORTS HALL</h3>
+            <div class="carousel-caption" style="width: 30%">
+                <p><span class="carousel-mark-blue">State of the art</span></p>
+                <h3><span class="carousel-mark-lightgray">SPORTS HALL</span></h3>
             </div>
         </div>
 
         <div class="item">
             <img src="../../Assets/HomepageCarousel/mlc_astro-1024x323.jpg" alt="Astro">
-            <div class="carousel-caption">
-                <h3>FLOODLIT</h3>
-                <p>All-weather pitch</p>
+            <div class="carousel-caption" style="width: 30%">
+                <h3><span class="carousel-mark-lightgray">FLOODLIT</span></h3>
+                <p><span class="carousel-mark-blue">All-weather pitch</span></p>
             </div>
         </div>
 
         <div class="item">
             <img src="../../Assets/HomepageCarousel/mlc_birthday-1024x323.jpg" alt="Birthday">
-            <div class="carousel-caption">
-                <p>Let's party</p>
-                <h3>MULTI-PURPOSE ROOMS</h3>
+            <div class="carousel-caption" style="width: 40%">
+                <p><span class="carousel-mark-blue">Let's party</span></p>
+                <h3><span class="carousel-mark-lightgray">MULTI-PURPOSE ROOMS</span></h3>
             </div>
         </div>
 
         <div class="item">
             <img src="../../Assets/HomepageCarousel/mlc-activities-1024x323.jpg" alt="Choice">
-            <div class="carousel-caption">
-                <p>It's your choice</p>
-                <h3>MULTI-PURPOSE ROOMS</h3>
+            <div class="carousel-caption" style="width: 40%">
+                <p><span class="carousel-mark-blue">It's your choice</span></p>
+                <h3><span class="carousel-mark-lightgray">MULTI-PURPOSE ROOMS</span></h3>
             </div>
         </div>
 
@@ -86,97 +88,135 @@
     </a>
 </div>
 
-<div class="col-lg-12 col-sm-12 col-md-12" align="center">
+<div class="col-lg-12 col-sm-12 col-md-12" align="center" style="margin: 20px">
     <h2>
         MITCHELSTOWN LEISURE CENTRE
     </h2>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Membership</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that enables a clean separation of concerns and gives you full control over markup for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<div>
+    <div class="row" style="display: block; height: 240px">
+        <div class="col-md-4 membership-color-darkerblue">
+            <h3>Membership</h3>
+            <p>
+                Please Contact Us @@ (025) 52102 or Contact Form if you have any questions. We will be delighted to talk to you. We provide various membership packages to suit your needs.
+            </p>
+        </div>
+        <div class="col-md-4 membership-color-dullerblue">
+            <h3>Classes Coming Up</h3>
+            @Html.Partial("_UpcomingClasses", Model.UpcomingClasses)
+        </div>
+        <div class="col-md-4 membership-color-salmon">
+            <h3>Mitchelstown Leisure Centre</h3>
+            <p>Mitchelstown Leisure Centre aim to create a facility that is accessible to all members within and surrounding Mitchelstown. To provide an environment promoting a more cohesive, active and healthier community.</p>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Classes Coming Up</h2>
-        <p>This is a placeholder for upcoming classes</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Mitchelstown Leisure Centre</h2>
-        <p>Mitchelstown Leisure Centre aim to create a facility that is accessible to all members within and surrounding Mitchelstown. To provide an environment promoting a more cohesive, active and healthier community.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div class="row">
+        <div class="col-md-4 membership-color-darkerblue">
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4 membership-color-dullerblue">
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4 membership-color-salmon">
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        </div>
     </div>
 </div>
 
-<div class="col-lg-12 col-sm-12 col-md-12" align="center">
+
+
+<div class="col-lg-12 col-sm-12 col-md-12" align="center" style="margin: 20px">
     <h2>
         MLC MEMBERSHIP PACKAGES
     </h2>
 </div>
 
-<div>
-    <div class="col-md-3">
-        <img src="../../Assets/HomepagePackages/packages-single.jpg" alt="Single" class="img-responsive"/>
-        <h3>SINGLE</h3>
-        <ul>
-            <li>
-                €450 for 12 Months
-            </li>
-            <li>
-                €250 for 6 Months
-            </li>
-            <li>
-                €150.00 for 3 Months
-            </li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <img src="../../Assets/HomepagePackages/packages-couple.jpg" alt="Couple" class="img-responsive"/>
-        <h3>COUPLES</h3>
-        <ul>
-            <li>
-                €675 for 12 Months
-            </li>
-            <li>
-                €400 for 6 Months
-            </li>
-            <li>
-                €225 for 3 Months
-            </li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <img src="../../Assets/HomepagePackages/packages-corp.jpg" alt="Corporate" class="img-responsive"/>
-        <h3>CORPORATE/STUDENT</h3>
-        <ul>
-            <li>
-                €405 for 12 Months
-            </li>
-            <li>
-                €225 for 6 Months
-            </li>
-            <li>
-                €135 for 3 Months
-            </li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <img src="../../Assets/HomepagePackages/packages-senior.jpg" alt="Senior" class="img-responsive"/>
-        <h3>SENIOR CITIZENS</h3>
-        <ul>
-            <li>
-                €405 for 12 Months
-            </li>
-            <li>
-                €225 for 6 Months
-            </li>
-            <li>
-                €135 for 3 Months
-            </li>
-        </ul>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="div-border-padded">
+                <img src="../../Assets/HomepagePackages/packages-single.jpg" alt="Single" class="img-responsive" />
+                <h4>SINGLE</h4>
+                <ul>
+                    <li>
+                        €450 for 12 Months
+                    </li>
+                    <li>
+                        €250 for 6 Months
+                    </li>
+                    <li>
+                        €150.00 for 3 Months
+                    </li>
+                </ul>
+                <div class="div-border-top">
+                    <h4>€150<span class="deemphasised">/3 Months</span></h4>
+                    <p><a class="btn btn-primary" href="https://go.microsoft.com/fwlink/?LinkId=301865">Membership form &raquo;</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="div-border-padded">
+                <img src="../../Assets/HomepagePackages/packages-couple.jpg" alt="Couple" class="img-responsive" />
+                <h4>COUPLES</h4>
+                <ul>
+                    <li>
+                        €675 for 12 Months
+                    </li>
+                    <li>
+                        €400 for 6 Months
+                    </li>
+                    <li>
+                        €225 for 3 Months
+                    </li>
+                </ul>
+                <div class="div-border-top">
+                    <h4>€225<span class="deemphasised">/3 Months</span></h4>
+                    <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Membership form &raquo;</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="div-border-padded">
+                <img src="../../Assets/HomepagePackages/packages-corp.jpg" alt="Corporate" class="img-responsive" />
+                <h4>CORPORATE/STUDENT</h4>
+                <ul>
+                    <li>
+                        €405 for 12 Months
+                    </li>
+                    <li>
+                        €225 for 6 Months
+                    </li>
+                    <li>
+                        €135 for 3 Months
+                    </li>
+                </ul>
+                <div class="div-border-top">
+                    <h4>€135<span class="deemphasised">/3 Months</span></h4>
+                    <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Membership form &raquo;</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="div-border-padded">
+                <img src="../../Assets/HomepagePackages/packages-senior.jpg" alt="Senior" class="img-responsive" />
+                <h4>SENIOR CITIZENS</h4>
+                <ul>
+                    <li>
+                        €405 for 12 Months
+                    </li>
+                    <li>
+                        €225 for 6 Months
+                    </li>
+                    <li>
+                        €135 for 3 Months
+                    </li>
+                </ul>
+                <div class="div-border-top">
+                    <h4>€135<span class="deemphasised">/3 Months</span></h4>
+                    <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Membership form &raquo;</a></p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

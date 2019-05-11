@@ -52,5 +52,21 @@ namespace ProperArch01.Persistence.Queries
 
             return dto;
         }
+
+        public async Task<List<ScheduledClassDto>> GetScheduledClassesByClassType(string id)
+        {
+            var scheduledClasses = await _context.ScheduledClasses.Where(x => x.ClassTypeId == id).ToListAsync();
+
+            var dtos = scheduledClasses.Select(x => new ScheduledClassDto()
+            {
+                Id = x.Id,
+                ClassStartTime = x.ClassStartTime,
+                ClassTypeName = x.ClassType.Name,
+                InstructorName = x.Instructor.UserName,
+                IsCancelled = x.IsCancelled
+            }).ToList();
+
+            return dtos;
+        }
     }
 }

@@ -119,11 +119,15 @@
     <Compile Include="Models\ClassTimetable\EditClassTimetableViewModel.cs" />
     <Compile Include="Models\ClassType\AddClassTypeViewModel.cs" />
     <Compile Include="Dto\ClassTypeDto.cs" />
+    <Compile Include="Models\ClassType\ClassTypeDetailsViewModel.cs" />
     <Compile Include="Models\ClassType\EditClassTypeViewModel.cs" />
+    <Compile Include="Models\ClassType\UpcomingClassesViewModel.cs" />
     <Compile Include="Models\Colour\RGBAModel.cs" />
     <Compile Include="Models\Holiday\CreateHolidayViewModel.cs" />
     <Compile Include="Models\Holiday\EditHolidayViewModel.cs" />
     <Compile Include="Models\Home\ClassTypeMenuViewModel.cs" />
+    <Compile Include="Models\Home\HomeIndexViewModel.cs" />
+    <Compile Include="Models\Home\UpcomingClassViewModel.cs" />
     <Compile Include="Models\ScheduledClass\CreateScheduledClassViewModel.cs" />
     <Compile Include="Models\ScheduledClass\DetailedScheduledClassViewModel.cs" />
     <Compile Include="Models\ScheduledClass\EditScheduledClassViewModel.cs" />
@@ -144,6 +148,7 @@
     <Compile Include="Services\IColourServices.cs" />
     <Compile Include="Services\IHolidayService.cs" />
     <Compile Include="Services\IBaseService.cs" />
+    <Compile Include="Services\IHomeService.cs" />
     <Compile Include="Services\IScheduledClassService.cs" />
   </ItemGroup>
   <ItemGroup>

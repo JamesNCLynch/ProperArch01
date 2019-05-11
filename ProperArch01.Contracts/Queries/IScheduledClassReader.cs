@@ -11,5 +11,6 @@ namespace ProperArch01.Contracts.Queries
     {
         Task<List<ScheduledClassDto>> GetAllScheduledClasses();
         Task<ScheduledClassDto> GetScheduledClass(string id);
+        Task<List<ScheduledClassDto>> GetScheduledClassesByClassType(string id);
     }
 }

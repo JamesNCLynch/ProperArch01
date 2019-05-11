@@ -17,5 +17,6 @@ namespace ProperArch01.Contracts.Services
         Task<bool> AddClassType(AddClassTypeViewModel model);
         Task<bool> EditClassType(EditClassTypeViewModel model);
         Task<bool> DeleteClassType(string id);
+        Task<ClassTypeDetailsViewModel> BuildClassTypeViewModel(string id);
     }
 }

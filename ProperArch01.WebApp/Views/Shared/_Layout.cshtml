@@ -8,7 +8,7 @@
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
-<body>
+<body style="font-family:Calibri">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -88,8 +88,23 @@
                     }
                     else
                     {
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Rates", "Rates", "Home")</li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">About<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Mission/Aim", "MissionAim", "Home")</li>
+                                <li>@Html.ActionLink("History", "History", "Home")</li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Rates<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Membership Rates", "MembershipRates", "Home")</li>
+                                <li>@Html.ActionLink("Corporate Rates", "CorporateRates", "Home")</li>
+                                <li>@Html.ActionLink("Pay As You Go", "Payg", "Home")</li>
+                                <li>@Html.ActionLink("Room/Facility Rates", "RoomFacilityRates", "Home")</li>
+                                <li>@Html.ActionLink("Booking Forms", "BookingForms", "Home")</li>
+                            </ul>
+                        </li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Classes<span class="caret"></span></a>
                             <ul class="dropdown-menu">
@@ -105,9 +120,25 @@
                                 }
                             </ul>
                         </li>
-                        <li>@Html.ActionLink("Upcoming Classes", "Index", "ScheduledClass")</li>
-                        <li>@Html.ActionLink("Facilities", "Facilities", "Home")</li>
-                        <li>@Html.ActionLink("Activities", "Activities", "Home")</li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Facilities<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Sports Hall", "SportsHall", "Home")</li>
+                                <li>@Html.ActionLink("Gym", "Gym", "Home")</li>
+                                <li>@Html.ActionLink("Activities Room", "Activities", "Home")</li>
+                                <li>@Html.ActionLink("All Weather Pitch", "Pitch", "Home")</li>
+                                <li>@Html.ActionLink("Meeting Rooms", "MeetingRooms", "Home")</li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Activities<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("MLC Class and Timetable", "Index", "ClassTimetable")</li>
+                                <li>@Html.ActionLink("Summer Camps", "SummerCamps", "Home")</li>
+                                <li>@Html.ActionLink("Birthday Parties", "Birthday", "Home")</li>
+                                <li>@Html.ActionLink("Gallery", "Gallery", "Home")</li>
+                            </ul>
+                        </li>
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     }
                 </ul>

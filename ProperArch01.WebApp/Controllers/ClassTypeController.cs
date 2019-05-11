@@ -43,12 +43,13 @@ namespace ProperArch01.WebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var classType = await _classTypeService.GetClassType(id);
+            var classType = await _classTypeService.BuildClassTypeViewModel(id);
 
             if (classType == null)
             {
                 return HttpNotFound();
             }
+
             return View(classType);
         }
 

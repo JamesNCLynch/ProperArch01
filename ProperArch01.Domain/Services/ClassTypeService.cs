@@ -14,11 +14,13 @@ namespace ProperArch01.Domain.Services
     {
         private readonly IClassTypeReader _classTypeReader;
         private readonly IClassTypeWriter _classTypeWriter;
+        private readonly IScheduledClassReader _scheduledClassReader;
 
-        public ClassTypeService(IClassTypeReader classTypeReader, IClassTypeWriter classTypeWriter)
+        public ClassTypeService(IClassTypeReader classTypeReader, IClassTypeWriter classTypeWriter, IScheduledClassReader scheduledClassReader)
         {
             _classTypeReader = classTypeReader;
             _classTypeWriter = classTypeWriter;
+            _scheduledClassReader = scheduledClassReader;
         }
 
         public async Task<bool> AddClassType(AddClassTypeViewModel viewModel)
@@ -34,6 +36,29 @@ namespace ProperArch01.Domain.Services
 
             var result = await _classTypeWriter.AddClassType(dto);
             return result;
+        }
+
+        public async Task<ClassTypeDetailsViewModel> BuildClassTypeViewModel(string id)
+        {
+            var classType = await _classTypeReader.GetClassType(id);
+
+            var dtos = await _scheduledClassReader.GetScheduledClassesByClassType(classType.Id);
+
+            var topThree = dtos.OrderBy(x => x.ClassStartTime).Take(3).Select(x => new UpcomingClassesViewModel() {
+                ScheduledClassId = x.Id,
+                ScheduledClassStartTime = $"{x.ClassStartTime.DayOfWeek} {x.ClassStartTime.ToShortTimeString()}"
+            }).ToList();
+
+            var viewModel = new ClassTypeDetailsViewModel()
+            {
+                Id = classType.Id,
+                ClassColour = classType.ClassColour,
+                Description = classType.Description,
+                Difficulty = classType.Difficulty,
+                UpcomingScheduledClasses = topThree
+            };
+
+            return viewModel;
         }
 
         public async Task<bool> DeleteClassType(string id)

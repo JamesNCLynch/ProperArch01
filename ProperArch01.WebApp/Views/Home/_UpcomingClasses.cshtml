@@ -1,0 +1,27 @@
+﻿@model IEnumerable<ProperArch01.Contracts.Models.Home.UpcomingClassViewModel>
+
+<div style="padding: 0px 30px 0px 10px">
+    @if (Model != null && Model.Any())
+    {
+        foreach (var item in Model)
+        {
+            <div class="div-border" style="padding: 0px 20px 5px 10px; margin: 5px; background-color: white; color: black">
+                <a href="@Url.Action("Details", "ClassType", new { Id = item.ClassTypeId })">
+                    <div>
+                        <h5>@item.ClassTypeName</h5>
+                        <span style="font-size: 80%">@item.NextScheduledClassStartTime</span>
+                    </div>
+                    
+                </a>
+                
+            </div>
+        }
+    } else
+    {
+        <span style="font-style: italic">No upcoming classes have been scheduled. Please ask a member of staff directly</span>
+    }
+
+
+</div>
+
+

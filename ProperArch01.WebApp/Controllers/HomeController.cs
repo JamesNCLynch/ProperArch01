@@ -1,4 +1,5 @@
-﻿using ProperArch01.Contracts.Services;
+﻿using ProperArch01.Contracts.Models.Home;
+using ProperArch01.Contracts.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,18 @@ namespace ProperArch01.WebApp.Controllers
     public class HomeController : BaseController
     {
         new private readonly IBaseService _baseService;
+        new private readonly IHomeService _homeService;
 
-        public HomeController(IBaseService baseService) : base(baseService)
+        public HomeController(IHomeService homeService, IBaseService baseService) : base(baseService)
         {
             _baseService = baseService;
+            _homeService = homeService;
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            HomeIndexViewModel viewModel = await _homeService.BuildIndexViewModel();
+            return View(viewModel);
         }
 
         public ActionResult About()
