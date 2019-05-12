@@ -39,13 +39,13 @@ namespace ProperArch01.Domain.Services
                 ClassTypeName = viewModel.ClassTypeName
             };
 
-            var isSuccess = await _classTimetableWriter.AddClassTimetable(dto);
-            return isSuccess;
+            var isSuccess = _classTimetableWriter.AddClassTimetable(dto);
+            return await Task.FromResult(isSuccess);
         }
 
         public async Task<IEnumerable<ClassTimetableRowViewModel>> BuildTimetableViewModel()
         {
-            var timetables = await _classTimetableReader.GetAllClassTimetables();
+            var timetables = _classTimetableReader.GetAllClassTimetables();
 
             var earliestSlotStartHour = Int32.Parse(ConfigurationManager.AppSettings["GymOpeningHour"]);
             var latestSlotEndHour = Int32.Parse(ConfigurationManager.AppSettings["GymClosingHour"]);
@@ -101,13 +101,13 @@ namespace ProperArch01.Domain.Services
                 timetableViewModel.Add(row);
             }
 
-            return timetableViewModel.AsEnumerable();
+            return await Task.FromResult(timetableViewModel.AsEnumerable());
         }
 
         public async Task<bool> DeleteClassTimetable(ClassTimetableDto dto)
         {
-            var isSuccess = await _classTimetableWriter.DeleteClassTimetable(dto);
-            return isSuccess;
+            var isSuccess = _classTimetableWriter.DeleteClassTimetable(dto);
+            return await Task.FromResult(isSuccess);
         }
 
         public async Task<bool> EditClassTimetable(EditClassTimetableViewModel viewModel)
@@ -123,20 +123,20 @@ namespace ProperArch01.Domain.Services
                 ClassTypeName = viewModel.ClassTypeName
             };
 
-            var isSuccess = await _classTimetableWriter.UpdateClassTimetable(dto);
-            return isSuccess;
+            var isSuccess = _classTimetableWriter.UpdateClassTimetable(dto);
+            return await Task.FromResult(isSuccess);
         }
 
         public async Task<ClassTimetableDto> GetClassTimetable(string id)
         {
-            var dto = await _classTimetableReader.GetClassTimetable(id);
-            return dto;
+            var dto = _classTimetableReader.GetClassTimetable(id);
+            return await Task.FromResult(dto);
         }
 
         public async Task<IEnumerable<ClassTimetableDto>> GetClassTimetables()
         {
-            var timetables = await _classTimetableReader.GetAllClassTimetables();
-            return timetables;
+            var timetables = _classTimetableReader.GetAllClassTimetables();
+            return await Task.FromResult(timetables);
         }
     }
 }

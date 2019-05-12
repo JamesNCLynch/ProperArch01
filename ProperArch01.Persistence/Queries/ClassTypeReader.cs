@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web;
 using ProperArch01.Contracts.Dto;
 using ProperArch01.Contracts.Queries;
@@ -17,7 +16,7 @@ namespace ProperArch01.Persistence.Queries
             _context = context;
         }
 
-        public List<ClassTypeDto> GetAllActiveClassTypes()
+        public IList<ClassTypeDto> GetAllActiveClassTypes()
         {
             var retValue = _context.ClassTypes.Where(x => x.IsActive == true).Select(x => new ClassTypeDto()
             {
@@ -32,26 +31,26 @@ namespace ProperArch01.Persistence.Queries
             return retValue.ToList();
         }
 
-        public async Task<IList<ClassTypeDto>> GetAllActiveClassTypesAsync()
+        //public IList<ClassTypeDto> GetAllActiveClassTypes()
+        //{
+        //    var classTypes = _context.ClassTypes.Where(x => x.IsActive == true).ToList();
+
+        //    var retValue = classTypes.Select(x => new ClassTypeDto()
+        //    {
+        //        Id = x.Id,
+        //        Name = x.Name,
+        //        IsActive = x.IsActive,
+        //        Difficulty = x.Difficulty,
+        //        Description = x.Description,
+        //        ClassColour = x.ClassColour
+        //    });
+
+        //    return retValue.ToList();
+        //}
+
+        public IList<ClassTypeDto> GetAllClassTypes()
         {
-            var classTypes = await _context.ClassTypes.Where(x => x.IsActive == true).ToListAsync();
-
-            var retValue = classTypes.Select(x => new ClassTypeDto()
-            {
-                Id = x.Id,
-                Name = x.Name,
-                IsActive = x.IsActive,
-                Difficulty = x.Difficulty,
-                Description = x.Description,
-                ClassColour = x.ClassColour
-            });
-
-            return retValue.ToList();
-        }
-
-        public async Task<IList<ClassTypeDto>> GetAllClassTypes()
-        {
-            var classTypes = await _context.ClassTypes.ToListAsync();
+            var classTypes = _context.ClassTypes.ToList();
 
             var retValue = classTypes.Select(x => new ClassTypeDto() {
                 Id = x.Id,
@@ -65,9 +64,9 @@ namespace ProperArch01.Persistence.Queries
             return retValue.ToList();
         }
 
-        public async Task<ClassTypeDto> GetClassType(string id)
+        public ClassTypeDto GetClassType(string id)
         {
-            var classType = await _context.ClassTypes.FirstOrDefaultAsync(x => x.Id == id);
+            var classType = _context.ClassTypes.FirstOrDefault(x => x.Id == id);
 
             var retValue = new ClassTypeDto()
             {

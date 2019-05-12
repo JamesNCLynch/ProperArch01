@@ -44,7 +44,7 @@ namespace ProperArch01.Domain.Services
         {
             if (viewModel == null)
             {
-                return false;
+                return await Task.FromResult(false);
             }
 
             ScheduledClassDto dto = new ScheduledClassDto()
@@ -56,23 +56,23 @@ namespace ProperArch01.Domain.Services
                 IsCancelled = false
             };
 
-            bool isSuccess = await _scheduledClassWriter.AddScheduledClass(dto);
+            bool isSuccess = _scheduledClassWriter.AddScheduledClass(dto);
 
-            return isSuccess;
+            return await Task.FromResult(isSuccess);
         }
 
         public async Task<ScheduledClassIndexViewModel> BuildIndexViewModel()
         {
-            var allScheduledClasses = await _scheduledClassReader.GetAllScheduledClasses();
+            var allScheduledClasses = _scheduledClassReader.GetAllScheduledClasses();
 
             var indexViewModel = new ScheduledClassIndexViewModel() {
                 ScheduledClassesCompleted = allScheduledClasses.Where(x => x.InstructorName != null),
                 CancelledScheduledClasses = allScheduledClasses.Where(x => x.IsCancelled)
             };
 
-            var timetable = await _classTimetableReader.GetAllClassTimetables();
+            var timetable = _classTimetableReader.GetAllClassTimetables();
 
-            var holidayDtos = await _holidayReader.GetAllHolidays();
+            var holidayDtos = _holidayReader.GetAllHolidays();
             var holidayDates = holidayDtos.Where(x => x.HolidayDate > DateTime.UtcNow).Select(x => x.HolidayDate.Date);
 
             var plannerTimespan = Int32.Parse(ConfigurationManager.AppSettings["ScheduledClassTimeSpanInDays"]);
@@ -118,13 +118,13 @@ namespace ProperArch01.Domain.Services
 
             indexViewModel.ScheduledClassesRequiringCompletion = incompleteScheduledClassSlots;
 
-            return indexViewModel;
+            return await Task.FromResult(indexViewModel);
         }
 
         public async Task<DetailedScheduledClassViewModel> BuildScheduledClassDetailsViewModel(string id)
         {
-            var dto = await _scheduledClassReader.GetScheduledClass(id);
-            var attendances = await _classAttendanceReader.GetClassAttendanceByScheduledClass(id);
+            var dto = _scheduledClassReader.GetScheduledClass(id);
+            var attendances = _classAttendanceReader.GetClassAttendanceByScheduledClass(id);
 
             if (dto == null || attendances == null)
             {
@@ -141,27 +141,27 @@ namespace ProperArch01.Domain.Services
                 Attendances = attendances
             };
 
-            return viewModel;
+            return await Task.FromResult(viewModel);
         }
 
         public async Task<bool> DeleteScheduledClass(string id)
         {
-            var isSuccess = await _scheduledClassWriter.DeleteScheduledClass(id);
-            return isSuccess;
+            var isSuccess = _scheduledClassWriter.DeleteScheduledClass(id);
+            return await Task.FromResult(isSuccess);
         }
 
         public async Task<List<string>> GetAllInstructorNames()
         {
-            var instructors = await _gymReader.GetAllUsers();
+            var instructors = _gymReader.GetAllUsers();
             var instructorNames = instructors.Where(x => x.RoleName == RoleNames.InstructorName).Select(u => u.UserName).ToList();
 
-            return instructorNames;
+            return await Task.FromResult(instructorNames);
         }
 
         public async Task<ScheduledClassDto> GetScheduledClass(string id)
         {
-            var dto = await _scheduledClassReader.GetScheduledClass(id);
-            return dto;
+            var dto = _scheduledClassReader.GetScheduledClass(id);
+            return await Task.FromResult(dto);
         }
 
         public async Task<bool> UpdateScheduledClass(EditScheduledClassViewModel viewModel)
@@ -175,8 +175,8 @@ namespace ProperArch01.Domain.Services
                 IsCancelled = viewModel.IsCancelled
             };
 
-            var isSuccess = await _scheduledClassWriter.UpdateScheduledClass(dto);
-            return isSuccess;
+            var isSuccess = _scheduledClassWriter.UpdateScheduledClass(dto);
+            return await Task.FromResult(isSuccess);
         }
     }
 }

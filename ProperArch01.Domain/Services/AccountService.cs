@@ -36,8 +36,8 @@ namespace ProperArch01.Domain.Services
 
         public async Task<GymUserDto> GetUser(string id)
         {
-            var gymUser = await _gymUserReader.GetUser(id);
-            return gymUser;
+            var gymUser = _gymUserReader.GetUser(id);
+            return await Task.FromResult(gymUser);
         }
 
         public async Task<IList<GymUserDto>> GetUsersByScheduledClass(string id)
@@ -52,9 +52,9 @@ namespace ProperArch01.Domain.Services
 
         public async Task<IEnumerable<string>> AddUserByRegistration(GymUserDto dto)
         {
-            var listOfErrors = await _gymUserWriter.AddGymUser(dto);
+            var listOfErrors = _gymUserWriter.AddGymUser(dto);
 
-            return listOfErrors;
+            return await Task.FromResult(listOfErrors);
         }
 
         public async Task<IEnumerable<string>> AddUserByPortal(CreateUserViewModel viewModel)
@@ -68,42 +68,42 @@ namespace ProperArch01.Domain.Services
                 Password = viewModel.Password
             };
 
-            var listOfErrors = await _gymUserWriter.AddGymUser(dto);
+            var listOfErrors = _gymUserWriter.AddGymUser(dto);
 
-            return listOfErrors;
+            return await Task.FromResult(listOfErrors);
         }
 
         public async Task<GymUserDto> GetUserByEmailAddress(string email)
         {
-            var dto = await _gymUserReader.GetAllUsers();
+            var dto = _gymUserReader.GetAllUsers();
             var user = dto.FirstOrDefault(x => x.Email == email);
 
-            return user;
+            return await Task.FromResult(user);
         }
 
         public async Task<IList<GymUserDto>> GetAllUsers()
         {
-            var users = await _gymUserReader.GetAllUsers();
+            var users = _gymUserReader.GetAllUsers();
 
-            return users;
+            return await Task.FromResult(users);
         }
 
         public async Task<bool> EditUser(GymUserDto gymUser)
         {
-            bool result = await _gymUserWriter.EditUser(gymUser);
-            return result;
+            bool result = _gymUserWriter.EditUser(gymUser);
+            return await Task.FromResult(result);
         }
 
         public async Task<bool> DeleteUser(GymUserDto gymUser)
         {
-            bool result = await _gymUserWriter.DeleteUser(gymUser);
-            return result;
+            bool result = _gymUserWriter.DeleteUser(gymUser);
+            return await Task.FromResult(result);
         }
 
         public async Task<string> GetRoleNameByUser(string id)
         {
-            string roleName = await _gymUserReader.GetRoleNameByUser(id);
-            return roleName;
+            string roleName = _gymUserReader.GetRoleNameByUser(id);
+            return await Task.FromResult(roleName);
         }
     }
 }

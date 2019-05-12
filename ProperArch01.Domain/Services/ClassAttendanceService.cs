@@ -28,17 +28,17 @@ namespace ProperArch01.Domain.Services
         {
             if (viewModel == null)
             {
-                return ClassAttendanceResponse.UnspecifiedError;
+                return await Task.FromResult(ClassAttendanceResponse.UnspecifiedError);
             }
 
-            var scheduledClass = await _scheduledClassReader.GetScheduledClass(viewModel.ScheduledClassId);
+            var scheduledClass = _scheduledClassReader.GetScheduledClass(viewModel.ScheduledClassId);
             if (scheduledClass == null)
             {
-                return ClassAttendanceResponse.ClassNotFound;
+                return await Task.FromResult(ClassAttendanceResponse.ClassNotFound);
             }
             if (scheduledClass.IsCancelled)
             {
-                return ClassAttendanceResponse.ClassCancelled;
+                return await Task.FromResult(ClassAttendanceResponse.ClassCancelled);
             }
 
             var dto = new ClassAttendanceDto()
@@ -52,15 +52,15 @@ namespace ProperArch01.Domain.Services
                 NoShow = false
             };
 
-            bool isSuccess = await _classAttendanceWriter.AddClassAttendance(dto);
+            bool isSuccess = _classAttendanceWriter.AddClassAttendance(dto);
 
-            return isSuccess ? ClassAttendanceResponse.Success : ClassAttendanceResponse.UnspecifiedError;
+            return await Task.FromResult(isSuccess ? ClassAttendanceResponse.Success : ClassAttendanceResponse.UnspecifiedError);
         }
 
         public async Task<ClassAttendanceIndexViewModel> BuildClassAttendanceIndexViewModel(string id)
         {
-            var scheduledClasses = await _scheduledClassReader.GetAllScheduledClasses();
-            var classesSignedUp = await _classAttendanceReader.GetAttendancesByUser(id);
+            var scheduledClasses = _scheduledClassReader.GetAllScheduledClasses();
+            var classesSignedUp = _classAttendanceReader.GetAttendancesByUser(id);
 
             if (scheduledClasses == null || classesSignedUp == null)
             {
@@ -78,38 +78,38 @@ namespace ProperArch01.Domain.Services
                 PastClassesAttended = classesSignedUp.Where(x => x.ClassStartDateTime < DateTime.UtcNow).ToList()
             };
 
-            return viewModel;
+            return await Task.FromResult(viewModel);
         }
 
         public async Task<bool> DeleteClassAttendance(string id)
         {
             if (id == null)
             {
-                return false;
+                return await Task.FromResult(false);
             }
 
-            var isSuccess = await _classAttendanceWriter.DeleteClassAttendance(id);
-            return isSuccess;
+            var isSuccess = _classAttendanceWriter.DeleteClassAttendance(id);
+            return await Task.FromResult(isSuccess);
         }
 
         public async Task<bool> EditClassAttendance(EditClassAttendanceViewModel viewModel)
         {
             if (viewModel == null)
             {
-                return false;
+                return await Task.FromResult(false);
             }
 
-            var dto = await _classAttendanceReader.GetClassAttendance(viewModel.Id);
+            var dto = _classAttendanceReader.GetClassAttendance(viewModel.Id);
 
-            var isSuccess = await _classAttendanceWriter.UpdateClassAttendance(dto);
-            return isSuccess;
+            var isSuccess = _classAttendanceWriter.UpdateClassAttendance(dto);
+            return await Task.FromResult(isSuccess);
         }
 
         // probably won't ever be used
         public async Task<List<ClassAttendanceDto>> GetAllClassAttendances()
         {
-            var dtos = await _classAttendanceReader.GetAllClassAttendances();
-            return dtos;
+            var dtos = _classAttendanceReader.GetAllClassAttendances();
+            return await Task.FromResult(dtos);
         }
 
         public async Task<ClassAttendanceDto> GetClassAttendance(string id)
@@ -119,20 +119,20 @@ namespace ProperArch01.Domain.Services
                 return null;
             }
 
-            var dto = await _classAttendanceReader.GetClassAttendance(id);
+            var dto = _classAttendanceReader.GetClassAttendance(id);
 
             if (dto == null)
             {
                 return null;
             }
 
-            return dto;
+            return await Task.FromResult(dto);
         }
 
         public async Task<ScheduledClassDto> GetScheduledClass(string scid)
         {
-            var dto = await _scheduledClassReader.GetScheduledClass(scid);
-            return dto;
+            var dto = _scheduledClassReader.GetScheduledClass(scid);
+            return await Task.FromResult(dto);
         }
     }
 }

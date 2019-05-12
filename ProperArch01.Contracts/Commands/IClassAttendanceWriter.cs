@@ -9,8 +9,8 @@ namespace ProperArch01.Contracts.Commands
 {
     public interface IClassAttendanceWriter
     {
-        Task<bool> AddClassAttendance(ClassAttendanceDto dto);
-        Task<bool> DeleteClassAttendance(string id);
-        Task<bool> UpdateClassAttendance(ClassAttendanceDto dto);
+        bool AddClassAttendance(ClassAttendanceDto dto);
+        bool DeleteClassAttendance(string id);
+        bool UpdateClassAttendance(ClassAttendanceDto dto);
     }
 }

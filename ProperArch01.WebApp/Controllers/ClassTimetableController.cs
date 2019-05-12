@@ -14,13 +14,15 @@ namespace ProperArch01.WebApp.Controllers
     public class ClassTimetableController : BaseController
     {
         new private readonly IClassTimetableService _classTimetableService;
+        new private readonly IClassTypeService _classTypeService;
         new private readonly IBaseService _baseService;
 
         // CHANGE ALL BASE CONSTRUCTORS TO baseService!!!
 
-        public ClassTimetableController(IClassTimetableService classTimetableService, IBaseService baseService) : base(baseService)
+        public ClassTimetableController(IClassTimetableService classTimetableService, IClassTypeService classTypeService, IBaseService baseService) : base(baseService)
         {
             _classTimetableService = classTimetableService;
+            _classTypeService = classTypeService;
             _baseService = baseService;
         }
 

@@ -30,14 +30,14 @@ namespace ProperArch01.Domain.Services
                 HolidayDate = viewModel.HolidayDate
             };
 
-            var isSuccess = await _holidayWriter.AddHoliday(dto);
-            return isSuccess;
+            var isSuccess = _holidayWriter.AddHoliday(dto);
+            return await Task.FromResult(isSuccess);
         }
 
         public async Task<bool> DeleteHoliday(string id)
         {
-            var isSuccess = await _holidayWriter.DeleteHoliday(id);
-            return isSuccess;
+            var isSuccess = _holidayWriter.DeleteHoliday(id);
+            return await Task.FromResult(isSuccess);
         }
 
         public async Task<bool> EditHoliday(EditHolidayViewModel viewModel)
@@ -49,22 +49,22 @@ namespace ProperArch01.Domain.Services
                 HolidayDate = viewModel.HolidayDate
             };
 
-            var isSuccess = await _holidayWriter.UpdateHoliday(dto);
-            return isSuccess;
+            var isSuccess = _holidayWriter.UpdateHoliday(dto);
+            return await Task.FromResult(isSuccess);
         }
 
         public async Task<IList<HolidayDto>> GetAllHolidays()
         {
-            var dtos = await _holidayReader.GetAllHolidays();
+            var dtos = _holidayReader.GetAllHolidays();
             var holidays = dtos.OrderByDescending(x => x.HolidayDate).ToList();
 
-            return holidays;
+            return await Task.FromResult(holidays);
         }
 
         public async Task<HolidayDto> GetHoliday(string id)
         {
-            var holiday = await _holidayReader.GetHoliday(id);
-            return holiday;
+            var holiday = _holidayReader.GetHoliday(id);
+            return await Task.FromResult(holiday);
         }
     }
 }

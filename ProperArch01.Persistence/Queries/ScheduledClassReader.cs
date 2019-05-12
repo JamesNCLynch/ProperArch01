@@ -16,11 +16,11 @@ namespace ProperArch01.Persistence.Queries
             _context = context;
         }
 
-        public async Task<List<ScheduledClassDto>> GetAllScheduledClasses()
+        public List<ScheduledClassDto> GetAllScheduledClasses()
         {
-            var scheduledClasses = await _context.ScheduledClasses
+            var scheduledClasses = _context.ScheduledClasses
                 .Include("ClassType")
-                .Include("Instructor").ToListAsync();
+                .Include("Instructor");
 
             var scheduledClassDtos = scheduledClasses
                 .Select(x => new ScheduledClassDto() {
@@ -34,12 +34,12 @@ namespace ProperArch01.Persistence.Queries
             return scheduledClassDtos;
         }
 
-        public async Task<ScheduledClassDto> GetScheduledClass(string id)
+        public ScheduledClassDto GetScheduledClass(string id)
         {
-            var scheduledClass = await _context.ScheduledClasses
+            var scheduledClass = _context.ScheduledClasses
                 .Include("ClassType")
                 .Include("Instructor")
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefault(x => x.Id == id);
 
             var dto = new ScheduledClassDto()
             {
@@ -53,9 +53,9 @@ namespace ProperArch01.Persistence.Queries
             return dto;
         }
 
-        public async Task<List<ScheduledClassDto>> GetScheduledClassesByClassType(string id)
+        public List<ScheduledClassDto> GetScheduledClassesByClassType(string id)
         {
-            var scheduledClasses = await _context.ScheduledClasses.Where(x => x.ClassTypeId == id).ToListAsync();
+            var scheduledClasses = _context.ScheduledClasses.Where(x => x.ClassTypeId == id);
 
             var dtos = scheduledClasses.Select(x => new ScheduledClassDto()
             {

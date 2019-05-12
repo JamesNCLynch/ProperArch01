@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using ProperArch01.Contracts.Dto;
 using ProperArch01.Contracts.Queries;
 using System.Data.Entity;
@@ -16,12 +15,12 @@ namespace ProperArch01.Persistence.Queries
             _context = context;
         }
 
-        public async Task<List<ClassAttendanceDto>> GetAllClassAttendances()
+        public List<ClassAttendanceDto> GetAllClassAttendances()
         {
-            var classAttendances = await _context.ClassAttendances
+            var classAttendances = _context.ClassAttendances
                 .Include("Attendee")
                 .Include("ScheduledClass")
-                .ToListAsync();
+                .ToList();
 
             var dtos = classAttendances.Select(x => new ClassAttendanceDto()
             {
@@ -39,12 +38,12 @@ namespace ProperArch01.Persistence.Queries
             return dtos;
         }
 
-        public async Task<List<ClassAttendanceDto>> GetAttendancesByUser(string id)
+        public List<ClassAttendanceDto> GetAttendancesByUser(string id)
         {
-            var classAttendances = await _context.ClassAttendances
+            var classAttendances = _context.ClassAttendances
                 .Include("Attendee")
                 .Include("ScheduledClass")
-                .Where(x => x.AttendeeId == id).ToListAsync();
+                .Where(x => x.AttendeeId == id).ToList();
 
             var dtos = classAttendances.Select(x => new ClassAttendanceDto()
             {
@@ -62,12 +61,12 @@ namespace ProperArch01.Persistence.Queries
             return dtos;
         }
 
-        public async Task<ClassAttendanceDto> GetClassAttendance(string id)
+        public ClassAttendanceDto GetClassAttendance(string id)
         {
-            var classAttendance = await _context.ClassAttendances
+            var classAttendance = _context.ClassAttendances
                 .Include("Attendee")
                 .Include("ScheduledClass")
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefault(x => x.Id == id);
 
             var dto = new ClassAttendanceDto()
             {
@@ -85,12 +84,12 @@ namespace ProperArch01.Persistence.Queries
             return dto;
         }
 
-        public async Task<List<ClassAttendanceDto>> GetClassAttendanceByScheduledClass(string id)
+        public List<ClassAttendanceDto> GetClassAttendanceByScheduledClass(string id)
         {
-            var classAttendances = await _context.ClassAttendances
+            var classAttendances = _context.ClassAttendances
                 .Include("Attendee")
                 .Include("ScheduledClass")
-                .Where(x => x.ScheduledClassId == id).ToListAsync();
+                .Where(x => x.ScheduledClassId == id).ToList();
 
             var dtos = classAttendances.Select(x => new ClassAttendanceDto()
             {

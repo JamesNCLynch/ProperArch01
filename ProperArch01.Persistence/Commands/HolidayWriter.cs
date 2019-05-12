@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using ProperArch01.Contracts.Commands;
+﻿using ProperArch01.Contracts.Commands;
 using ProperArch01.Contracts.Dto;
 using ProperArch01.Persistence.EntityModels;
 using System.Data.Entity;
+using System.Linq;
 
 namespace ProperArch01.Persistence.Commands
 {
@@ -15,7 +15,7 @@ namespace ProperArch01.Persistence.Commands
             _context = context;
         }
 
-        public async Task<bool> AddHoliday(HolidayDto dto)
+        public bool AddHoliday(HolidayDto dto)
         {
             if (dto == null)
             {
@@ -30,19 +30,19 @@ namespace ProperArch01.Persistence.Commands
             };
 
             _context.Holiday.Add(holiday);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return true;
         }
 
-        public async Task<bool> DeleteHoliday(string id)
+        public bool DeleteHoliday(string id)
         {
             if (id == null)
             {
                 return false;
             }
 
-            var holiday = await _context.Holiday.FirstOrDefaultAsync(x => x.HolidaysId == id);
+            var holiday = _context.Holiday.FirstOrDefault(x => x.HolidaysId == id);
 
             if (holiday == null)
             {
@@ -50,19 +50,19 @@ namespace ProperArch01.Persistence.Commands
             }
 
             _context.Holiday.Remove(holiday);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return true;
         }
 
-        public async Task<bool> UpdateHoliday(HolidayDto dto)
+        public bool UpdateHoliday(HolidayDto dto)
         {
             if (dto == null)
             {
                 return false;
             }
 
-            var holiday = await _context.Holiday.FirstOrDefaultAsync(x => x.HolidaysId == dto.Id);
+            var holiday = _context.Holiday.FirstOrDefault(x => x.HolidaysId == dto.Id);
 
             if (holiday == null)
             {
@@ -73,7 +73,7 @@ namespace ProperArch01.Persistence.Commands
             holiday.HolidayDate = dto.HolidayDate;
 
             _context.Entry(holiday).State = System.Data.Entity.EntityState.Modified;
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return true;
         }

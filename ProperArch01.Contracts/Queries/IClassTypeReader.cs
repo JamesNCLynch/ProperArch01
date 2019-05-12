@@ -11,9 +11,9 @@ namespace ProperArch01.Contracts.Queries
 {
     public interface IClassTypeReader
     {
-        Task<ClassTypeDto> GetClassType(string id);
-        Task<IList<ClassTypeDto>> GetAllClassTypes();
-        Task<IList<ClassTypeDto>> GetAllActiveClassTypesAsync();
-        List<ClassTypeDto> GetAllActiveClassTypes();
+        ClassTypeDto GetClassType(string id);
+        IList<ClassTypeDto> GetAllClassTypes();
+        //IList<ClassTypeDto> GetAllActiveClassTypesAsync();
+        IList<ClassTypeDto> GetAllActiveClassTypes();
     }
 }

@@ -9,7 +9,6 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ProperArch01.Persistence.EntityModels;
 using ProperArch01.Contracts.Dto;
-using System.Threading.Tasks;
 using System.Data;
 using System.Data.Entity;
 
@@ -24,7 +23,7 @@ namespace ProperArch01.Persistence.Commands
             _context = context;
         }
 
-        public async Task<IEnumerable<string>> AddGymUser(GymUserDto model)
+        public IEnumerable<string> AddGymUser(GymUserDto model)
         {
             var userManager = new UserManager<GymUser>(new UserStore<GymUser>(_context));
             
@@ -37,17 +36,17 @@ namespace ProperArch01.Persistence.Commands
                 DateCreated = DateTime.UtcNow
             };
 
-            var result = await userManager.CreateAsync(gymUser, model.Password);
+            var result = userManager.Create(gymUser, model.Password);
             if (result.Succeeded)
             {
-                await userManager.AddToRoleAsync(gymUser.Id, RoleNames.AttendeeName);
+                userManager.AddToRole(gymUser.Id, RoleNames.AttendeeName);
                 return null;
             }
 
             return result.Errors;
         }
 
-        //public async Task<IEnumerable<string>> AddGymUser(CreateUserViewModel model)
+        //public IEnumerable<string>> AddGymUser(CreateUserViewModel model)
         //{
         //    var userManager = new UserManager<GymUser>(new UserStore<GymUser>(_context));
 
@@ -61,48 +60,48 @@ namespace ProperArch01.Persistence.Commands
         //        DateCreated = DateTime.UtcNow
         //    };
 
-        //    var result = await userManager.CreateAsync(gymUser, model.Password);
+        //    var result = userManager.Create(gymUser, model.Password);
         //    if (result.Succeeded)
         //    {
-        //        await userManager.AddToRoleAsync(gymUser.Id, RoleNames.AttendeeName);
+        //        userManager.AddToRole(gymUser.Id, RoleNames.AttendeeName);
         //        return null;
         //    }
 
         //    return result.Errors;
         //}
 
-        public async Task<bool> DeleteUser(GymUserDto gymUser)
+        public bool DeleteUser(GymUserDto gymUser)
         {
             if (gymUser == null)
             {
                 return false;
             }
 
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == gymUser.Id);
+            var user = _context.Users.FirstOrDefault(x => x.Id == gymUser.Id);
             if (user == null)
             {
                 return false;
             }
 
             // if instructor, remove association between user and scheduled class. do no remove scheduled class
-            var scheduledClasses = await _context.ScheduledClasses.Where(x => x.InstructorId == gymUser.Id).ToListAsync();
+            var scheduledClasses = _context.ScheduledClasses.Where(x => x.InstructorId == gymUser.Id).ToList();
             scheduledClasses.ForEach(sc => { sc.InstructorId = null; });
 
             // remove associated attendances
-            var attendances = await _context.ClassAttendances.Where(x => x.AttendeeId == gymUser.Id).ToListAsync();
+            var attendances = _context.ClassAttendances.Where(x => x.AttendeeId == gymUser.Id).ToList();
             _context.ClassAttendances.RemoveRange(attendances);
 
             //remove userroles
-            var userRoles = await _context.UserRoles.Where(x => x.UserId == gymUser.Id).ToListAsync();
+            var userRoles = _context.UserRoles.Where(x => x.UserId == gymUser.Id).ToList();
             _context.UserRoles.RemoveRange(userRoles);
 
             _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return true;
         }
 
-        public async Task<bool> EditUser(GymUserDto gymUser)
+        public bool EditUser(GymUserDto gymUser)
         {
             if (gymUser == null)
             {
@@ -112,7 +111,7 @@ namespace ProperArch01.Persistence.Commands
             var userManager = new UserManager<GymUser>(new UserStore<GymUser>(_context));
 
             //var user = _context.Users.FirstOrDefault(x => x.Id == gymUser.Id);
-            var user = await userManager.Users.FirstOrDefaultAsync(x => x.Id == gymUser.Id);
+            var user = userManager.Users.FirstOrDefault(x => x.Id == gymUser.Id);
 
             if (user == null)
             {
@@ -131,15 +130,15 @@ namespace ProperArch01.Persistence.Commands
 
             if (currentRoleName != gymUser.RoleName)
             {
-                await userManager.RemoveFromRoleAsync(user.Id, currentRoleName);
-                await userManager.AddToRoleAsync(user.Id, gymUser.RoleName);
+                userManager.RemoveFromRole(user.Id, currentRoleName);
+                userManager.AddToRole(user.Id, gymUser.RoleName);
             }
 
 
             // todo: might have to do something with password soon
 
             _context.Entry(user).State = System.Data.Entity.EntityState.Modified;
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return true;
         }

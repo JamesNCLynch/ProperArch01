@@ -9,9 +9,9 @@ namespace ProperArch01.Contracts.Queries
 {
     public interface IClassAttendanceReader
     {
-        Task<List<ClassAttendanceDto>> GetAttendancesByUser(string id);
-        Task<ClassAttendanceDto> GetClassAttendance(string id);
-        Task<List<ClassAttendanceDto>> GetAllClassAttendances();
-        Task<List<ClassAttendanceDto>> GetClassAttendanceByScheduledClass(string id);
+        List<ClassAttendanceDto> GetAttendancesByUser(string id);
+        ClassAttendanceDto GetClassAttendance(string id);
+        List<ClassAttendanceDto> GetAllClassAttendances();
+        List<ClassAttendanceDto> GetClassAttendanceByScheduledClass(string id);
     }
 }

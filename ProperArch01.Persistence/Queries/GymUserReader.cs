@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web;
 using ProperArch01.Contracts.Dto;
 using ProperArch01.Contracts.Queries;
@@ -17,13 +16,13 @@ namespace ProperArch01.Persistence.Queries
         {
             _context = context;
         }
-        public async Task<GymUserDto> GetUser(string id)
+        public GymUserDto GetUser(string id)
         {
-            var gymUser = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            var gymUser = _context.Users.FirstOrDefault(x => x.Id == id);
 
             var roleId = gymUser.Roles.FirstOrDefault().RoleId;
 
-            var role = await _context.Roles.FirstOrDefaultAsync(x => x.Id == roleId);
+            var role = _context.Roles.FirstOrDefault(x => x.Id == roleId);
             var roleName = role.Name;
 
             return new GymUserDto()
@@ -37,12 +36,12 @@ namespace ProperArch01.Persistence.Queries
             };
         }
 
-        public async Task<IList<GymUserDto>> GetAllUsers()
+        public IList<GymUserDto> GetAllUsers()
         {
-            var roles = await _context.Roles.ToListAsync();
+            var roles = _context.Roles.ToList();
             
 
-            var gymUsers = await _context.Users.ToListAsync();
+            var gymUsers = _context.Users.ToList();
 
             var dtos = gymUsers.Select(x => new GymUserDto() {
                 Id = x.Id,
@@ -56,12 +55,12 @@ namespace ProperArch01.Persistence.Queries
             return dtos;
         }
 
-        public async Task<string> GetRoleNameByUser(string id)
+        public string GetRoleNameByUser(string id)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            var user = _context.Users.FirstOrDefault(x => x.Id == id);
             var userRole = user.Roles.FirstOrDefault();
 
-            var role = await _context.Roles.FirstOrDefaultAsync(r => r.Id == userRole.RoleId);
+            var role = _context.Roles.FirstOrDefault(r => r.Id == userRole.RoleId);
             var roleName = role.Name;
 
             return roleName;

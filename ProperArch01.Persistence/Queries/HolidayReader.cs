@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web;
 using ProperArch01.Contracts.Dto;
 using ProperArch01.Contracts.Queries;
@@ -18,14 +17,14 @@ namespace ProperArch01.Persistence.Queries
             _context = context;
         }
 
-        public async Task<HolidayDto> GetHoliday(string id)
+        public HolidayDto GetHoliday(string id)
         {
             if (id == null)
             {
                 return null;
             }
 
-            var holiday = await _context.Holiday.FirstOrDefaultAsync(x => x.HolidaysId == id);
+            var holiday = _context.Holiday.FirstOrDefault(x => x.HolidaysId == id);
 
             if (holiday == null)
             {
@@ -41,9 +40,9 @@ namespace ProperArch01.Persistence.Queries
             return dto;
         }
 
-        public async Task<List<HolidayDto>> GetAllHolidays()
+        public List<HolidayDto> GetAllHolidays()
         {
-            var holidays = await _context.Holiday.ToListAsync();
+            var holidays = _context.Holiday.ToList();
 
             var dtos = holidays.Select(x => new HolidayDto()
             {

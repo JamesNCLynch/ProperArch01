@@ -10,8 +10,8 @@ namespace ProperArch01.Contracts.Commands
 {
     public interface IClassTimetableWriter
     {
-        Task<bool> AddClassTimetable(ClassTimetableDto model);
-        Task<bool> DeleteClassTimetable(ClassTimetableDto dto);
-        Task<bool> UpdateClassTimetable(ClassTimetableDto model);
+        bool AddClassTimetable(ClassTimetableDto model);
+        bool DeleteClassTimetable(ClassTimetableDto dto);
+        bool UpdateClassTimetable(ClassTimetableDto model);
     }
 }

@@ -19,14 +19,14 @@ namespace ProperArch01.Domain.Services
 
         public List<ClassTypeDto> GetClassTypeDtos()
         {
-            var dtos = _classTypeReader.GetAllActiveClassTypes();
-            return dtos.ToList();
+            var dtos = _classTypeReader.GetAllActiveClassTypes().ToList();
+            return dtos;
         }
 
         public async Task<List<ClassTypeDto>> GetClassTypeDtosAsync()
         {
-            var dtos = await _classTypeReader.GetAllActiveClassTypesAsync();
-            return dtos.ToList();
+            var dtos = _classTypeReader.GetAllActiveClassTypes();
+            return await Task.FromResult(dtos.ToList());
         }
     }
 }

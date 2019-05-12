@@ -16,13 +16,12 @@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.ClassTypeNames)
-    @Html.HiddenFor(model => model.ClassTypeName)
 
     <div class="form-group">
-        @Html.LabelFor(model => model.ClassTypeNames, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.ClassTypeName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DropDownListFor(m => m.ClassTypeName, Model.ClassTypeSelectList, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.ClassTypeNames, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.ClassTypeName, "", new { @class = "text-danger" })
         </div>
     </div>
 

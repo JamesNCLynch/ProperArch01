@@ -34,15 +34,15 @@ namespace ProperArch01.Domain.Services
                 Description = viewModel.Description
             };
 
-            var result = await _classTypeWriter.AddClassType(dto);
-            return result;
+            var result = _classTypeWriter.AddClassType(dto);
+            return await Task.FromResult(result);
         }
 
         public async Task<ClassTypeDetailsViewModel> BuildClassTypeViewModel(string id)
         {
-            var classType = await _classTypeReader.GetClassType(id);
+            var classType = _classTypeReader.GetClassType(id);
 
-            var dtos = await _scheduledClassReader.GetScheduledClassesByClassType(classType.Id);
+            var dtos = _scheduledClassReader.GetScheduledClassesByClassType(classType.Id);
 
             var topThree = dtos.OrderBy(x => x.ClassStartTime).Take(3).Select(x => new UpcomingClassesViewModel() {
                 ScheduledClassId = x.Id,
@@ -58,20 +58,20 @@ namespace ProperArch01.Domain.Services
                 UpcomingScheduledClasses = topThree
             };
 
-            return viewModel;
+            return await Task.FromResult(viewModel);
         }
 
         public async Task<bool> DeleteClassType(string id)
         {
-            var result = await _classTypeWriter.DeleteClassType(id);
-            return result;
+            var result = _classTypeWriter.DeleteClassType(id);
+            return await Task.FromResult(result);
         }
 
         public async Task<bool> EditClassType(EditClassTypeViewModel viewModel)
         {
             if (viewModel == null)
             {
-                return false;
+                return await Task.FromResult(false);
             }
 
             var dto = new ClassTypeDto
@@ -83,33 +83,33 @@ namespace ProperArch01.Domain.Services
                 Description = viewModel.Description,
                 IsActive = viewModel.IsActive
             };
-            var result = await _classTypeWriter.EditClassType(dto);
-            return result;
+            var result = _classTypeWriter.EditClassType(dto);
+            return await Task.FromResult(result);
         }
 
         public async Task<IList<string>> GetAllActiveClassTypeNames()
         {
-            var classTypes = await _classTypeReader.GetAllActiveClassTypesAsync();
+            var classTypes = _classTypeReader.GetAllActiveClassTypes();
             var names = classTypes.Select(x => x.Name).ToList();
-            return names;
+            return await Task.FromResult(names);
         }
 
         public async Task<IList<ClassTypeDto>> GetAllActiveClassTypes()
         {
-            var result = await _classTypeReader.GetAllActiveClassTypesAsync();
-            return result;
+            var result = _classTypeReader.GetAllActiveClassTypes();
+            return await Task.FromResult(result);
         }
 
         public async Task<IList<ClassTypeDto>> GetAllClassTypes()
         {
-            var result = await _classTypeReader.GetAllClassTypes();
-            return result;
+            var result = _classTypeReader.GetAllClassTypes();
+            return await Task.FromResult(result);
         }
 
         public async Task<ClassTypeDto> GetClassType(string id)
         {
-            var result = await _classTypeReader.GetClassType(id);
-            return result;
+            var result = _classTypeReader.GetClassType(id);
+            return await Task.FromResult(result);
         }
     }
 }

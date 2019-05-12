@@ -6,7 +6,6 @@ using ProperArch01.Contracts.Commands;
 using ProperArch01.Contracts.Models.ClassType;
 using ProperArch01.Contracts.Constants;
 using ProperArch01.Contracts.Dto;
-using System.Threading.Tasks;
 using System.Data.Entity;
 
 namespace ProperArch01.Persistence.Commands
@@ -19,7 +18,7 @@ namespace ProperArch01.Persistence.Commands
             _context = context;
         }
 
-        public async Task<bool> AddClassType(ClassTypeDto dto)
+        public bool AddClassType(ClassTypeDto dto)
         {
             var classType = new EntityModels.ClassType
             {
@@ -32,17 +31,17 @@ namespace ProperArch01.Persistence.Commands
             };
 
             _context.ClassTypes.Add(classType);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             return true;
         }
 
-        public async Task<bool> DeleteClassType(string id)
+        public bool DeleteClassType(string id)
         {
             if (id == null)
             {
                 return false;
             }
-            var classType = await _context.ClassTypes.FirstOrDefaultAsync(x => x.Id == id);
+            var classType = _context.ClassTypes.FirstOrDefault(x => x.Id == id);
 
             if (classType != null)
             {
@@ -54,7 +53,7 @@ namespace ProperArch01.Persistence.Commands
 
                 // remove classtype and save
                 _context.ClassTypes.Remove(classType);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
 
                 return true;
             }
@@ -62,14 +61,14 @@ namespace ProperArch01.Persistence.Commands
             return false;
         }
 
-        public async Task<bool> EditClassType(ClassTypeDto dto)
+        public bool EditClassType(ClassTypeDto dto)
         {
             if (dto.Id == null)
             {
                 return false;
             }
 
-            var classType = await _context.ClassTypes.FirstOrDefaultAsync(x => x.Id == dto.Id);
+            var classType = _context.ClassTypes.FirstOrDefault(x => x.Id == dto.Id);
 
             if (classType != null)
             {
@@ -80,7 +79,7 @@ namespace ProperArch01.Persistence.Commands
                 classType.ClassColour = dto.ClassColour;
 
                 _context.Entry(classType).State = System.Data.Entity.EntityState.Modified;
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
 
                 return true;
             }

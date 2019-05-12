@@ -3,7 +3,6 @@ using ProperArch01.Contracts.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web;
 using System.Data.Entity;
 using ProperArch01.Persistence.EntityModels;
@@ -18,10 +17,10 @@ namespace ProperArch01.Persistence.Commands
             _context = context;
         }
 
-        public async Task<bool> AddClassAttendance(ClassAttendanceDto dto)
+        public bool AddClassAttendance(ClassAttendanceDto dto)
         {
-            var attendee = await _context.Users.FirstOrDefaultAsync(x => x.Id == dto.AttendeeId);
-            var scheduledClass = await _context.ScheduledClasses.FirstOrDefaultAsync(x => x.Id == dto.ScheduledClassId);
+            var attendee = _context.Users.FirstOrDefault(x => x.Id == dto.AttendeeId);
+            var scheduledClass = _context.ScheduledClasses.FirstOrDefault(x => x.Id == dto.ScheduledClassId);
 
             if (attendee == null || scheduledClass == null)
             {
@@ -41,19 +40,19 @@ namespace ProperArch01.Persistence.Commands
             };
 
             _context.ClassAttendances.Add(classAttendance);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return true;
         }
 
-        public async Task<bool> DeleteClassAttendance(string id)
+        public bool DeleteClassAttendance(string id)
         {
             if (id == null)
             {
                 return false;
             }
 
-            var classAttendance = await _context.ClassAttendances.FirstOrDefaultAsync(x => x.Id == id);
+            var classAttendance = _context.ClassAttendances.FirstOrDefault(x => x.Id == id);
 
             if (classAttendance == null)
             {
@@ -61,19 +60,19 @@ namespace ProperArch01.Persistence.Commands
             }
 
             _context.ClassAttendances.Remove(classAttendance);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return true;
         }
 
-        public async Task<bool> UpdateClassAttendance(ClassAttendanceDto dto)
+        public bool UpdateClassAttendance(ClassAttendanceDto dto)
         {
             if (dto == null)
             {
                 return false;
             }
 
-            var classAttendance = await _context.ClassAttendances.FirstOrDefaultAsync(x => x.Id == dto.Id);
+            var classAttendance = _context.ClassAttendances.FirstOrDefault(x => x.Id == dto.Id);
 
             if (classAttendance == null)
             {
@@ -82,7 +81,7 @@ namespace ProperArch01.Persistence.Commands
 
             if (classAttendance.AttendeeId != dto.AttendeeId)
             {
-                var attendee = await _context.Users.FirstOrDefaultAsync(x => x.Id == dto.AttendeeId);
+                var attendee = _context.Users.FirstOrDefault(x => x.Id == dto.AttendeeId);
 
                 classAttendance.Attendee = attendee;
                 classAttendance.AttendeeId = dto.AttendeeId;
@@ -90,7 +89,7 @@ namespace ProperArch01.Persistence.Commands
 
             if (classAttendance.ScheduledClassId != dto.ScheduledClassId)
             {
-                var scheduledClass = await _context.ScheduledClasses.FirstOrDefaultAsync(x => x.Id == dto.ScheduledClassId);
+                var scheduledClass = _context.ScheduledClasses.FirstOrDefault(x => x.Id == dto.ScheduledClassId);
 
                 classAttendance.ScheduledClass = scheduledClass;
                 classAttendance.ScheduledClassId = dto.ScheduledClassId;
@@ -101,7 +100,7 @@ namespace ProperArch01.Persistence.Commands
             classAttendance.NoShow = dto.NoShow;
 
             _context.Entry(classAttendance).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return true;
         }

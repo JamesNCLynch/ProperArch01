@@ -49,7 +49,6 @@ namespace ProperArch01.Contracts.Models.ClassTimetable
         [Required]
         [Display(Name = "Class")]
         public string ClassTypeName { get; set; }
-        [Required]
         [Display(Name = "Class")]
         public IList<string> ClassTypeNames { get; set; }
         [Required]
@@ -60,7 +59,7 @@ namespace ProperArch01.Contracts.Models.ClassTimetable
         {
             get
             {
-                return ClassTypeNames.Select(x => new SelectListItem { Text = x, Value = x }).ToList();
+                return ClassTypeNames.Select(x => new SelectListItem { Text = x, Value = x }).OrderBy(x => x.Text).ToList();
             }
             set { }
         }

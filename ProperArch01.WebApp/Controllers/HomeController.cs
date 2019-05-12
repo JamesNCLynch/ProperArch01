@@ -12,7 +12,7 @@ namespace ProperArch01.WebApp.Controllers
     public class HomeController : BaseController
     {
         new private readonly IBaseService _baseService;
-        new private readonly IHomeService _homeService;
+        private readonly IHomeService _homeService;
 
         public HomeController(IHomeService homeService, IBaseService baseService) : base(baseService)
         {

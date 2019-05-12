@@ -22,11 +22,11 @@ namespace ProperArch01.Domain.Services
 
         public async Task<HomeIndexViewModel> BuildIndexViewModel()
         {
-            var allUpcomingClasses = await _scheduledClassReader.GetAllScheduledClasses();
+            var allUpcomingClasses = _scheduledClassReader.GetAllScheduledClasses();
             var nextThreeUpcomingClasses = allUpcomingClasses.Where(t => t.ClassStartTime > DateTime.UtcNow)
                 .OrderBy(x => x.ClassStartTime).Take(3).ToList();
 
-            var allClassTypes = await _classTypeReader.GetAllClassTypes();
+            var allClassTypes = _classTypeReader.GetAllClassTypes();
             var threeUpcomingClassTypes = allClassTypes.Where(x => nextThreeUpcomingClasses.Select(u => u.ClassTypeName).Contains(x.Name)).ToList();
 
             var upcomingClassViewModels = nextThreeUpcomingClasses.Select(x => new UpcomingClassViewModel() {
@@ -39,7 +39,7 @@ namespace ProperArch01.Domain.Services
                 UpcomingClasses = upcomingClassViewModels
             };
 
-            return viewModel;
+            return await Task.FromResult(viewModel);
         }
 
         //Task<HomeIndexViewModel> IHomeService.BuildIndexViewModel()
