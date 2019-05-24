@@ -13,6 +13,8 @@ using ProperArch01.Contracts.Services;
 using ProperArch01.Contracts.Models.ClassType;
 using ProperArch01.Contracts.Dto;
 using ProperArch01.Contracts.Constants;
+using System.IO;
+using System.Configuration;
 
 namespace ProperArch01.WebApp.Controllers
 {
@@ -70,6 +72,41 @@ namespace ProperArch01.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Verify that the user selected a file
+                if (classType.ImageFile != null && classType.ImageFile.ContentLength > 0)
+                {
+                    if (classType.ImageFile.ContentLength > 20000000)
+                    {
+                        ModelState.AddModelError("", "Please ensure image file is less than 2MB");
+                        return RedirectToAction("Create");
+                    }
+
+                    // extract only the filename
+                    var fileName = Path.GetFileName(classType.ImageFile.FileName);
+
+                    if (!fileName.Contains(".jpg") && !fileName.Contains(".png"))
+                    {
+                        ModelState.AddModelError("", "Please ensure file is in JPG or PNG format");
+                        return RedirectToAction("Create");
+                    }
+
+                    if (fileName.Contains(" "))
+                    {
+                        ModelState.AddModelError("", "Image filename cannot contain spaces or special characters");
+                        return RedirectToAction("Create");
+                    }
+
+                    var filePath = ConfigurationManager.AppSettings["ClassTypeAssetPath"];
+
+                    // store the file inside ~/App_Data/classtype folder
+                    var path = Path.Combine(Server.MapPath(filePath), fileName);
+                    classType.ImageFile.SaveAs(path);
+
+                    classType.ImageFileName = fileName;
+                }
+
+                // have not populated view yet - need to do that and then test
+
                 var isSuccess = await _classTypeService.AddClassType(classType);
 
                 if (isSuccess)
@@ -77,8 +114,6 @@ namespace ProperArch01.WebApp.Controllers
                     return RedirectToAction("Index");
                 }
             }
-
-            // need to populate the views. might be problems with conflicting get/post models per action
 
             return View(classType);
         }
@@ -113,6 +148,37 @@ namespace ProperArch01.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (viewModel.ImageFile != null && viewModel.ImageFile.ContentLength > 0)
+                {
+                    if (viewModel.ImageFile.ContentLength > 2000000)
+                    {
+                        ModelState.AddModelError("", "Please ensure image file is less than 2MB");
+                        return RedirectToAction("Edit");
+                    }
+
+                    var fileName = Path.GetFileName(viewModel.ImageFile.FileName);
+
+                    if (!fileName.Contains(".jpg") && !fileName.Contains(".png"))
+                    {
+                        ModelState.AddModelError("", "Please ensure file is in JPG or PNG format");
+                        return RedirectToAction("Edit");
+                    }
+
+                    if (fileName.Contains(" "))
+                    {
+                        ModelState.AddModelError("", "Image filename cannot contain spaces or special characters");
+                        return RedirectToAction("Edit");
+                    }
+
+                    // store the file inside ~/App_Data/classtype folder
+                    var filePath = ConfigurationManager.AppSettings["ClassTypeAssetPath"];
+                    var path = Path.Combine(Server.MapPath(filePath), fileName);
+                    viewModel.ImageFile.SaveAs(path);
+
+                    viewModel.ImageFileName = fileName;
+                }
+                   
+
                 var isSuccess = await _classTypeService.EditClassType(viewModel);
 
                 if (!isSuccess)
@@ -120,7 +186,7 @@ namespace ProperArch01.WebApp.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", "ClassType", new { Id = viewModel.Id});
         }
 
         // GET: ClassType/Delete/5

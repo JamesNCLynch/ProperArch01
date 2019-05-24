@@ -16,5 +16,7 @@ namespace ProperArch01.Contracts.Models.ClassType
         [MaxLength(500)]
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
+        public string ImageFileName { get; set; }
+        public HttpPostedFileBase ImageFile { get; set; }
     }
 }

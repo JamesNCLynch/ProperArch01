@@ -10,5 +10,6 @@ namespace ProperArch01.Contracts.Services
     public interface IHomeService
     {
         Task<HomeIndexViewModel> BuildIndexViewModel();
+        Task<List<string>> GetListOfGalleryFiles();
     }
 }

@@ -126,6 +126,10 @@
     <Compile Include="Migrations\201902161155047_FirstMigration.Designer.cs">
       <DependentUpon>201902161155047_FirstMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905211544433_AddImageToClassType.cs" />
+    <Compile Include="Migrations\201905211544433_AddImageToClassType.Designer.cs">
+      <DependentUpon>201905211544433_AddImageToClassType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ProperArch01DbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -165,6 +169,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201902161155047_FirstMigration.resx">
       <DependentUpon>201902161155047_FirstMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905211544433_AddImageToClassType.resx">
+      <DependentUpon>201905211544433_AddImageToClassType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -446,6 +446,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Assets\ClassType\" />
+    <Folder Include="Assets\Gallery\" />
     <Folder Include="DependencyResolution\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>

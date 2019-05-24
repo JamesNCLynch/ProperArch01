@@ -126,6 +126,8 @@
     <Compile Include="Models\Holiday\CreateHolidayViewModel.cs" />
     <Compile Include="Models\Holiday\EditHolidayViewModel.cs" />
     <Compile Include="Models\Home\ClassTypeMenuViewModel.cs" />
+    <Compile Include="Models\Home\FileUploadModel.cs" />
+    <Compile Include="Models\Home\GalleryViewModel.cs" />
     <Compile Include="Models\Home\HomeIndexViewModel.cs" />
     <Compile Include="Models\Home\UpcomingClassViewModel.cs" />
     <Compile Include="Models\ScheduledClass\CreateScheduledClassViewModel.cs" />

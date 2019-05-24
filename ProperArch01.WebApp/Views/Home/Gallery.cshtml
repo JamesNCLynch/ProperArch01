@@ -1,11 +1,52 @@
-﻿<div class="container">
+﻿@model ProperArch01.Contracts.Models.Home.GalleryViewModel
+
+<div class="container">
+    <h2>Gallery</h2>
     <div class="row">
-        <div class="col-md-offset-2"></div>
-        <div class="col-md-8">
-            <p>This is a placeholder</p>
-            <p>There will be a grid of photo thumbnails displayed here</p>
-            <p>There will be options to upload photos here</p>
+        <div class="col-md-12 ">
+            @foreach (var item in Model.GalleryFileList)
+            {
+                <div class="gallery-image">
+                    <img src="~/Assets/Gallery/@item" class="img-responsive" />
+                </div>
+            }
         </div>
-        <div class="col-md-offset-2"></div>
     </div>
+
+    @if(User.IsInRole(ProperArch01.Contracts.Constants.RoleNames.AdminName))
+    {
+    <div class="row" style="margin-top: 40px;">
+        <div class="col-md-6 col-md-offset-3">
+            @using (Html.BeginForm("Gallery", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FileUploadModel.Files, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.FileUploadModel.Files, "", new { @type = "file", @multiple = "multiple" })
+                            @Html.ValidationMessageFor(model => model.FileUploadModel.Files, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Upload" class="btn btn-primary" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10 text-success">
+                            @ViewBag.UploadStatus
+                        </div>
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+    }
+
+    
 </div>

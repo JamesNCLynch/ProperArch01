@@ -2,6 +2,8 @@
 using ProperArch01.Contracts.Services;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -137,12 +139,60 @@ namespace ProperArch01.WebApp.Controllers
 
             return View();
         }
-
-        public ActionResult Gallery()
+        [HttpGet]
+        public async Task<ActionResult> Gallery()
         {
             ViewBag.Message = "Gallery";
 
-            return View();
+            var viewModel = new GalleryViewModel()
+            {
+                GalleryFileList = await _homeService.GetListOfGalleryFiles()
+            };
+
+            return View(viewModel);
+        }
+
+        //Single File Upload
+        [HttpPost]
+        public async Task<ActionResult> Gallery(GalleryViewModel viewModel)
+        {
+
+            //Ensure model state is valid  
+            if (ModelState.IsValid)
+            {
+                var galleryFilePath = ConfigurationManager.AppSettings["GalleryAssetPath"];
+
+                //iterating through multiple file collection   
+                foreach (var file in viewModel.FileUploadModel.Files)
+                {
+                    //Checking file is available to save.  
+                    if (file != null)
+                    {
+                        var inputFileName = Path.GetFileName(file.FileName);
+
+                        if (inputFileName.Contains(" "))
+                        {
+                            ModelState.AddModelError("", "File names cannot contain spaces");
+                            return RedirectToAction("Gallery");
+                        }
+
+                        var savePath = Path.Combine(Server.MapPath(galleryFilePath) + inputFileName);
+
+                        //Save file to server folder  
+                        file.SaveAs(savePath);
+
+                        //assigning file uploaded status to ViewBag for showing message to user.  
+                        
+                    }
+                }
+
+                ViewBag.UploadStatus = viewModel.FileUploadModel.Files.Count().ToString() + " files uploaded successfully.";
+            }
+
+            // update view with latest uploads
+            viewModel.GalleryFileList = await _homeService.GetListOfGalleryFiles();
+
+            return View(viewModel);
         }
     }
 }

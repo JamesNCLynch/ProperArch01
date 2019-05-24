@@ -22,6 +22,7 @@ namespace ProperArch01.Persistence.EntityModels
         [Column(TypeName = "nvarchar")]
         [MaxLength(500)]
         public string Description { get; set; }
+        public string ImageFileName { get; set; }
 
         public virtual ICollection<ScheduledClass> ScheduledClass { get; set; }
 

@@ -259,3 +259,16 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/ProperArch01.WebApp/Assets/Gallery/Trapezoid_ms-MY.png
+/ProperArch01.WebApp/Assets/Gallery/TaskVersusPeopleFocus_pt-AO.png
+/ProperArch01.WebApp/Assets/Gallery/TaskVersusPeopleFocus_ms-MY.png
+/ProperArch01.WebApp/Assets/Gallery/packages-single.jpg
+/ProperArch01.WebApp/Assets/Gallery/packages-senior.jpg
+/ProperArch01.WebApp/Assets/Gallery/packages-couple.jpg
+/ProperArch01.WebApp/Assets/Gallery/packages-corp.jpg
+/ProperArch01.WebApp/Assets/Gallery/mlc-summercamp-sm.jpg
+/ProperArch01.WebApp/Assets/Gallery/mlc-pitch-sm.jpg
+/ProperArch01.WebApp/Assets/Gallery/mlc-meeting-room.jpg
+/ProperArch01.WebApp/Assets/Gallery/BarChart_2.png
+/ProperArch01.WebApp/Assets/ClassType/Trapezoid_ms-MY.png
+/ProperArch01.WebApp/Assets/ClassType/BarChart_2.png

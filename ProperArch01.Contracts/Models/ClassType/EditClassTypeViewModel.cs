@@ -23,6 +23,7 @@ namespace ProperArch01.Contracts.Models.ClassType
             Difficulty = dto.Difficulty;
             Description = dto.Description;
             IsActive = dto.IsActive;
+            ImageFileName = dto.ImageFileName;
         }
 
         public string Id { get; set; }
@@ -34,5 +35,7 @@ namespace ProperArch01.Contracts.Models.ClassType
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
         public bool IsActive { get; set; }
+        public string ImageFileName { get; set; }
+        public HttpPostedFileBase ImageFile { get; set; }
     }
 }

@@ -27,7 +27,8 @@ namespace ProperArch01.Persistence.Commands
                 ClassColour = dto.ClassColour,
                 Name = dto.Name,
                 Description = dto.Description,
-                Difficulty = dto.Difficulty
+                Difficulty = dto.Difficulty,
+                ImageFileName = dto.ImageFileName
             };
 
             _context.ClassTypes.Add(classType);
@@ -77,6 +78,7 @@ namespace ProperArch01.Persistence.Commands
                 classType.Difficulty = dto.Difficulty;
                 classType.Description = dto.Description;
                 classType.ClassColour = dto.ClassColour;
+                classType.ImageFileName = dto.ImageFileName;
 
                 _context.Entry(classType).State = System.Data.Entity.EntityState.Modified;
                 _context.SaveChanges();

@@ -118,3 +118,46 @@ textarea {
     font-size: 0.7em;
     opacity: 0.7;
 }
+
+.gallery-image {
+    /*display: inline-block;*/
+    width: 280px;
+    height: 210px;
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+    .gallery-image:hover {
+        transition: 0.5s;
+        transform: scale(2);
+        padding: 0px;
+        background-color: white;
+    }
+
+.gallery-image > img {
+    vertical-align: middle;
+    max-height: 210px;
+    padding: 8px;
+}
+
+@media screen and (max-width: 992px) {
+    .gallery-image {
+        width: 248px;
+        height: 186px;
+    }
+
+    .gallery-image > img {
+        max-height: 180px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .gallery-image {
+        width: 150px;
+        height: 112px;
+    }
+
+    .gallery-image > img {
+        max-height: 112px;
+    }
+}

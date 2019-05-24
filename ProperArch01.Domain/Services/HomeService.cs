@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -40,6 +42,19 @@ namespace ProperArch01.Domain.Services
             };
 
             return await Task.FromResult(viewModel);
+        }
+
+        public async Task<List<string>> GetListOfGalleryFiles()
+        {
+            var galleryFilePath = ConfigurationManager.AppSettings["GalleryAssetPath"];
+
+            var filteredByFilename = Directory
+                        .EnumerateFiles(HttpContext.Current.Server.MapPath(galleryFilePath))
+                        .Select(f => Path.GetFileName(f))
+                        .Where(f => f.ToLower().EndsWith(".png") || f.ToLower().EndsWith(".jpg"))
+                        .ToList();
+
+            return await Task.FromResult(filteredByFilename);
         }
 
         //Task<HomeIndexViewModel> IHomeService.BuildIndexViewModel()

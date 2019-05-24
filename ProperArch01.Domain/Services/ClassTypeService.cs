@@ -31,7 +31,8 @@ namespace ProperArch01.Domain.Services
                 Name = viewModel.Name,
                 ClassColour = viewModel.ClassColour,
                 Difficulty = viewModel.Difficulty,
-                Description = viewModel.Description
+                Description = viewModel.Description,
+                ImageFileName = viewModel.ImageFileName
             };
 
             var result = _classTypeWriter.AddClassType(dto);
@@ -49,13 +50,18 @@ namespace ProperArch01.Domain.Services
                 ScheduledClassStartTime = $"{x.ClassStartTime.DayOfWeek} {x.ClassStartTime.ToShortTimeString()}"
             }).ToList();
 
+            var classTypeDtos = _classTypeReader.GetAllActiveClassTypes().ToList();
+
             var viewModel = new ClassTypeDetailsViewModel()
             {
                 Id = classType.Id,
+                Name = classType.Name,
                 ClassColour = classType.ClassColour,
                 Description = classType.Description,
                 Difficulty = classType.Difficulty,
-                UpcomingScheduledClasses = topThree
+                UpcomingScheduledClasses = topThree,
+                ImageFileName = classType.ImageFileName,
+                ClassTypeDtos = classTypeDtos
             };
 
             return await Task.FromResult(viewModel);
@@ -81,7 +87,8 @@ namespace ProperArch01.Domain.Services
                 ClassColour = viewModel.ClassColour,
                 Difficulty = viewModel.Difficulty,
                 Description = viewModel.Description,
-                IsActive = viewModel.IsActive
+                IsActive = viewModel.IsActive,
+                ImageFileName = viewModel.ImageFileName
             };
             var result = _classTypeWriter.EditClassType(dto);
             return await Task.FromResult(result);

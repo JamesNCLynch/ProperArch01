@@ -25,7 +25,8 @@ namespace ProperArch01.Persistence.Queries
                 IsActive = x.IsActive,
                 Difficulty = x.Difficulty,
                 Description = x.Description,
-                ClassColour = x.ClassColour
+                ClassColour = x.ClassColour,
+                ImageFileName = x.ImageFileName
             });
 
             return retValue.ToList();
@@ -58,7 +59,8 @@ namespace ProperArch01.Persistence.Queries
                 IsActive = x.IsActive,
                 Difficulty = x.Difficulty,
                 Description = x.Description,
-                ClassColour = x.ClassColour
+                ClassColour = x.ClassColour,
+                ImageFileName = x.ImageFileName
             });
 
             return retValue.ToList();
@@ -75,7 +77,8 @@ namespace ProperArch01.Persistence.Queries
                 IsActive = classType.IsActive,
                 Difficulty = classType.Difficulty,
                 Description = classType.Description,
-                ClassColour = classType.ClassColour
+                ClassColour = classType.ClassColour,
+                ImageFileName = classType.ImageFileName
             };
 
             return retValue;
