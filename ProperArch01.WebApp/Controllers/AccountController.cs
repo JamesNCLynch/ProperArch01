@@ -17,6 +17,7 @@ using ProperArch01.Contracts.Models.Account;
 using ProperArch01.Contracts.Constants;
 using ProperArch01.Contracts.Dto;
 using RegisterViewModel = ProperArch01.Contracts.Models.Account.RegisterViewModel;
+using NLog;
 
 namespace ProperArch01.WebApp.Controllers
 {
@@ -28,6 +29,8 @@ namespace ProperArch01.WebApp.Controllers
 
         new private readonly IAccountService _accountService;
         new private readonly IBaseService _baseService;
+
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         public AccountController(IAccountService accountService, IBaseService baseService) : base(baseService)
         {
@@ -113,6 +116,7 @@ namespace ProperArch01.WebApp.Controllers
         {
             if (id == null)
             {
+                _logger.Trace("No parameters passed for Details");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
@@ -120,6 +124,7 @@ namespace ProperArch01.WebApp.Controllers
 
             if (gymUser == null)
             {
+                _logger.Info($"Parameter {id} was passed for Details but did not return a result");
                 return HttpNotFound();
             }
 
@@ -133,6 +138,7 @@ namespace ProperArch01.WebApp.Controllers
         {
             if (id == null)
             {
+                _logger.Trace("No parameters passed for Edit");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
@@ -140,6 +146,7 @@ namespace ProperArch01.WebApp.Controllers
             
             if (gymUser == null)
             {
+                _logger.Info($"Parameter {id} was passed for Edit but did not return a result");
                 return HttpNotFound();
             }
             
@@ -169,9 +176,11 @@ namespace ProperArch01.WebApp.Controllers
 
                 if (!isSuccess)
                 {
-                    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    _logger.Info($"An error occurred while editing account ID {dto.Id}");
                     return View(viewModel);
                 }
+
+                _logger.Info($"User Id {dto.Id} account details have been edited");
             }
 
             return RedirectToAction("Index"); 
@@ -392,6 +401,7 @@ namespace ProperArch01.WebApp.Controllers
                 var user = await UserManager.FindByNameAsync(model.Email);
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
+                    _logger.Debug($"Forgot password requested for {model.Email} failed due to email not existing in database");
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
                 }

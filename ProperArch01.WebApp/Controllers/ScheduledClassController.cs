@@ -11,6 +11,7 @@ using ProperArch01.Contracts.Dto;
 using ProperArch01.Contracts.Models.ScheduledClass;
 using System.Threading.Tasks;
 using ProperArch01.Contracts.Constants;
+using NLog;
 
 namespace ProperArch01.WebApp.Controllers
 {
@@ -18,6 +19,8 @@ namespace ProperArch01.WebApp.Controllers
     {
         new private readonly IScheduledClassService _scheduledClassService;
         new private readonly IBaseService _baseService;
+
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         public ScheduledClassController(IScheduledClassService scheduledClassService, IBaseService baseService) : base(baseService)
         {
@@ -39,11 +42,13 @@ namespace ProperArch01.WebApp.Controllers
         {
             if (id == null)
             {
+                _logger.Trace("No parameters passed for Details");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var dto = await _scheduledClassService.GetScheduledClass(id);
             if (dto == null)
             {
+                _logger.Info($"Parameter {id} was passed for Details but did not return a result");
                 return HttpNotFound();
             }
 
@@ -76,6 +81,7 @@ namespace ProperArch01.WebApp.Controllers
 
                 if (isSuccess)
                 {
+                    _logger.Info($"Scheduled class {viewModel.ClassTypeName}, starting at {viewModel.ClassStartTime} has been created with {viewModel.InstructorName} assigned as instructor");
                     return RedirectToAction("Index");
                 }
                 
@@ -89,6 +95,7 @@ namespace ProperArch01.WebApp.Controllers
         {
             if (id == null)
             {
+                _logger.Trace("No parameters passed for Edit");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
@@ -98,6 +105,7 @@ namespace ProperArch01.WebApp.Controllers
 
             if (dto == null)
             {
+                _logger.Info($"Parameter {id} was passed for Edit but did not return a result");
                 return HttpNotFound();
             }
 
@@ -119,6 +127,7 @@ namespace ProperArch01.WebApp.Controllers
                 var isSuccess = await _scheduledClassService.UpdateScheduledClass(viewModel);
                 if (isSuccess)
                 {
+                    _logger.Info($"Scheduled class ID {viewModel.Id} was edited successfully with {viewModel.InstructorName} assigned as instructor");
                     return RedirectToAction("Index");
                 }
             }
@@ -132,12 +141,14 @@ namespace ProperArch01.WebApp.Controllers
         {
             if (id == null)
             {
+                _logger.Trace("No parameters passed for Delete");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             ScheduledClassDto dto = await _scheduledClassService.GetScheduledClass(id);
             if (dto == null)
             {
+                _logger.Info($"Parameter {id} was passed for Delete but did not return a result, therefore, no deletion occurred");
                 return HttpNotFound();
             }
             return View(dto);
@@ -153,6 +164,7 @@ namespace ProperArch01.WebApp.Controllers
 
             if (isSuccess)
             {
+                _logger.Info($"Scheduled class ID {id} has been successfully deleted");
                 return RedirectToAction("Index");
             }
 

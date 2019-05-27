@@ -5,12 +5,15 @@ using ProperArch01.Contracts.Queries;
 using ProperArch01.Persistence.EntityModels;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using NLog;
 
 namespace ProperArch01.Persistence.Queries
 {
     public class ScheduledClassReader : IScheduledClassReader
     {
         private readonly ProperArch01DbContext _context;
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+
         public ScheduledClassReader(ProperArch01DbContext context)
         {
             _context = context;
@@ -31,6 +34,8 @@ namespace ProperArch01.Persistence.Queries
                 IsCancelled = x.IsCancelled
             }).ToList();
 
+            _logger.Info($"{scheduledClassDtos.Count()} ScheduledClasses found in database");
+
             return scheduledClassDtos;
         }
 
@@ -41,6 +46,12 @@ namespace ProperArch01.Persistence.Queries
                 .Include("Instructor")
                 .FirstOrDefault(x => x.Id == id);
 
+            if (scheduledClass == null)
+            {
+                _logger.Warn($"ScheduledClass ID {id} not found in database");
+                return null;
+            }
+
             var dto = new ScheduledClassDto()
             {
                 Id = scheduledClass.Id,
@@ -49,6 +60,8 @@ namespace ProperArch01.Persistence.Queries
                 InstructorName = scheduledClass.Instructor.UserName,
                 IsCancelled = scheduledClass.IsCancelled
             };
+            
+            _logger.Info($"ScheduledClass ID {id} found in database");
 
             return dto;
         }
@@ -56,6 +69,12 @@ namespace ProperArch01.Persistence.Queries
         public List<ScheduledClassDto> GetScheduledClassesByClassType(string id)
         {
             var scheduledClasses = _context.ScheduledClasses.Where(x => x.ClassTypeId == id);
+
+            if (scheduledClasses == null)
+            {
+                _logger.Warn($"ScheduledClass linked to ClassType ID {id} not found in database");
+                return null;
+            }
 
             var dtos = scheduledClasses.Select(x => new ScheduledClassDto()
             {
@@ -65,6 +84,8 @@ namespace ProperArch01.Persistence.Queries
                 InstructorName = x.Instructor.UserName,
                 IsCancelled = x.IsCancelled
             }).ToList();
+            
+            _logger.Info($"{dtos.Count()} ScheduledClasses linked to ClassType ID {id} found in database");
 
             return dtos;
         }

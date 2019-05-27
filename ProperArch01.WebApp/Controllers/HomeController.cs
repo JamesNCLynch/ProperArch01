@@ -1,4 +1,5 @@
-﻿using ProperArch01.Contracts.Models.Home;
+﻿using NLog;
+using ProperArch01.Contracts.Models.Home;
 using ProperArch01.Contracts.Services;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace ProperArch01.WebApp.Controllers
     {
         new private readonly IBaseService _baseService;
         private readonly IHomeService _homeService;
+
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         public HomeController(IHomeService homeService, IBaseService baseService) : base(baseService)
         {
@@ -180,12 +183,12 @@ namespace ProperArch01.WebApp.Controllers
 
                         //Save file to server folder  
                         file.SaveAs(savePath);
-
-                        //assigning file uploaded status to ViewBag for showing message to user.  
-                        
                     }
                 }
 
+                _logger.Info($"{viewModel.FileUploadModel.Files.Count()} files uploaded to Gallery view");
+
+                //assigning file uploaded status to ViewBag for showing message to user.  
                 ViewBag.UploadStatus = viewModel.FileUploadModel.Files.Count().ToString() + " files uploaded successfully.";
             }
 

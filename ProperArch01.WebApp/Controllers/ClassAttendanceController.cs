@@ -12,6 +12,7 @@ using ProperArch01.Contracts.Dto;
 using ProperArch01.Contracts.Models.ClassAttendance;
 using ProperArch01.Contracts.Constants;
 using Microsoft.AspNet.Identity;
+using NLog;
 
 namespace ProperArch01.WebApp.Controllers
 {
@@ -19,6 +20,8 @@ namespace ProperArch01.WebApp.Controllers
     {
         new private readonly IClassAttendanceService _classAttendanceService;
         new private readonly IBaseService _baseService;
+
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         public ClassAttendanceController(IClassAttendanceService classAttendanceService, IBaseService baseService) : base(baseService)
         {
@@ -30,8 +33,9 @@ namespace ProperArch01.WebApp.Controllers
         public async Task<ActionResult> Index()
         {
             var attendeeId = User.Identity.GetUserId();
-
             var viewModel = await _classAttendanceService.BuildClassAttendanceIndexViewModel(attendeeId);
+
+            _logger.Trace($"ClassAttendance Index view built for user ID {attendeeId}");
             return View(viewModel);
         }
 
@@ -40,12 +44,14 @@ namespace ProperArch01.WebApp.Controllers
         {
             if (id == null)
             {
+                _logger.Trace("No parameters passed for Details");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             var dto = await _classAttendanceService.GetClassAttendance(id);
             if (dto == null)
             {
+                _logger.Info($"Parameter {id} was passed for Details but did not return a result");
                 return HttpNotFound();
             }
             return View(dto);
@@ -78,14 +84,18 @@ namespace ProperArch01.WebApp.Controllers
                 switch (response)
                 {
                     case ClassAttendanceResponse.Success:
+                        _logger.Info($"User ID {viewModel.AttendeeId} has successfully signed up for scheduled class {viewModel.ScheduledClassId}");
                         return RedirectToAction("Index");
                     case ClassAttendanceResponse.ClassCancelled:
                         ModelState.AddModelError("", "Class has been cancelled. Sorry!");
+                        _logger.Info($"User ID {viewModel.AttendeeId} attempted to sign up for scheduled class {viewModel.ScheduledClassId} which has since been cancelled");
                         break;
                     case ClassAttendanceResponse.ClassNotFound:
                         ModelState.AddModelError("", "Class not found. Please try again");
+                        _logger.Info($"User ID {viewModel.AttendeeId} attempted to sign up for scheduled class {viewModel.ScheduledClassId} which does not exist");
                         break;
                     case ClassAttendanceResponse.UnspecifiedError:
+                        _logger.Info($"User ID {viewModel.AttendeeId} attempted to sign up for scheduled class, but something went wrong");
                         ModelState.AddModelError("", "Something has gone wrong. Please refresh the page and try again");
                         break;
                     default:
@@ -103,12 +113,14 @@ namespace ProperArch01.WebApp.Controllers
         {
             if (id == null)
             {
+                _logger.Trace("No parameters passed for Edit");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             var dto = await _classAttendanceService.GetClassAttendance(id);
             if (dto == null)
             {
+                _logger.Info($"Parameter {id} was passed for Edit but did not return a result");
                 return HttpNotFound();
             }
 

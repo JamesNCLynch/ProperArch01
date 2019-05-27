@@ -4,12 +4,15 @@ using System.Linq;
 using ProperArch01.Contracts.Dto;
 using ProperArch01.Contracts.Queries;
 using System.Data.Entity;
+using NLog;
 
 namespace ProperArch01.Persistence.Queries
 {
     public class ClassAttendanceReader : IClassAttendanceReader
     {
         private readonly ProperArch01DbContext _context;
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+
         public ClassAttendanceReader(ProperArch01DbContext context)
         {
             _context = context;
@@ -35,6 +38,8 @@ namespace ProperArch01.Persistence.Queries
                 NoShow = x.NoShow
             }).ToList();
 
+            _logger.Info($"{dtos.Count()} ClassAttendances found in database");
+
             return dtos;
         }
 
@@ -57,6 +62,8 @@ namespace ProperArch01.Persistence.Queries
                 ClassStartDateTime = x.ScheduledClass.ClassStartTime,
                 NoShow = x.NoShow
             }).ToList();
+
+            _logger.Info($"{dtos.Count()} ClassAttendances for GymUser {id} found in database");
 
             return dtos;
         }
@@ -81,6 +88,8 @@ namespace ProperArch01.Persistence.Queries
                 NoShow = classAttendance.NoShow
             };
 
+            _logger.Info($"ClassAttendance ID {id} found in database");
+
             return dto;
         }
 
@@ -104,23 +113,9 @@ namespace ProperArch01.Persistence.Queries
                 NoShow = x.NoShow
             }).ToList();
 
+            _logger.Info($"{dtos.Count()} ClassAttendances found for ScheduledClass ID {id} in database");
+
             return dtos;
         }
-
-        //public List<GymUserDto> GetUsersByScheduledClass(string id)
-        //{
-        //    var userEntities = _context.ClassAttendances.Where(sc => sc.ScheduledClassId == id).Select(x => x.Attendee).ToList();
-
-        //    var dtos = userEntities.Select(x => new GymUserDto()
-        //    {
-        //        Id = x.Id,
-        //        FirstName = x.FirstName,
-        //        LastName = x.LastName,
-        //        UserName = x.UserName,
-        //        Email = x.Email
-        //    }).ToList();
-
-        //    return dtos;
-        //}
     }
 }

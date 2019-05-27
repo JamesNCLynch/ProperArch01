@@ -5,12 +5,14 @@ using System.Web;
 using ProperArch01.Contracts.Dto;
 using ProperArch01.Contracts.Queries;
 using System.Data.Entity;
+using NLog;
 
 namespace ProperArch01.Persistence.Queries
 {
     public class HolidayReader : IHolidayReader
     {
         private readonly ProperArch01DbContext _context;
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         public HolidayReader(ProperArch01DbContext context)
         {
@@ -21,6 +23,7 @@ namespace ProperArch01.Persistence.Queries
         {
             if (id == null)
             {
+                _logger.Warn("null parameter passed");
                 return null;
             }
 
@@ -28,6 +31,7 @@ namespace ProperArch01.Persistence.Queries
 
             if (holiday == null)
             {
+                _logger.Warn($"Holiday ID {id} not found in database");
                 return null;
             }
 
@@ -36,6 +40,8 @@ namespace ProperArch01.Persistence.Queries
                 Name = holiday.Name,
                 HolidayDate = holiday.HolidayDate
             };
+
+            _logger.Info($"Holiday ID {id} found in database");
 
             return dto;
         }
@@ -50,6 +56,8 @@ namespace ProperArch01.Persistence.Queries
                 Name = x.Name,
                 HolidayDate = x.HolidayDate
             }).ToList();
+
+            _logger.Info($"{holidays.Count()} Holidays found in database");
 
             return dtos;
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using NLog;
 using ProperArch01.Contracts.Dto;
 using ProperArch01.Contracts.Models.ClassTimetable;
 using ProperArch01.Contracts.Queries;
@@ -12,6 +13,8 @@ namespace ProperArch01.Persistence.Queries
     public class ClassTimetableReader : IClassTimetableReader
     {
         private readonly ProperArch01DbContext _context;
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+
         public ClassTimetableReader(ProperArch01DbContext context)
         {
             _context = context;
@@ -19,20 +22,23 @@ namespace ProperArch01.Persistence.Queries
 
         public IList<ClassTimetableDto> GetAllClassTimetables()
         {
-            var classTimetables = _context.ClassTimetable
+            var dtos = _context.ClassTimetable
                 .Include("ClassType")
-                .Select(x => new ClassTimetableDto() {
-                Id = x.Id,
-                ClassTypeName = x.ClassType.Name,
-                StartHour = x.StartTime.Hour,
-                StartMinutes = x.StartTime.Minute,
-                EndHour = x.EndTime.Hour,
-                EndMinutes = x.EndTime.Minute,
-                Weekday = x.Weekday,
-                Colour = x.ClassType.ClassColour
-            }).ToList();
+                .Select(x => new ClassTimetableDto()
+                {
+                    Id = x.Id,
+                    ClassTypeName = x.ClassType.Name,
+                    StartHour = x.StartTime.Hour,
+                    StartMinutes = x.StartTime.Minute,
+                    EndHour = x.EndTime.Hour,
+                    EndMinutes = x.EndTime.Minute,
+                    Weekday = x.Weekday,
+                    Colour = x.ClassType.ClassColour
+                }).ToList();
 
-            return classTimetables;
+            _logger.Info($"{dtos.Count()} ClassTimetables found in database");
+
+            return dtos;
         }
 
         public ClassTimetableDto GetClassTimetable(string id)
@@ -51,6 +57,8 @@ namespace ProperArch01.Persistence.Queries
                 Weekday = classTimetable.Weekday,
                 Colour = classTimetable.ClassType.ClassColour
             };
+
+            _logger.Info($"ClassTimetable ID {id} found in database");
 
             return dto;
         }

@@ -8,6 +8,7 @@ using ProperArch01.Contracts.Constants;
 using ProperArch01.Contracts.Dto;
 using System.Threading.Tasks;
 using System.Configuration;
+using NLog;
 
 namespace ProperArch01.WebApp.Controllers
 {
@@ -16,8 +17,8 @@ namespace ProperArch01.WebApp.Controllers
         new private readonly IClassTimetableService _classTimetableService;
         new private readonly IClassTypeService _classTypeService;
         new private readonly IBaseService _baseService;
-
-        // CHANGE ALL BASE CONSTRUCTORS TO baseService!!!
+        
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         public ClassTimetableController(IClassTimetableService classTimetableService, IClassTypeService classTypeService, IBaseService baseService) : base(baseService)
         {
@@ -38,6 +39,7 @@ namespace ProperArch01.WebApp.Controllers
         {
             if (id == null)
             {
+                _logger.Trace("No parameters passed for Details");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
@@ -45,6 +47,7 @@ namespace ProperArch01.WebApp.Controllers
 
             if (classTimetable == null)
             {
+                _logger.Info($"Parameter {id} was passed for Details but did not return a result");
                 return HttpNotFound();
             }
 
@@ -57,6 +60,7 @@ namespace ProperArch01.WebApp.Controllers
         {
             if (weekday < 0 || weekday > 7)
             {
+                _logger.Info($"An attempt was made to create a timetable entry with the weekday parameter as {weekday}");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
@@ -64,6 +68,7 @@ namespace ProperArch01.WebApp.Controllers
 
             if (classTypeNames == null)
             {
+                _logger.Info($"There may be no class types created yet");
                 return HttpNotFound();
             }
 
@@ -80,6 +85,7 @@ namespace ProperArch01.WebApp.Controllers
         {
             if (viewModel == null)
             {
+                _logger.Trace("Null parameter passed for Create ClassTimetable");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
@@ -88,6 +94,7 @@ namespace ProperArch01.WebApp.Controllers
                 var isClassTimerangeValid = ValidateTime(viewModel.StartHour, viewModel.StartMinutes, viewModel.EndHour, viewModel.EndMinutes);
                 if (!isClassTimerangeValid)
                 {
+                    _logger.Info($"An attempt was made to create a class timetable outside of the gym opening times");
                     viewModel.ClassTypeNames = await _classTypeService.GetAllActiveClassTypeNames();
                     return View(viewModel);
                 }
@@ -153,6 +160,7 @@ namespace ProperArch01.WebApp.Controllers
         {
             if (id == null)
             {
+                _logger.Trace("No parameters passed for Edit");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
@@ -161,6 +169,7 @@ namespace ProperArch01.WebApp.Controllers
 
             if (classTimetable == null || classTypeNames == null)
             {
+                _logger.Info($"Parameter {id} was passed for Edit but did not return a result");
                 return HttpNotFound();
             }
 
@@ -202,6 +211,7 @@ namespace ProperArch01.WebApp.Controllers
         {
             if (id == null)
             {
+                _logger.Trace("No parameters passed for Delete");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
@@ -209,6 +219,7 @@ namespace ProperArch01.WebApp.Controllers
 
             if (classTimetable == null)
             {
+                _logger.Info($"Parameter {id} was passed for Delete but did not return a result, therefore, no deletion occurred");
                 return HttpNotFound();
             }
 

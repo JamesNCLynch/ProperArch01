@@ -15,6 +15,7 @@ using ProperArch01.Contracts.Dto;
 using ProperArch01.Contracts.Constants;
 using System.IO;
 using System.Configuration;
+using NLog;
 
 namespace ProperArch01.WebApp.Controllers
 {
@@ -22,6 +23,8 @@ namespace ProperArch01.WebApp.Controllers
     {
         new private readonly IClassTypeService _classTypeService;
         new private readonly IBaseService _baseService;
+
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         public ClassTypeController(IClassTypeService classTypeService, IBaseService baseService) : base(baseService)
         {
@@ -42,6 +45,7 @@ namespace ProperArch01.WebApp.Controllers
         {
             if (id == null)
             {
+                _logger.Trace("No parameters passed for Details");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
@@ -49,6 +53,7 @@ namespace ProperArch01.WebApp.Controllers
 
             if (classType == null)
             {
+                _logger.Info($"Parameter {id} was passed for Details but did not return a result");
                 return HttpNotFound();
             }
 
@@ -124,12 +129,14 @@ namespace ProperArch01.WebApp.Controllers
         {
             if (id == null)
             {
+                _logger.Trace("No parameters passed for Edit");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var dto = await _classTypeService.GetClassType(id);
 
             if (dto == null)
             {
+                _logger.Info($"Parameter {id} was passed for Edit but did not return a result");
                 return HttpNotFound();
             }
 
@@ -195,12 +202,14 @@ namespace ProperArch01.WebApp.Controllers
         {
             if (id == null)
             {
+                _logger.Trace("No parameters passed for Delete");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             var classType = await _classTypeService.GetClassType(id);
             if (classType == null)
             {
+                _logger.Info($"Parameter {id} was passed for Delete but did not return a result, therefore, no deletion occurred");
                 return HttpNotFound();
             }
             return View(classType);
@@ -219,6 +228,7 @@ namespace ProperArch01.WebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+            _logger.Info($"Class type ID {id} has been successfully deleted");
             return RedirectToAction("Index");
         }
     }

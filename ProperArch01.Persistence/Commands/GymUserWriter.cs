@@ -11,136 +11,156 @@ using ProperArch01.Persistence.EntityModels;
 using ProperArch01.Contracts.Dto;
 using System.Data;
 using System.Data.Entity;
+using NLog;
 
 namespace ProperArch01.Persistence.Commands
 {
     public class GymUserWriter : IGymUserWriter
     {
         private readonly ProperArch01DbContext _context;
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         public GymUserWriter(ProperArch01DbContext context)
         {
             _context = context;
         }
 
-        public IEnumerable<string> AddGymUser(GymUserDto model)
+        public IEnumerable<string> AddGymUser(GymUserDto dto)
         {
-            var userManager = new UserManager<GymUser>(new UserStore<GymUser>(_context));
-            
-            var gymUser = new GymUser()
+            try
             {
-                Email = model.Email,
-                UserName = model.UserName?? model.Email,
-                FirstName = model.FirstName?? "",
-                LastName = model.LastName?? "",
-                DateCreated = DateTime.UtcNow
-            };
+                var userManager = new UserManager<GymUser>(new UserStore<GymUser>(_context));
 
-            var result = userManager.Create(gymUser, model.Password);
-            if (result.Succeeded)
-            {
-                userManager.AddToRole(gymUser.Id, RoleNames.AttendeeName);
-                return null;
+                var gymUser = new GymUser()
+                {
+                    Email = dto.Email,
+                    UserName = dto.UserName ?? dto.Email,
+                    FirstName = dto.FirstName ?? "",
+                    LastName = dto.LastName ?? "",
+                    DateCreated = DateTime.UtcNow
+                };
+
+                var result = userManager.Create(gymUser, dto.Password);
+                if (result.Succeeded)
+                {
+                    userManager.AddToRole(gymUser.Id, RoleNames.AttendeeName);
+                    _logger.Info($"Gym user ID {gymUser.Id} successfully created");
+                    return null;
+                }
+                return result.Errors;
             }
-
-            return result.Errors;
+            catch (Exception e)
+            {
+                _logger.Error(e);
+                return new List<string>() { "Error occurred creating a new member" };
+            }
         }
 
-        //public IEnumerable<string>> AddGymUser(CreateUserViewModel model)
-        //{
-        //    var userManager = new UserManager<GymUser>(new UserStore<GymUser>(_context));
-
-        //    // replace with automapper at some point
-        //    var gymUser = new GymUser()
-        //    {
-        //        Email = model.Email,
-        //        UserName = model.UserName ?? model.Email,
-        //        FirstName = model.FirstName ?? "",
-        //        LastName = model.LastName ?? "",
-        //        DateCreated = DateTime.UtcNow
-        //    };
-
-        //    var result = userManager.Create(gymUser, model.Password);
-        //    if (result.Succeeded)
-        //    {
-        //        userManager.AddToRole(gymUser.Id, RoleNames.AttendeeName);
-        //        return null;
-        //    }
-
-        //    return result.Errors;
-        //}
-
-        public bool DeleteUser(GymUserDto gymUser)
+        public bool DeleteUser(GymUserDto dto)
         {
-            if (gymUser == null)
+            try
             {
+                if (dto == null)
+                {
+                    _logger.Warn("Parameter passed is null");
+                    return false;
+                }
+
+                var user = _context.Users.FirstOrDefault(x => x.Id == dto.Id);
+                if (user == null)
+                {
+                    _logger.Warn($"User ID {dto.Id} not found in database");
+                    return false;
+                }
+
+                // if instructor, remove association between user and scheduled class. do no remove scheduled class
+                var scheduledClasses = _context.ScheduledClasses.Where(x => x.InstructorId == dto.Id).ToList();
+                if (scheduledClasses != null && scheduledClasses.Any())
+                {
+                    scheduledClasses.ForEach(sc => { sc.InstructorId = null; });
+                    _logger.Info($"Instructor ID {dto.Id} removed from scheduled classes with IDs {scheduledClasses.Select(x => x.Id).ToList()}");
+                }
+                
+
+                // remove associated attendances
+                var attendances = _context.ClassAttendances.Where(x => x.AttendeeId == dto.Id).ToList();
+                if (attendances != null && attendances.Any())
+                {
+                    _context.ClassAttendances.RemoveRange(attendances);
+                    _logger.Info($"Gym user ID {dto.Id} unsigned from class attendances with IDs {attendances.Select(x => x.Id).ToList()}");
+                }
+
+                //remove userroles
+                var userRoles = _context.UserRoles.Where(x => x.UserId == dto.Id).ToList();
+                _context.UserRoles.RemoveRange(userRoles);
+
+                _context.Users.Remove(user);
+                _context.SaveChanges();
+
+                _logger.Info($"Gym user ID {dto.Id} successfully deleted");
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e);
                 return false;
             }
-
-            var user = _context.Users.FirstOrDefault(x => x.Id == gymUser.Id);
-            if (user == null)
-            {
-                return false;
-            }
-
-            // if instructor, remove association between user and scheduled class. do no remove scheduled class
-            var scheduledClasses = _context.ScheduledClasses.Where(x => x.InstructorId == gymUser.Id).ToList();
-            scheduledClasses.ForEach(sc => { sc.InstructorId = null; });
-
-            // remove associated attendances
-            var attendances = _context.ClassAttendances.Where(x => x.AttendeeId == gymUser.Id).ToList();
-            _context.ClassAttendances.RemoveRange(attendances);
-
-            //remove userroles
-            var userRoles = _context.UserRoles.Where(x => x.UserId == gymUser.Id).ToList();
-            _context.UserRoles.RemoveRange(userRoles);
-
-            _context.Users.Remove(user);
-            _context.SaveChanges();
-
-            return true;
         }
 
-        public bool EditUser(GymUserDto gymUser)
+        public bool EditUser(GymUserDto dto)
         {
-            if (gymUser == null)
+            try
             {
+                if (dto == null)
+                {
+                    _logger.Warn("Parameter passed is null");
+                    return false;
+                }
+
+                var userManager = new UserManager<GymUser>(new UserStore<GymUser>(_context));
+
+                //var user = _context.Users.FirstOrDefault(x => x.Id == gymUser.Id);
+                var user = userManager.Users.FirstOrDefault(x => x.Id == dto.Id);
+
+                if (user == null)
+                {
+                    _logger.Warn($"Gymuser ID {dto.Id} not found in database");
+                    return false;
+                }
+
+                // todo: replace with automapper
+                user.DateModified = DateTime.UtcNow;
+                user.Email = dto.Email;
+                user.FirstName = dto.FirstName;
+                user.LastName = dto.LastName;
+                user.UserName = dto.UserName;
+
+                var currentRoleId = user.Roles.FirstOrDefault().RoleId;
+                var currentRoleName = _context.Roles.FirstOrDefault(x => x.Id == currentRoleId).Name;
+
+                if (currentRoleName != dto.RoleName)
+                {
+                    userManager.RemoveFromRole(user.Id, currentRoleName);
+                    userManager.AddToRole(user.Id, dto.RoleName);
+                    _logger.Info($"Gymuser ID {dto.Id} has changed role from {currentRoleName} to {dto.RoleName}");
+                }
+
+
+                // todo: might have to do something with password soon
+
+                _context.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                _context.SaveChanges();
+
+                _logger.Info($"Gymuser ID {dto.Id} has been updated");
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e);
                 return false;
             }
-
-            var userManager = new UserManager<GymUser>(new UserStore<GymUser>(_context));
-
-            //var user = _context.Users.FirstOrDefault(x => x.Id == gymUser.Id);
-            var user = userManager.Users.FirstOrDefault(x => x.Id == gymUser.Id);
-
-            if (user == null)
-            {
-                return false;
-            }
-
-            // todo: replace with automapper
-            user.DateModified = DateTime.UtcNow;
-            user.Email = gymUser.Email;
-            user.FirstName = gymUser.FirstName;
-            user.LastName = gymUser.LastName;
-            user.UserName = gymUser.UserName;
-
-            var currentRoleId = user.Roles.FirstOrDefault().RoleId;
-            var currentRoleName = _context.Roles.FirstOrDefault(x => x.Id == currentRoleId).Name;
-
-            if (currentRoleName != gymUser.RoleName)
-            {
-                userManager.RemoveFromRole(user.Id, currentRoleName);
-                userManager.AddToRole(user.Id, gymUser.RoleName);
-            }
-
-
-            // todo: might have to do something with password soon
-
-            _context.Entry(user).State = System.Data.Entity.EntityState.Modified;
-            _context.SaveChanges();
-
-            return true;
         }
     }
 }

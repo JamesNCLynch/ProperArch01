@@ -7,11 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ProperArch01.Contracts.Services;
-using ProperArch01.WebApp.Models;
 using ProperArch01.Contracts.Models.Holiday;
 using ProperArch01.Contracts.Constants;
 using ProperArch01.Contracts.Dto;
 using System.Threading.Tasks;
+using NLog;
 
 namespace ProperArch01.WebApp.Controllers
 {
@@ -20,6 +20,8 @@ namespace ProperArch01.WebApp.Controllers
     {
         new private readonly IHolidayService _holidayService;
         new private readonly IBaseService _baseService;
+
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         public HolidayController(IHolidayService holidayService, IBaseService baseService) : base(baseService)
         {
@@ -39,6 +41,7 @@ namespace ProperArch01.WebApp.Controllers
         {
             if (id == null)
             {
+                _logger.Trace("No parameters passed for Details");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
@@ -46,6 +49,7 @@ namespace ProperArch01.WebApp.Controllers
 
             if (holiday == null)
             {
+                _logger.Info($"Parameter {id} was passed for Details but did not return a result");
                 return HttpNotFound();
             }
             return View(holiday);
@@ -72,6 +76,7 @@ namespace ProperArch01.WebApp.Controllers
 
                 if (isSuccess)
                 {
+                    _logger.Info($"Holiday on {viewModel.HolidayDate} created successfully");
                     return RedirectToAction("Index");
                 }
             }
@@ -84,12 +89,14 @@ namespace ProperArch01.WebApp.Controllers
         {
             if (id == null)
             {
+                _logger.Trace("No parameters passed for Edit");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var dto = await _holidayService.GetHoliday(id);
 
             if (dto == null)
             {
+                _logger.Info($"Parameter {id} was passed for Edit but did not return a result");
                 return HttpNotFound();
             }
 
@@ -110,6 +117,7 @@ namespace ProperArch01.WebApp.Controllers
                 bool isSuccess = await _holidayService.EditHoliday(viewModel);
                 if (isSuccess)
                 {
+                    _logger.Info($"Holiday ID {viewModel.Id} created successfully");
                     return RedirectToAction("Index");
                 }
             }
@@ -121,11 +129,13 @@ namespace ProperArch01.WebApp.Controllers
         {
             if (id == null)
             {
+                _logger.Trace("No parameters passed for Delete");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var dto = await _holidayService.GetHoliday(id);
             if (dto == null)
             {
+                _logger.Info($"Parameter {id} was passed for Delete but did not return a result, therefore, no deletion occurred");
                 return HttpNotFound();
             }
             return View(dto);
@@ -144,6 +154,7 @@ namespace ProperArch01.WebApp.Controllers
                 return RedirectToAction("Index");
             }
 
+            _logger.Info($"Holiday ID {id} has been successfully deleted");
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
     }
