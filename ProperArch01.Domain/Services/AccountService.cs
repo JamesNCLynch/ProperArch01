@@ -21,33 +21,17 @@ namespace ProperArch01.Domain.Services
         private readonly IGymUserWriter _gymUserWriter;
         private readonly IGymUserReader _gymUserReader;
 
-        // Need to update Account services and all piping so that Persistence does not map viewmodels directly to entity models
-
         public AccountService(IGymUserWriter gymUserWriter, IGymUserReader gymUserReader)
         {
             _gymUserWriter = gymUserWriter;
             _gymUserReader = gymUserReader;
         }
         
-        public async Task<IList<GymUserDto>> GetInstructorByScheduledClass(string id)
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task<GymUserDto> GetUser(string id)
         {
             var gymUser = _gymUserReader.GetUser(id);
             return await Task.FromResult(gymUser);
-        }
-
-        public async Task<IList<GymUserDto>> GetUsersByScheduledClass(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<IList<GymUserDto>> GetUsers(IList<string> userIds)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<string>> AddUserByRegistration(GymUserDto dto)

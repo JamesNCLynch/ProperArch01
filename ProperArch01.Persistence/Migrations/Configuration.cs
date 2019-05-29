@@ -9,7 +9,7 @@ namespace ProperArch01.Persistence.Migrations
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<ProperArch01.Persistence.ProperArch01DbContext>
+    public sealed class Configuration : DbMigrationsConfiguration<ProperArch01.Persistence.ProperArch01DbContext>
     {
         public Configuration()
         {
@@ -44,8 +44,8 @@ namespace ProperArch01.Persistence.Migrations
                 //Here we create a Admin super user who will maintain the website
                 var user = new GymUser
                 {
-                    UserName = "admin",
-                    Email = "jamesbernardlynch@gmail.com"
+                    UserName = "admin@mlc.com",
+                    Email = "admin@mlc.com"
                 };
 
                 string userPWD = "Ballygowan1!";
@@ -70,8 +70,8 @@ namespace ProperArch01.Persistence.Migrations
 
                 var user = new GymUser
                 {
-                    UserName = "attendee",
-                    Email = "corpsemuncher@gmail.com"
+                    UserName = "attendee@mlc.com",
+                    Email = "attendee@mlc.com"
                 };
 
                 string userPWD = "Ballygowan1!";
@@ -94,8 +94,8 @@ namespace ProperArch01.Persistence.Migrations
 
                 var user = new GymUser
                 {
-                    UserName = "instructor",
-                    Email = "jlynch@actionpoint.ie"
+                    UserName = "instructor@mlc.com",
+                    Email = "instructor@mlc.com"
                 };
 
                 string userPWD = "Ballygowan1!";
