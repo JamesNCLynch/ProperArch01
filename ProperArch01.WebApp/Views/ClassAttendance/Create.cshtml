@@ -1,7 +1,7 @@
 ﻿@model ProperArch01.Contracts.Models.ClassAttendance.CreateClassAttendanceViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Sign up for class";
 }
 
 <h2>Create</h2>
@@ -10,16 +10,16 @@
 <div>
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.ScheduledClassName)
+            Class type:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ScheduledClassName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ClassStartTime)
+            Starts at:
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ClassStartTime)
+            @Model.ClassStartTime.DayOfWeek @Html.DisplayFor(model => model.ClassStartTime)
         </dd>
     </dl>
 </div>
@@ -30,7 +30,7 @@
     @Html.HiddenFor(model => model.ScheduledClassId)
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
+            <input type="submit" value="Sign up" class="btn btn-default" />
         </div>
     </div>
 }

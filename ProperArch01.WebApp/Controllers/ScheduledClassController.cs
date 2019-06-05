@@ -37,7 +37,7 @@ namespace ProperArch01.WebApp.Controllers
         }
 
         // GET: ScheduledClass/Details/5
-        [Authorize(Roles = RoleNames.AdminName)]
+        //[Authorize(Roles = RoleNames.AdminName)]
         public async Task<ActionResult> Details(string id)
         {
             if (id == null)

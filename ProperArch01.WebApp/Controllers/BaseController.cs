@@ -85,6 +85,9 @@ namespace ProperArch01.WebApp.Controllers
             var classTypes = _baseService.GetClassTypeDtos();
             ViewBag.ClassTypes = classTypes;
 
+            var openingHours = _baseService.GetFooterOpeningHours();
+            ViewBag.OpeningHours = openingHours;
+
             base.OnActionExecuting(filterContext);
         }
     }

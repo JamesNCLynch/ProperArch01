@@ -63,7 +63,7 @@
                             <tr>
                                 <td>@item.ScheduledClassStartTime</td>
                                 <td>
-                                    @Html.ActionLink("View scheduled class", "Details", "ScheduledClass", new { Id = item.ScheduledClassId }, null)
+                                    @Html.ActionLink("Sign up for this class", "Create", "ClassAttendance", new { scid = item.ScheduledClassId }, null)
                                 </td>
                             </tr>
                         }
