@@ -3,6 +3,10 @@
     padding-bottom: 0px;
 }
 
+html {
+    background-color: black;
+}
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -123,7 +127,6 @@ textarea {
 }
 
 .gallery-image {
-    /*display: inline-block;*/
     width: 280px;
     height: 210px;
     display: inline-flex;
@@ -148,15 +151,27 @@ textarea {
     height: 200px;
     background-color: #21409A;
     color: white;
-    padding-left: 0px;
-    padding-right: 0px;
-    margin-left: 0px;
-    margin-right: 0px;
+    position: relative;
+    bottom: 0;
+}
+
+.opening-hours-bottom {
+    position: relative;
+    right: 20px;
+    bottom: 40px;
+    top: 0;
 }
 
 .navbar-bottom {
+    width: 100%;
     position: relative;
-    margin-bottom: 0px;
+    bottom: 0;
+    height: 40px;
+    background-color: black;
+    color: white;
+    padding-bottom: 20px;
+    border-top: thin solid;
+    border-color: white;
     border-radius: 0px;
 }
 
@@ -180,6 +195,10 @@ textarea {
         padding: 8px;
         margin: 8px;
     }
+
+    .navbar-bottom {
+        display: none;
+    }
 }
 
 @media screen and (max-width: 600px) {
@@ -197,6 +216,18 @@ textarea {
     }
 
     footer-full-width {
-        height: 280px;
+        height: 400px;
+    }
+
+    .navbar-bottom {
+        display: none;
+        background-color: #21409A;
+    }
+
+    .opening-hours-bottom {
+        position: relative;
+        left: 0px;
+        bottom: 0px;
+        top: 0;
     }
 }
