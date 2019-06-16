@@ -27,8 +27,7 @@ textarea {
     max-width: 280px;
 }
 
-.div-border
-{
+.div-border {
     border: solid thin;
     border-color: lightgray;
 }
@@ -39,18 +38,18 @@ textarea {
     padding: 8px;
 }
 
-.div-border-padded > h4 {
-    padding-left: 16px;
-}
+    .div-border-padded > h4 {
+        padding-left: 16px;
+    }
 
 .div-border-top {
     border-top: solid thin;
     border-color: lightgray;
 }
 
-.div-border-top > h4 {
-    padding-left: 16px;
-}
+    .div-border-top > h4 {
+        padding-left: 16px;
+    }
 
 .div-border-bottom {
     border-bottom: solid thin;
@@ -73,11 +72,11 @@ textarea {
     margin-bottom: 20px;
 }
 
-.timetable  > tr > td, th {
-    padding: 4px 6px;
-    width: 2%;
-    margin-bottom: 0;
-}
+    .timetable > tr > td, th {
+        padding: 4px 6px;
+        width: 2%;
+        margin-bottom: 0;
+    }
 
 .carousel-mark-blue {
     background-color: #64B8D9;
@@ -93,9 +92,9 @@ textarea {
     margin: 10px;
 }
 
-.carousel-mark-blue, .carousel-mark-lightgray > h3, p {
-    font-size: 125%;
-}
+    .carousel-mark-blue, .carousel-mark-lightgray > h3, p {
+        font-size: 125%;
+    }
 
 .membership-color-darkerblue {
     background-color: #087DC2;
@@ -133,6 +132,7 @@ textarea {
     align-items: center;
     flex-wrap: wrap;
 }
+
     .gallery-image:hover {
         transition: 0.5s;
         transform: scale(2);
@@ -140,11 +140,11 @@ textarea {
         background-color: white;
     }
 
-.gallery-image > img {
-    vertical-align: middle;
-    max-height: 210px;
-    padding: 8px;
-}
+    .gallery-image > img {
+        vertical-align: middle;
+        max-height: 210px;
+        padding: 8px;
+    }
 
 .footer-full-width {
     width: 100%;
@@ -180,15 +180,217 @@ textarea {
     padding-right: 0px;
 }
 
+.grad-background-pink {
+    background-image: linear-gradient(-45deg, lightgray, white, lightgray);
+    height: 100%;
+}
+
+    .grad-background-pink > h4 {
+        color: #DE1F80;
+    }
+
+    .grad-background-pink:hover {
+        background-image: linear-gradient(-45deg, #DE1F80, #EF80B8, #DE1F80);
+        color: white;
+        transition: 0.5s;
+    }
+
+        .grad-background-pink:hover > h4 {
+            color: white;
+            transition: 0.5s;
+            font-style: inherit;
+        }
+
+.grad-background-purple {
+    background-image: linear-gradient(-45deg, lightgray, white, lightgray);
+    height: 100%;
+}
+
+    .grad-background-purple > h4 {
+        color: #980CB6;
+    }
+
+    .grad-background-purple:hover {
+        background-image: linear-gradient(-45deg, #980CB6, #BD59D2, #980CB6);
+        color: white;
+        transition: 0.5s;
+    }
+
+        .grad-background-purple:hover > h4 {
+            color: white;
+            transition: 0.5s;
+            font-style: inherit;
+        }
+
+.grad-background-skyblue {
+    background-image: linear-gradient(-45deg, lightgray, white, lightgray);
+    height: 100%;
+}
+
+    .grad-background-skyblue > h4 {
+        color: #1ABAFF;
+    }
+
+    .grad-background-skyblue:hover {
+        background-image: linear-gradient(-45deg, #1ABAFF, #79D6FF, #1ABAFF);
+        color: white;
+        transition: 0.5s;
+    }
+
+        .grad-background-skyblue:hover > h4 {
+            color: white;
+            transition: 0.5s;
+            font-style: inherit;
+        }
+
+.grad-button-pink-ani {
+    border-radius: 0px;
+    margin: 20px;
+    background-color: #DE1F80;
+}
+
+    .grad-button-pink-ani:hover {
+        transform: rotateX(360deg);
+        transition: 1s;
+        background-color: #DE1F80;
+    }
+
+
+.grad-button-purple-ani {
+    border-radius: 0px;
+    margin: 20px;
+    background-color: #980CB6;
+}
+
+    .grad-button-purple-ani:hover {
+        transform: rotateX(360deg);
+        transition: 1s;
+        background-color: #980CB6;
+    }
+
+
+.grad-button-skyblue-ani {
+    border-radius: 0px;
+    margin: 20px;
+    background-color: #1ABAFF;
+}
+
+    .grad-button-skyblue-ani:hover {
+        transform: rotateX(360deg);
+        transition: 1s;
+        background-color: #1ABAFF;
+    }
+
+.grad-background-orangebrown {
+    background-image: linear-gradient(-45deg, lightgray, white, lightgray);
+    height: 100%;
+}
+
+    .grad-background-orangebrown > h4 {
+        color: #E36243;
+    }
+
+    .grad-background-orangebrown:hover {
+        background-image: linear-gradient(-45deg, #E36243, #E8917D, #E36243);
+        color: white;
+        transition: 0.5s;
+    }
+
+        .grad-background-orangebrown:hover > h4 {
+            color: white;
+            transition: 0.5s;
+            font-style: inherit;
+        }
+
+.grad-background-bluegrey {
+    background-image: linear-gradient(-45deg, lightgray, white, lightgray);
+    height: 100%;
+}
+
+    .grad-background-bluegrey > h4 {
+        color: #74A1C8;
+    }
+
+    .grad-background-bluegrey:hover {
+        background-image: linear-gradient(-45deg, #74A1C8, #A3C2DD, #74A1C8);
+        color: white;
+        transition: 0.5s;
+    }
+
+        .grad-background-bluegrey:hover > h4 {
+            color: white;
+            transition: 0.5s;
+            font-style: inherit;
+        }
+
+.grad-background-limegreen {
+    background-image: linear-gradient(-45deg, lightgray, white, lightgray);
+    height: 100%;
+}
+
+    .grad-background-limegreen > h4 {
+        color: #7CCA36;
+    }
+
+    .grad-background-limegreen:hover {
+        background-image: linear-gradient(-45deg, #7CCA36, #9DD569, #7CCA36);
+        color: white;
+        transition: 0.5s;
+    }
+
+        .grad-background-limegreen:hover > h4 {
+            color: white;
+            transition: 0.5s;
+            font-style: inherit;
+        }
+
+.grad-button-orangebrown-ani {
+    border-radius: 0px;
+    margin: 20px;
+    background-color: #E36243;
+}
+
+    .grad-button-orangebrown-ani:hover {
+        transform: rotateX(360deg);
+        transition: 1s;
+        background-color: #E36243;
+    }
+
+.grad-button-bluegrey-ani {
+    border-radius: 0px;
+    margin: 20px;
+    background-color: #74A1C8;
+}
+
+    .grad-button-bluegrey-ani:hover {
+        transform: rotateX(360deg);
+        transition: 1s;
+        background-color: #74A1C8;
+    }
+
+
+.grad-button-limegreen-ani {
+    border-radius: 0px;
+    margin: 20px;
+    background-color: #7CCA36;
+}
+
+    .grad-button-limegreen-ani:hover {
+        transform: rotateX(360deg);
+        transition: 1s;
+        background-color: #7CCA36;
+    }
+
+
 @media screen and (max-width: 992px) {
     .gallery-image {
         width: 248px;
         height: 186px;
     }
 
-    .gallery-image > img {
-        max-height: 180px;
-    }
+        .gallery-image > img {
+            max-height: 180px;
+        }
 
     .membership-color-darkerblue, .membership-color-dullerblue, .membership-color-salmon {
         height: 220px;
@@ -207,9 +409,9 @@ textarea {
         height: 112px;
     }
 
-    .gallery-image > img {
-        max-height: 112px;
-    }
+        .gallery-image > img {
+            max-height: 112px;
+        }
 
     body {
         padding-bottom: 0px;
