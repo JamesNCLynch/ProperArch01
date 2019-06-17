@@ -1,9 +1,11 @@
-﻿<div class="container">
+﻿<h2>ACTIVITIES ROOM</h2>
+<div class="container">
     <div class="row">
-        <div class="col-md-offset-4"></div>
-        <div class="col-md-8">
-            <h2>ACTIVITIES ROOM</h2>
-            <img src="~/Assets/Home/mlc-activitiesroom-sm.jpg"  style="margin:20px"/>
+        <div class="col-md-4 col-lg-4">
+            @Html.Partial("_SidebarMenu", ProperArch01.WebApp.Helpers.HelperMethods.GetFacilitiesMenu())
+        </div>
+        <div class="col-md-8 col-lg-8">
+            <img src="~/Assets/Home/mlc-activitiesroom-sm.jpg" style="margin:20px" />
             <p>The Activities Room is a 2000sq ft. air conditioned room and as its names suggests has been built to support a variety of activities. The room will accommodate leisure and sporting classes, educational training courses, musicals and much more. To book the Activities Room please contact a member of staff on 025-52102. You can also secure your weekly slot by “Block Booking” please speak with a member of staff for further details.</p>
             <table class="table table-striped table-bordered" style="text-align: center">
                 <tr>
@@ -26,7 +28,7 @@
                     <td>Week (Mon-FRI, 9AM-5PM)</td>
                     <td>€350.00</td>
                 </tr>
-            </table>            
+            </table>
         </div>
     </div>
 </div>

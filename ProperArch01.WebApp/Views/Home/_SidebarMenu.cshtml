@@ -1,0 +1,10 @@
+﻿@model List<ProperArch01.WebApp.Models.MenuListItemModel>
+
+<ul style="font-size: 125%;">
+
+
+    @foreach (var item in Model)
+    {
+        <li>@Html.ActionLink(item.DisplayName, item.ActionName, item.ControllerName)</li>
+    }
+</ul>

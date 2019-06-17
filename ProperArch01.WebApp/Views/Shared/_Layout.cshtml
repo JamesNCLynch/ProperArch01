@@ -24,18 +24,23 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">About<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Mission/Aim", "MissionAim", "Home")</li>
-                            <li>@Html.ActionLink("History", "History", "Home")</li>
+                            @{ 
+                                foreach (var menuListItem in ProperArch01.WebApp.Helpers.HelperMethods.GetAboutMenu())
+                                {
+                                    <li>@Html.ActionLink(menuListItem.DisplayName, menuListItem.ActionName, menuListItem.ControllerName)</li>
+                                }
+                            }
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Rates<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Membership Rates", "MembershipRates", "Home")</li>
-                            <li>@Html.ActionLink("Corporate Rates", "CorporateRates", "Home")</li>
-                            <li>@Html.ActionLink("Pay As You Go", "Payg", "Home")</li>
-                            <li>@Html.ActionLink("Room/Facility Rates", "RoomFacilityRates", "Home")</li>
-                            <li>@Html.ActionLink("Booking Forms", "BookingForms", "Home")</li>
+                            @{
+                                foreach (var menuListItem in ProperArch01.WebApp.Helpers.HelperMethods.GetRatesMenu())
+                                {
+                                    <li>@Html.ActionLink(menuListItem.DisplayName, menuListItem.ActionName, menuListItem.ControllerName)</li>
+                                }
+                            }
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -61,20 +66,23 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Facilities<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Sports Hall", "SportsHall", "Home")</li>
-                            <li>@Html.ActionLink("Gym", "Gym", "Home")</li>
-                            <li>@Html.ActionLink("Activities Room", "Activities", "Home")</li>
-                            <li>@Html.ActionLink("All Weather Pitch", "Pitch", "Home")</li>
-                            <li>@Html.ActionLink("Meeting Rooms", "MeetingRooms", "Home")</li>
+                            @{
+                                foreach (var menuListItem in ProperArch01.WebApp.Helpers.HelperMethods.GetFacilitiesMenu())
+                                {
+                                    <li>@Html.ActionLink(menuListItem.DisplayName, menuListItem.ActionName, menuListItem.ControllerName)</li>
+                                }
+                            }
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Activities<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("MLC Class and Timetable", "Index", "ClassTimetable")</li>
-                            <li>@Html.ActionLink("Summer Camps", "SummerCamps", "Home")</li>
-                            <li>@Html.ActionLink("Birthday Parties", "Birthday", "Home")</li>
-                            <li>@Html.ActionLink("Gallery", "Gallery", "Home")</li>
+                            @{
+                                foreach (var menuListItem in ProperArch01.WebApp.Helpers.HelperMethods.GetActivitiesMenu())
+                                {
+                                    <li>@Html.ActionLink(menuListItem.DisplayName, menuListItem.ActionName, menuListItem.ControllerName)</li>
+                                }
+                            }
                         </ul>
                     </li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
@@ -83,9 +91,12 @@
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin tools<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Create a class type", "Create", "ClassType")</li>
-                                <li>@Html.ActionLink("Scheduled classes need completion", "Index", "ScheduledClass")</li>
-                                <li>@Html.ActionLink("Add a holiday", "Create", "Holiday")</li>
+                                @{
+                                    foreach (var menuListItem in ProperArch01.WebApp.Helpers.HelperMethods.GetAdminMenu())
+                                    {
+                                        <li>@Html.ActionLink(menuListItem.DisplayName, menuListItem.ActionName, menuListItem.ControllerName)</li>
+                                    }
+                                }
                             </ul>
                         </li>
                     }
