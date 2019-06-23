@@ -32,7 +32,7 @@ namespace ProperArch01.Persistence.Migrations
             context.ClassTypes.AddOrUpdate(
                 new ClassType
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = "2A19AFC2-B48D-4A9A-B329-DDC0A2827A39",
                     Name = "Barbell Blast",
                     Difficulty = 80,
                     IsActive = true,
@@ -43,7 +43,7 @@ namespace ProperArch01.Persistence.Migrations
             context.ClassTypes.AddOrUpdate(
                 new ClassType
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = "E46A1C73-8E07-47E4-8B47-E16922EB0C8F",
                     Name = "Rebel Training",
                     Difficulty = 90,
                     IsActive = true,
@@ -54,7 +54,7 @@ namespace ProperArch01.Persistence.Migrations
             context.ClassTypes.AddOrUpdate(
                 new ClassType
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = "E05D837C-0D7C-440E-BE69-F7EB4D5F595A",
                     Name = "Fab Abs",
                     Difficulty = 60,
                     IsActive = true,
