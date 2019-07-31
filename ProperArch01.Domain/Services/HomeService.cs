@@ -26,7 +26,7 @@ namespace ProperArch01.Domain.Services
         {
             var allUpcomingClasses = _scheduledClassReader.GetAllScheduledClasses();
             var nextThreeUpcomingClasses = allUpcomingClasses.Where(t => t.ClassStartTime > DateTime.UtcNow)
-                .OrderBy(x => x.ClassStartTime).Take(3).ToList();
+                .OrderBy(x => x.ClassStartTime).Take(2).ToList();
 
             var allClassTypes = _classTypeReader.GetAllClassTypes();
             var threeUpcomingClassTypes = allClassTypes.Where(x => nextThreeUpcomingClasses.Select(u => u.ClassTypeName).Contains(x.Name)).ToList();

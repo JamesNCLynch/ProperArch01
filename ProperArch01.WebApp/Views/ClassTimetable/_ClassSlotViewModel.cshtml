@@ -3,7 +3,7 @@
 <div style="background: rgba(@Model.Colour.Red, @Model.Colour.Green, @Model.Colour.Blue, 0.3);">
     <div style="">
         <p>@Model.ClassName</p>
-        <p>@Model.StartTime.ToShortTimeString() - @Model.EndTime.ToShortTimeString()</p>
+        <p>@Model.StartTime.ToString("h:mm") - @Model.EndTime.ToString("hh:mm tt")</p>
         @if (User.IsInRole(ProperArch01.Contracts.Constants.RoleNames.AdminName))
         {
         <p>
@@ -12,5 +12,4 @@
         </p>
         }
     </div>
-    
 </div>

@@ -9,21 +9,22 @@ namespace ProperArch01.Contracts.Constants
     {
         public enum Colour
         {
-            Aqua,
-            DeepPink,
-            DeepSkyBlue,
-            MediumOrchid,
-            Lime,
-            MidnightBlue,
-            Navy,
-            Plum,
-            RebeccaPurple,
-            Red,
-            Salmon,
-            SkyBlue,
-            Thistle,
-            Violet,
-            YellowGreen
+            Aqua = 0,
+            DeepPink = 1,
+            DeepSkyBlue = 2,
+            GoldenRod = 3,
+            MediumOrchid = 4,
+            Lime = 5,
+            MidnightBlue = 6,
+            Navy = 7,
+            Plum = 8,
+            RebeccaPurple = 9,
+            Red = 10,
+            Salmon = 11,
+            SkyBlue = 12,
+            Thistle = 13,
+            Violet = 14,
+            YellowGreen = 15
         }
 
         public static string ColourHtmlCode(Colours.Colour colour)
@@ -39,6 +40,9 @@ namespace ProperArch01.Contracts.Constants
                     break;
                 case Colours.Colour.DeepSkyBlue:
                     retValue = "00BFFF";
+                    break;
+                case Colour.GoldenRod:
+                    retValue = "DAA520";
                     break;
                 case Colours.Colour.MediumOrchid:
                     retValue = "BA55D3 ";

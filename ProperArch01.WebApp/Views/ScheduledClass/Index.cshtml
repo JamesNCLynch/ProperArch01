@@ -4,9 +4,29 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Upcoming classes that require attention</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>Upcoming classes that require attention</h2>
+        </div>
+        <div class="col-md-2">
+            <a href="#" style="bottom: 0px" data-toggle="tooltip" title="Example!!!">What is this?</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            @Html.Partial("_IncompleteScheduledClasses", Model.ScheduledClassesRequiringCompletion)
+        </div>
+    </div>
 
-@Html.Partial("_IncompleteScheduledClasses", Model.ScheduledClassesRequiringCompletion)
+        <div class="row">
+
+        </div>
+    </div>
+
+
+
+
 
 <h2>Upcoming classes that do not require attention</h2>
 

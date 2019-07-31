@@ -24,7 +24,7 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">About<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            @{ 
+                            @{
                                 foreach (var menuListItem in ProperArch01.WebApp.Helpers.HelperMethods.GetAboutMenu())
                                 {
                                     <li>@Html.ActionLink(menuListItem.DisplayName, menuListItem.ActionName, menuListItem.ControllerName)</li>
@@ -114,14 +114,14 @@
 
     <div class="footer-full-width">
         <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-lg-4 col-sm-6">
-                    <p> Mitchelstown Leisure Centre</p>
-                    <p> Brigown Road</p>
-                    <p> Mitchelstown</p>
-                    <p> Co. Cork</p>
+            <div class="row" style="background-color: #21409A">
+                <div class="col-md-4 col-lg-4 col-sm-5 col-xs-12">
+                    <p>Mitchelstown Leisure Centre</p>
+                    <p>Brigown Road</p>
+                    <p>Mitchelstown</p>
+                    <p>Co. Cork</p>
                 </div>
-                <div class="col-md-4 col-lg-4 col-md-offset-4 col-lg-offset-4 col-sm-6">
+                <div class="col-md-5 col-lg-4 col-md-offset-3 col-lg-offset-4 col-sm-7 col-xs-12">
                     <div class="opening-hours-bottom">
                         <h4>Opening times:</h4>
                         <dl class="dl-horizontal">
@@ -134,9 +134,9 @@
                                 }
                             }
                         </dl>
-                        @if (ViewBag.OpeningHours.BankHolidayNote != null)
+                        @if (!string.IsNullOrEmpty(ViewBag.OpeningHours.BankHolidayNote))
                         {
-                            <p>@ViewBag.OpeningHours.BankHolidayNote</p>
+                            <h4 style="color: white">@ViewBag.OpeningHours.BankHolidayNote</h4>
                         }
                     </div>
                 </div>

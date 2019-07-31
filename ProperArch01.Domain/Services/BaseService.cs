@@ -29,12 +29,12 @@ namespace ProperArch01.Domain.Services
 
         public FooterOpeningHoursViewModel GetFooterOpeningHours()
         {
-            var weekdayOpeningHour = int.Parse(ConfigurationManager.AppSettings["GymOpeningHour"]);
-            var weekdayClosingHour = int.Parse(ConfigurationManager.AppSettings["GymClosingHour"]);
-            var saturdayOpeningHour = int.Parse(ConfigurationManager.AppSettings["GymOpeningHourSaturday"]);
-            var saturdayClosingHour = int.Parse(ConfigurationManager.AppSettings["GymClosingHourSaturday"]);
-            var sundayOpeningHour = int.Parse(ConfigurationManager.AppSettings["GymOpeningHourSunday"]);
-            var sundayClosingHour = int.Parse(ConfigurationManager.AppSettings["GymClosingHourSunday"]);
+            var weekdayOpeningHour = new DateTime(2000, 1, 1, int.Parse(ConfigurationManager.AppSettings["GymOpeningHour"]), 0, 0);
+            var weekdayClosingHour =  new DateTime(2000, 1, 1, int.Parse(ConfigurationManager.AppSettings["GymClosingHour"]), 0, 0);
+            var saturdayOpeningHour = new DateTime(2000, 1, 1, int.Parse(ConfigurationManager.AppSettings["GymOpeningHourSaturday"]), 0, 0);
+            var saturdayClosingHour = new DateTime(2000, 1, 1, int.Parse(ConfigurationManager.AppSettings["GymClosingHourSaturday"]), 0, 0);
+            var sundayOpeningHour =   new DateTime(2000, 1, 1, int.Parse(ConfigurationManager.AppSettings["GymOpeningHourSunday"]), 0, 0);
+            var sundayClosingHour = new DateTime(2000, 1, 1, int.Parse(ConfigurationManager.AppSettings["GymClosingHourSunday"]), 0, 0);
 
             var viewModel = new FooterOpeningHoursViewModel();
 
@@ -42,49 +42,49 @@ namespace ProperArch01.Domain.Services
                 new OpeningHourViewModel
                 {
                     Day = "Monday",
-                    TimeRange = weekdayOpeningHour + ":00 - " + weekdayClosingHour + ":00"
+                    TimeRange = weekdayOpeningHour.ToString("h:mm tt") + " - " + weekdayClosingHour.ToString("hh:mm tt")
                 }
             );
             viewModel.OpeningHours.Add(
                 new OpeningHourViewModel
                 {
                     Day = "Tuesday",
-                    TimeRange = weekdayOpeningHour + ":00 - " + weekdayClosingHour + ":00"
+                    TimeRange = weekdayOpeningHour.ToString("h:mm tt") + " - " + weekdayClosingHour.ToString("hh:mm tt")
                 }
             );
             viewModel.OpeningHours.Add(
                 new OpeningHourViewModel
                 {
                     Day = "Wednesday",
-                    TimeRange = weekdayOpeningHour + ":00 - " + weekdayClosingHour + ":00"
+                    TimeRange = weekdayOpeningHour.ToString("h:mm tt") + " - " + weekdayClosingHour.ToString("hh:mm tt")
                 }
             );
             viewModel.OpeningHours.Add(
                 new OpeningHourViewModel
                 {
                     Day = "Thursday",
-                    TimeRange = weekdayOpeningHour + ":00 - " + weekdayClosingHour + ":00"
+                    TimeRange = weekdayOpeningHour.ToString("h:mm tt") + " - " + weekdayClosingHour.ToString("hh:mm tt")
                 }
             );
             viewModel.OpeningHours.Add(
                 new OpeningHourViewModel
                 {
                     Day = "Friday",
-                    TimeRange = weekdayOpeningHour + ":00 - " + weekdayClosingHour + ":00"
+                    TimeRange = weekdayOpeningHour.ToString("h:mm tt") + " - " + weekdayClosingHour.ToString("hh:mm tt")
                 }
             );
             viewModel.OpeningHours.Add(
                 new OpeningHourViewModel
                 {
                     Day = "Saturday",
-                    TimeRange = saturdayOpeningHour + ":00 - " + saturdayClosingHour + ":00"
+                    TimeRange = saturdayOpeningHour.ToString("h:mm tt") + " - " + saturdayClosingHour.ToString("hh:mm tt")
                 }
             );
             viewModel.OpeningHours.Add(
                 new OpeningHourViewModel
                 {
                     Day = "Sunday",
-                    TimeRange = sundayOpeningHour + ":00 - " + sundayClosingHour + ":00"
+                    TimeRange = sundayOpeningHour.ToString("h:mm tt") + " - " + sundayClosingHour.ToString("hh:mm tt")
                 }
             );
 
