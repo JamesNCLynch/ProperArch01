@@ -13,6 +13,7 @@ using ProperArch01.Contracts.Queries;
 using ProperArch01.Contracts.Dto;
 using ProperArch01.Contracts.Constants;
 using System.Threading.Tasks;
+using ProperArch01.Contracts.Models.Manage;
 
 namespace ProperArch01.Domain.Services
 {
@@ -20,11 +21,15 @@ namespace ProperArch01.Domain.Services
     {
         private readonly IGymUserWriter _gymUserWriter;
         private readonly IGymUserReader _gymUserReader;
+        private readonly IClassAttendanceReader _classAttendanceReader;
+        private readonly IScheduledClassReader _scheduledClassReader;
 
-        public AccountService(IGymUserWriter gymUserWriter, IGymUserReader gymUserReader)
+        public AccountService(IGymUserWriter gymUserWriter, IGymUserReader gymUserReader, IClassAttendanceReader classAttendanceReader, IScheduledClassReader scheduledClassReader)
         {
             _gymUserWriter = gymUserWriter;
             _gymUserReader = gymUserReader;
+            _classAttendanceReader = classAttendanceReader;
+            _scheduledClassReader = scheduledClassReader;
         }
         
 
@@ -88,6 +93,25 @@ namespace ProperArch01.Domain.Services
         {
             string roleName = _gymUserReader.GetRoleNameByUser(id);
             return await Task.FromResult(roleName);
+        }
+
+        public async Task<AccountIndexViewModel> BuildAccountIndexViewModel(string userId)
+        {
+            var scheduledClasses = _scheduledClassReader.GetScheduledClassesByUserId(userId).Where(x => x.ClassStartTime >= DateTime.UtcNow).ToList();
+            var classAttendances = _classAttendanceReader.GetAttendancesByUser(userId).Where(x => x.ClassStartDateTime < DateTime.UtcNow).ToList();
+
+            var user = _gymUserReader.GetUser(userId);
+
+            var viewModel = new AccountIndexViewModel() {
+                Id = userId,
+                FullName = user.LastName + ", " + user.FirstName,
+                UserName = user.UserName,
+                Email = user.Email,
+                ScheduledClasses = scheduledClasses,
+                ClassesAttended = classAttendances
+            };
+
+            return await Task.FromResult(viewModel);
         }
     }
 }

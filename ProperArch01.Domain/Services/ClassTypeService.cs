@@ -43,7 +43,7 @@ namespace ProperArch01.Domain.Services
         {
             var classType = _classTypeReader.GetClassType(id);
 
-            var dtos = _scheduledClassReader.GetScheduledClassesByClassType(classType.Id);
+            var dtos = _scheduledClassReader.GetScheduledClassesByClassType(classType.Id).Where(x => x.ClassStartTime >= DateTime.UtcNow);
 
             var topThree = dtos.OrderBy(x => x.ClassStartTime).Take(3).Select(x => new UpcomingClassesViewModel() {
                 ScheduledClassId = x.Id,

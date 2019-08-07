@@ -12,5 +12,6 @@ namespace ProperArch01.Contracts.Queries
         List<ScheduledClassDto> GetAllScheduledClasses();
         ScheduledClassDto GetScheduledClass(string id);
         List<ScheduledClassDto> GetScheduledClassesByClassType(string id);
+        List<ScheduledClassDto> GetScheduledClassesByUserId(string userId);
     }
 }

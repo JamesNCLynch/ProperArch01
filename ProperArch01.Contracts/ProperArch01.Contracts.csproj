@@ -131,6 +131,8 @@
     <Compile Include="Models\Home\GalleryViewModel.cs" />
     <Compile Include="Models\Home\HomeIndexViewModel.cs" />
     <Compile Include="Models\Home\UpcomingClassViewModel.cs" />
+    <Compile Include="Models\Manage\AccountIndexViewModel.cs" />
+    <Compile Include="Models\Manage\EditAccountViewModel.cs" />
     <Compile Include="Models\ScheduledClass\CreateScheduledClassViewModel.cs" />
     <Compile Include="Models\ScheduledClass\DetailedScheduledClassViewModel.cs" />
     <Compile Include="Models\ScheduledClass\EditScheduledClassViewModel.cs" />

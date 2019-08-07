@@ -89,5 +89,23 @@ namespace ProperArch01.Persistence.Queries
 
             return dtos;
         }
+
+        public List<ScheduledClassDto> GetScheduledClassesByUserId(string userId)
+        {
+            var scheduledClasses = _context.ClassAttendances.Where(ca => ca.AttendeeId == userId).Select(sc => sc.ScheduledClass);
+
+            var dtos = scheduledClasses.Select(x => new ScheduledClassDto()
+            {
+                Id = x.Id,
+                ClassStartTime = x.ClassStartTime,
+                ClassTypeName = x.ClassType.Name,
+                InstructorName = x.Instructor.UserName,
+                IsCancelled = x.IsCancelled
+            }).ToList();
+
+            _logger.Info($"{dtos.Count()} ScheduledClasses linked to User ID {userId} found in database");
+
+            return dtos;
+        }
     }
 }

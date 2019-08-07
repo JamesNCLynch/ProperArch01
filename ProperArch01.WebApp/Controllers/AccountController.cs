@@ -180,7 +180,7 @@ namespace ProperArch01.WebApp.Controllers
                     return View(viewModel);
                 }
 
-                _logger.Info($"User Id {dto.Id} account details have been edited");
+                _logger.Info($"User Id {dto.Id} account details have been edited by admin");
             }
 
             return RedirectToAction("Index"); 

@@ -6,24 +6,35 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using ProperArch01.Contracts.Services;
+using ProperArch01.Contracts.Models.Manage;
+using ProperArch01.Contracts.Dto;
 using ProperArch01.WebApp.Models;
+using NLog;
 
 namespace ProperArch01.WebApp.Controllers
 {
     [Authorize]
     public class ManageController : BaseController
     {
+        new private readonly IBaseService _baseService;
+        new private readonly IAccountService _accountService;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
-        public ManageController()
+        public ManageController(IAccountService accountService, IBaseService baseService) : base(baseService)
         {
+            _accountService = accountService;
+            _baseService = baseService;
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IAccountService accountService, IBaseService baseService) : base(baseService)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _accountService = accountService;
+            _baseService = baseService;
         }
 
         public ApplicationSignInManager SignInManager
@@ -64,15 +75,63 @@ namespace ProperArch01.WebApp.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
-            var model = new IndexViewModel
+            //var user = await _accountService.GetUser(userId);
+
+            var viewModel = await _accountService.BuildAccountIndexViewModel(userId);
+
+            return View(viewModel);
+        }
+
+        // GET: /Manage/Edit
+        public async Task<ActionResult> Edit(string id)
+        {
+            if (id == null)
             {
-                HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
-                Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
-            };
-            return View(model);
+                _logger.Trace("No parameters passed for Edit");
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+
+            var gymUser = await _accountService.GetUser(id);
+
+            if (gymUser == null)
+            {
+                _logger.Info($"Parameter {id} was passed for Edit but did not return a result");
+                return HttpNotFound();
+            }
+
+            var viewModel = new EditAccountViewModel(gymUser);
+
+            return View(viewModel);
+        }
+
+        // POST: /Manage/Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(EditAccountViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var dto = new GymUserDto()
+                {
+                    Id = viewModel.Id,
+                    Email = viewModel.Email,
+                    UserName = viewModel.UserName,
+                    FirstName = viewModel.FirstName,
+                    LastName = viewModel.LastName,
+                    RoleName = viewModel.RoleName
+                };
+                var isSuccess = await _accountService.EditUser(dto);
+
+                if (!isSuccess)
+                {
+                    _logger.Info($"An error occurred while editing account ID {dto.Id}");
+                    return View(viewModel);
+                }
+
+                _logger.Info($"User Id {dto.Id} account details have been edited by user");
+            }
+
+            return RedirectToAction("Index");
         }
 
         //

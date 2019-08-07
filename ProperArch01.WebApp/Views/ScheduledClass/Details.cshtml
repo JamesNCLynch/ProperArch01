@@ -26,22 +26,33 @@
             @Html.DisplayFor(model => model.ClassStartTime)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.IsCancelled)
-        </dt>
+        @if (!User.IsInRole(ProperArch01.Contracts.Constants.RoleNames.AttendeeName))
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.IsCancelled)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.IsCancelled)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.IsCancelled)
+            </dd>
+        }
 
     </dl>
 </div>
 
-<h2>Users signed up for this class</h2>
+@if (User.IsInRole(ProperArch01.Contracts.Constants.RoleNames.AttendeeName))
+{
+    @Html.ActionLink("Back to manage account", "Index", "Manage")
+}
+else
+{
+    <h2>Users signed up for this class</h2>
 
-@Html.Partial("_Users", Model.Attendances)
+    @Html.Partial("_Users", Model.Attendances)
 
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
+

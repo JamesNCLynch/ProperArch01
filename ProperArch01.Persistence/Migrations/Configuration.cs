@@ -25,6 +25,62 @@ namespace ProperArch01.Persistence.Migrations
 
             SeedRolesAndUsers(context);
             SeedInitialClassTypes(context);
+            SeedInitialClassTimetable(context);
+        }
+
+        private void SeedInitialClassTimetable(ProperArch01DbContext context)
+        {
+            context.ClassTimetable.AddOrUpdate(
+                new ClassTimetable
+                {
+                    Id = "B95FD7FE-748C-40B3-A2EE-407AFFB8335D",
+                    ClassTypeId = "2A19AFC2-B48D-4A9A-B329-DDC0A2827A39",
+                    StartTime = new DateTime(2000, 1, 1, 9, 0, 0),
+                    EndTime = new DateTime(2000, 1, 1, 10, 0, 0),
+                    Weekday = DayOfWeek.Monday
+                }
+            );
+            context.ClassTimetable.AddOrUpdate(
+                new ClassTimetable
+                {
+                    Id = "D3915514-6D05-4D6B-8DB9-DFB5D06BFB10",
+                    ClassTypeId = "2A19AFC2-B48D-4A9A-B329-DDC0A2827A39",
+                    StartTime = new DateTime(2000, 1, 1, 9, 0, 0),
+                    EndTime = new DateTime(2000, 1, 1, 10, 0, 0),
+                    Weekday = DayOfWeek.Wednesday
+                }
+            );
+            context.ClassTimetable.AddOrUpdate(
+                new ClassTimetable
+                {
+                    Id = "DBECDEBE-4B79-4B9E-BE41-F446EB1D5987",
+                    ClassTypeId = "2A19AFC2-B48D-4A9A-B329-DDC0A2827A39",
+                    StartTime = new DateTime(2000, 1, 1, 9, 0, 0),
+                    EndTime = new DateTime(2000, 1, 1, 10, 0, 0),
+                    Weekday = DayOfWeek.Friday
+                }
+            );
+            context.ClassTimetable.AddOrUpdate(
+                new ClassTimetable
+                {
+                    Id = "5D1ED194-C83A-42C2-BF5F-8C44B3987D6C",
+                    ClassTypeId = "E46A1C73-8E07-47E4-8B47-E16922EB0C8F",
+                    StartTime = new DateTime(2000, 1, 1, 11, 0, 0),
+                    EndTime = new DateTime(2000, 1, 1, 12, 0, 0),
+                    Weekday = DayOfWeek.Tuesday
+                }
+            );
+            context.ClassTimetable.AddOrUpdate(
+                new ClassTimetable
+                {
+                    Id = "44C5A47F-E449-47AC-910A-429249A73B63",
+                    ClassTypeId = "E05D837C-0D7C-440E-BE69-F7EB4D5F595A",
+                    StartTime = new DateTime(2000, 1, 1, 15, 0, 0),
+                    EndTime = new DateTime(2000, 1, 1, 16, 0, 0),
+                    Weekday = DayOfWeek.Saturday
+                }
+            );
+            context.SaveChanges();
         }
 
         private void SeedInitialClassTypes(ProperArch01DbContext context)
@@ -85,7 +141,9 @@ namespace ProperArch01.Persistence.Migrations
                 var user = new GymUser
                 {
                     UserName = "admin@mlc.com",
-                    Email = "admin@mlc.com"
+                    Email = "admin@mlc.com",
+                    FirstName = "Administrator",
+                    LastName = "One"
                 };
 
                 string userPWD = "Ballygowan1!";
@@ -111,7 +169,9 @@ namespace ProperArch01.Persistence.Migrations
                 var user = new GymUser
                 {
                     UserName = "attendee@mlc.com",
-                    Email = "attendee@mlc.com"
+                    Email = "attendee@mlc.com",
+                    FirstName = "Attendee",
+                    LastName = "One"
                 };
 
                 string userPWD = "Ballygowan1!";
@@ -135,7 +195,9 @@ namespace ProperArch01.Persistence.Migrations
                 var user = new GymUser
                 {
                     UserName = "instructor@mlc.com",
-                    Email = "instructor@mlc.com"
+                    Email = "instructor@mlc.com",
+                    FirstName = "Instructor",
+                    LastName = "One"
                 };
 
                 string userPWD = "Ballygowan1!";

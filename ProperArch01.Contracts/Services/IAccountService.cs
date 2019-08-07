@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ProperArch01.Contracts.Models.Account;
 using ProperArch01.Contracts.Dto;
+using ProperArch01.Contracts.Models.Manage;
 
 namespace ProperArch01.Contracts.Services
 {
@@ -18,5 +19,6 @@ namespace ProperArch01.Contracts.Services
         Task<bool> EditUser(GymUserDto gymUser);
         Task<bool> DeleteUser(GymUserDto gymUser);
         Task<string> GetRoleNameByUser(string id);
+        Task<AccountIndexViewModel> BuildAccountIndexViewModel(string userId);
     }
 }
